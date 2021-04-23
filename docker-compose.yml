@@ -1,0 +1,18 @@
+version: "2"
+services:
+  shop:
+    build: ./shop
+    links:
+      - db
+    ports:
+      - "5000:5000"
+  db:
+    build: ./db
+    ports:
+      - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: Portfolio2Webshop
+      MYSQL_ROOT_HOST: "%"
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro
