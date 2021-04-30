@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Portfolio Webshop!</title>
+    <link href="./bootstrap.min.css" rel="stylesheet" />
+    <link rel="icon" href="data:," />
+    <script type="text/javascript" src="./scripts.js"></script>
+  </head>
+  <body>
+    <main class="my-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+
+          </div>
+          <div class="col-md-8">
+              <h5>Add a product</h5>
+            <form action="http://localhost:5000/api/product/add" method="POST">
+                <div class="form-group">
+                    <label for="name">Product name</label>
+                    <input type="text" class="form-control" name="name" id="name" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="description">Product description</label>
+                    <input type="text" class="form-control" name="description" id="description" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="price">Product price</label>
+                    <input type="number" class="form-control" name="price" id="price" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="brand">Product brand</label>
+                    <input type="text" class="form-control" name="brand" id="brand" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="category">Product category</label>
+                    <input type="text" class="form-control" name="category" id="category" required="true">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" name="action" value="edit">
+                    <input type="submit" class="btn btn-success" name="submit" value="Add product">
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
