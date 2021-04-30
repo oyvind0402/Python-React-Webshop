@@ -8,6 +8,7 @@ Goals:
 6. Need to create the post methods for the admin page - to be able to add new products.
 7. Need to create the admin page itself.
 8. Need to add pictures for the products to the database of products.
+9. Perhaps use React for rendering the products much more easily than normal js + html?
 
 Stretch goals:
 
