@@ -4,7 +4,7 @@ Goals:
 2. Change the scripts.js file to output all the products in the index.html file for now.
 3. Need to make the product.html file change based on the product we clicked on - to show information about said product.
 4. Need to add a buy button for each product - and have that buy button add the products chosen to a list.
-5. Need to add a shopping cart button where the items in the list of the user gets displayed. Also when you lick it you go to checkout.
+5. Need to add a shopping cart button where the items in the list of the user gets displayed. Also when you click it you go to checkout.
 6. Need to create the post methods for the admin page - to be able to add new products.
 7. Need to create the admin page itself.
 8. Need to add pictures for the products to the database of products.
