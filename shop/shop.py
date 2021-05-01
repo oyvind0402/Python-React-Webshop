@@ -26,7 +26,7 @@ def getProducts():
     db = openDatabase()
     cursor = db.cursor()
     cursor.execute('SELECT * FROM product')
-    result = [{"id": id, "name": name, "price": price, "brand": brand, "category": category} for (id, name, price, brand, category) in cursor]
+    result = [{"id": id, "name": name, "description": description, "price": price, "brand": brand, "category": category} for (id, name, description, price, brand, category) in cursor]
     cursor.close()
     db.close()
     return jsonify(result), 200
@@ -36,23 +36,26 @@ def getProduct(productid):
     db = openDatabase()
     cursor = db.cursor()
     cursor.execute('SELECT * FROM product WHERE id=%s', [productid])
-    result = cursor.fetchall()
+    result = [{"id": id, "name": name, "description": description, "price": price, "brand": brand, "category": category} for (id, name, description, price, brand, category) in cursor]
     cursor.close()
     db.close()
-    return jsonify(result), 200
+    return jsonify(result[0]), 200
 
 @app.route('/api/product/add', methods=["POST"])
 def addProduct():
-    name = request.form['name']
-    price = request.form['price']
-    description = request.form['description']
-    brand = request.form['brand']
-    category = request.form['category']
-    cursor.execute('INSERT INTO product (name, description, price, brand, category) VALUES (%s, %s, %s, %s, %s)', (name, description, price, brand, category))
-    result = cursor.fetchall()
+    db = openDatabase()
+    cursor = db.cursor()
+    form = request.form
+    name = form.get('name')
+    price = form.get('price')
+    description = form.get('description')
+    brand = form.get('brand')
+    category = form.get('category')
+    cursor.execute("INSERT INTO product (name, description, price, brand, category) VALUES (%s, %s, %s, %s, %s)", (name, description, price, brand, category))
+    db.commit()
     cursor.close()
     db.close()
-    return jsonify(result), 201
+    return jsonify(form), 201
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
