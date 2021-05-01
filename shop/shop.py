@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, send_from_directory, request
+from flask import Flask, jsonify, send_from_directory, request, redirect, url_for
 import mysql.connector
 
 app = Flask(__name__, static_folder="/shop/static", static_url_path="")
@@ -55,7 +55,7 @@ def addProduct():
     db.commit()
     cursor.close()
     db.close()
-    return jsonify(form), 201
+    return redirect("http://localhost:5000/adminindex.html")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
