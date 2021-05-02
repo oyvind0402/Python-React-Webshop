@@ -1,0 +1,27 @@
+.products {
+  @include flexbox;
+}
+
+.prodcard {
+  width: 20rem;
+  text-align: center;
+
+  &-name {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &-img {
+    height: 20rem;
+  }
+
+  &-price::before {
+    content: "kr ";
+  }
+  &-price {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: $grey20;
+    margin-top: 0.5rem;
+  }
+}

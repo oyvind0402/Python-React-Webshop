@@ -1,15 +1,26 @@
 import "./styles/main.scss";
-import { Navbar } from "./components/Navbar";
-import { Footer } from "./components/Footer";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Header } from "./components/Header/Header";
+import { Footer } from "./components/Footer/Footer";
+import { Home } from "./components/Homepage/Home";
+import { Login } from "./components/Login";
+import { Basket } from "./components/Basket";
+import { NewProductForm } from "./components/NewProductForm";
 
 let user = null;
 
 function App() {
   return (
-    <>
-      <Navbar user={user} />
+    <Router>
+      <Header user={user} />
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/login" component={Login} />
+        <Route path="/basket" component={Basket} />
+        <Route path="/new" component={NewProductForm} />
+      </Switch>
       <Footer />
-    </>
+    </Router>
   );
 }
 

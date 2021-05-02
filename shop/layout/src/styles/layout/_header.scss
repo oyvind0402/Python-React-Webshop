@@ -1,6 +1,6 @@
-.nav {
+.header {
   @include flexbox;
-  height: $navh;
+  height: $headerh;
   justify-content: space-between;
   align-items: center;
   padding: 1rem $pg-padding-lr;
@@ -27,22 +27,26 @@
   }
 
   &-logo {
-    height: $navh;
+    height: $headerh;
     width: auto;
   }
 }
 
-.basket-fig {
-  height: $navh;
+.headerbasket-fig {
+  height: $headerh;
   margin: 0;
 
   & img {
     box-sizing: border-box;
     padding: 0.5rem;
-    height: $navh;
+    height: $headerh;
   }
 }
 
 .login-container {
   padding-top: 1rem;
+
+  & p {
+    color: $grey20;
+  }
 }

@@ -6,7 +6,11 @@
   min-width: 100vw;
 }
 
-.nav {
+#main {
+  padding: 1rem 2rem;
+}
+
+.header {
   display: flex;
   height: 5rem;
   justify-content: space-between;
@@ -14,33 +18,33 @@
   padding: 1rem 2rem;
   background-color: #e6f2ff;
 }
-.nav-left {
+.header-left {
   margin-right: 1rem;
   flex-shrink: 0;
 }
-.nav-center {
+.header-center {
   flex-grow: 100;
 }
-.nav-right {
+.header-right {
   margin-left: 1rem;
   white-space: nowrap;
   flex-shrink: 0;
   display: flex !important;
   align-items: center;
 }
-.nav div {
+.header div {
   display: inline-block;
 }
-.nav-logo {
+.header-logo {
   height: 5rem;
   width: auto;
 }
 
-.basket-fig {
+.headerbasket-fig {
   height: 5rem;
   margin: 0;
 }
-.basket-fig img {
+.headerbasket-fig img {
   box-sizing: border-box;
   padding: 0.5rem;
   height: 5rem;
@@ -48,6 +52,9 @@
 
 .login-container {
   padding-top: 1rem;
+}
+.login-container p {
+  color: #313435;
 }
 
 .footer {
@@ -75,4 +82,29 @@
   color: #9acafe;
   margin-top: 0.2rem !important;
   font-size: 0.9rem;
+}
+
+.products {
+  display: flex;
+}
+
+.prodcard {
+  width: 20rem;
+  text-align: center;
+}
+.prodcard-name {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+.prodcard-img {
+  height: 20rem;
+}
+.prodcard-price::before {
+  content: "kr ";
+}
+.prodcard-price {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #313435;
+  margin-top: 0.5rem;
 }/*# sourceMappingURL=main.css.map */
