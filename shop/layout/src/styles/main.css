@@ -1,5 +1,28 @@
 /*---------------   Colours      ---------------*/
 /*---------------   Dimensions  ---------------*/
+.btn {
+  padding: 0.3em 0.9em;
+  margin: 0.2em;
+  border-radius: 5px;
+  border: 2px solid;
+}
+.btn-primary {
+  border-color: #9acafe;
+  background-color: #e6f2ff;
+  color: #013165;
+}
+.btn-primary:hover {
+  background-color: #9acafe;
+}
+.btn-secondary {
+  border-color: #cacdce;
+  background-color: #f2f2f3;
+  color: #313435;
+}
+.btn-secondary:hover {
+  background-color: #cacdce;
+}
+
 #root {
   box-sizing: border-box;
   height: 100vh;
@@ -7,7 +30,11 @@
 }
 
 #main {
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 1rem 2rem;
+  height: calc(100% - 5rem - 5rem - 2rem);
 }
 
 .header {
@@ -107,4 +134,28 @@
   font-weight: 500;
   color: #313435;
   margin-top: 0.5rem;
+}
+
+.login {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.login div {
+  width: 100%;
+}
+.login label {
+  display: block;
+  margin: auto;
+  font-weight: 500;
+  padding-bottom: 0.4rem;
+}
+.login-form {
+  display: block;
+  width: 100%;
+}
+.login-password {
+  margin: 2rem auto 1.3rem auto;
 }/*# sourceMappingURL=main.css.map */

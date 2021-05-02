@@ -1,11 +1,12 @@
 import "./styles/main.scss";
+
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Header } from "./components/Header/Header";
 import { Footer } from "./components/Footer/Footer";
 import { Home } from "./components/Homepage/Home";
-import { Login } from "./components/Login";
+import { Login } from "./components/Login/Login";
 import { Basket } from "./components/Basket";
-import { NewProductForm } from "./components/NewProductForm";
+import { NewProductForm } from "./components/Admin/NewProductForm";
 
 let user = null;
 
