@@ -1,0 +1,48 @@
+.nav {
+  @include flexbox;
+  height: $navh;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem $pg-padding-lr;
+  background-color: $blue95;
+
+  &-left {
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+
+  &-center {
+    flex-grow: 100;
+  }
+  &-right {
+    margin-left: 1rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    display: flex !important;
+    align-items: center;
+  }
+
+  & div {
+    display: inline-block;
+  }
+
+  &-logo {
+    height: $navh;
+    width: auto;
+  }
+}
+
+.basket-fig {
+  height: $navh;
+  margin: 0;
+
+  & img {
+    box-sizing: border-box;
+    padding: 0.5rem;
+    height: $navh;
+  }
+}
+
+.login-container {
+  padding-top: 1rem;
+}

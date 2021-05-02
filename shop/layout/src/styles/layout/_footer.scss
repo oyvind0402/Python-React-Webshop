@@ -1,0 +1,30 @@
+.footer {
+  @include flexbox;
+  height: $footerh;
+  position: sticky;
+  top: calc(100vh - #{$footerh});
+  background-color: $blue20;
+  padding: 0 $pg-padding-lr;
+  align-items: center;
+  justify-content: center;
+
+  &-container {
+    text-align: center;
+  }
+
+  & p {
+    margin: 0;
+  }
+
+  &-company {
+    color: $blue95;
+    font-size: 1.1rem;
+    font-weight: 900;
+  }
+
+  &-tagline {
+    color: $blue80;
+    margin-top: 0.2rem !important;
+    font-size: 0.9rem;
+  }
+}

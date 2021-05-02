@@ -1,0 +1,78 @@
+/*---------------   Colours      ---------------*/
+/*---------------   Dimensions  ---------------*/
+#root {
+  box-sizing: border-box;
+  height: 100vh;
+  min-width: 100vw;
+}
+
+.nav {
+  display: flex;
+  height: 5rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #e6f2ff;
+}
+.nav-left {
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+.nav-center {
+  flex-grow: 100;
+}
+.nav-right {
+  margin-left: 1rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: flex !important;
+  align-items: center;
+}
+.nav div {
+  display: inline-block;
+}
+.nav-logo {
+  height: 5rem;
+  width: auto;
+}
+
+.basket-fig {
+  height: 5rem;
+  margin: 0;
+}
+.basket-fig img {
+  box-sizing: border-box;
+  padding: 0.5rem;
+  height: 5rem;
+}
+
+.login-container {
+  padding-top: 1rem;
+}
+
+.footer {
+  display: flex;
+  height: 5rem;
+  position: sticky;
+  top: calc(100vh - 5rem);
+  background-color: #013165;
+  padding: 0 2rem;
+  align-items: center;
+  justify-content: center;
+}
+.footer-container {
+  text-align: center;
+}
+.footer p {
+  margin: 0;
+}
+.footer-company {
+  color: #e6f2ff;
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+.footer-tagline {
+  color: #9acafe;
+  margin-top: 0.2rem !important;
+  font-size: 0.9rem;
+}/*# sourceMappingURL=main.css.map */
