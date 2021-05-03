@@ -1,9 +1,10 @@
-from flask import Flask, jsonify, send_from_directory, request, redirect, url_for
+from flask import Flask, jsonify, send_from_directory, request, redirect
 import mysql.connector
 from werkzeug.utils import secure_filename
 import os
 
 app = Flask(__name__, static_folder="/shop/static", static_url_path="")
+app.config['SECRET_KEY'] = "AWdad12e+1daw::d1__123123dadaodo"
 
 UPLOAD_FOLDER = 'static/images'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -78,7 +79,7 @@ def addProduct():
         cursor.close()
         db.close()
         return redirect("http://localhost:5000/adminindex.html")
-    return redirect("http://localhost:5000/adminindex.html")
+    return redirect("http://localhost:5000/adminindex.html"), 400
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
