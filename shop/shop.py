@@ -1,7 +1,12 @@
 from flask import Flask, jsonify, send_from_directory, request, redirect, url_for
 import mysql.connector
+from werkzeug.utils import secure_filename
+import os
 
 app = Flask(__name__, static_folder="/shop/static", static_url_path="")
+
+UPLOAD_FOLDER = 'static/images'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def openDatabase():
     return mysql.connector.connect(user='root', host='db', port='3306', password='root', database='Portfolio2Webshop')
@@ -26,7 +31,7 @@ def getProducts():
     db = openDatabase()
     cursor = db.cursor()
     cursor.execute('SELECT * FROM product')
-    result = [{"id": id, "name": name, "description": description, "price": price, "brand": brand, "category": category} for (id, name, description, price, brand, category) in cursor]
+    result = [{"id": id, "name": name, "description": description, "price": price, "brand": brand, "category": category, "image": image} for (id, name, description, price, brand, category, image) in cursor]
     cursor.close()
     db.close()
     return jsonify(result), 200
@@ -36,7 +41,7 @@ def getProduct(productid):
     db = openDatabase()
     cursor = db.cursor()
     cursor.execute('SELECT * FROM product WHERE id=%s', [productid])
-    result = [{"id": id, "name": name, "description": description, "price": price, "brand": brand, "category": category} for (id, name, description, price, brand, category) in cursor]
+    result = [{"id": id, "name": name, "description": description, "price": price, "brand": brand, "category": category, "image": image} for (id, name, description, price, brand, category, image) in cursor]
     cursor.close()
     db.close()
     return jsonify(result[0]), 200
@@ -51,11 +56,22 @@ def addProduct():
     description = form.get('description')
     brand = form.get('brand')
     category = form.get('category')
-    cursor.execute("INSERT INTO product (name, description, price, brand, category) VALUES (%s, %s, %s, %s, %s)", (name, description, price, brand, category))
-    db.commit()
-    cursor.close()
-    db.close()
-    return redirect("http://localhost:5000/adminindex.html")
+    if not request.files.get('image'):
+        filename = 'default-product-pic.png'
+        cursor.execute("INSERT INTO product (name, description, price, brand, category, image) VALUES (%s, %s, %s, %s, %s, %s)", (name, description, price, brand, category, filename))
+        db.commit()
+        cursor.close()
+        db.close()
+        return redirect("http://localhost:5000/adminindex.html")
+    else:
+        file = request.files['image']
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        cursor.execute("INSERT INTO product (name, description, price, brand, category, image) VALUES (%s, %s, %s, %s, %s, %s)", (name, description, price, brand, category, filename))
+        db.commit()
+        cursor.close()
+        db.close()
+        return redirect("http://localhost:5000/adminindex.html")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
