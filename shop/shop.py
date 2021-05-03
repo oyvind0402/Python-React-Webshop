@@ -8,8 +8,14 @@ app = Flask(__name__, static_folder="/shop/static", static_url_path="")
 UPLOAD_FOLDER = 'static/images'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+images = set(['png', 'jpg', 'jpeg'])
+
+def validFile(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in images
+
 def openDatabase():
     return mysql.connector.connect(user='root', host='db', port='3306', password='root', database='Portfolio2Webshop')
+
 
 @app.route('/', defaults={"path": "index.html"})
 @app.route('/<path>')
@@ -63,8 +69,8 @@ def addProduct():
         cursor.close()
         db.close()
         return redirect("http://localhost:5000/adminindex.html")
-    else:
-        file = request.files['image']
+    file = request.files['image']
+    if file and validFile(file.filename):     
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         cursor.execute("INSERT INTO product (name, description, price, brand, category, image) VALUES (%s, %s, %s, %s, %s, %s)", (name, description, price, brand, category, filename))
@@ -72,6 +78,7 @@ def addProduct():
         cursor.close()
         db.close()
         return redirect("http://localhost:5000/adminindex.html")
+    return redirect("http://localhost:5000/adminindex.html")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
