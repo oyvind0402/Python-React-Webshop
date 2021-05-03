@@ -1,6 +1,6 @@
 .basket {
   &-pay-btn {
-    display: flex;
+    @include flexbox;
     justify-content: right;
   }
 }
@@ -17,7 +17,8 @@
   }
 
   &-img {
-    height: 10rem;
+    max-height: 10rem;
+    max-width: 95%;
     margin: 0 0 1rem 0;
   }
 
@@ -32,10 +33,23 @@
   }
 
   &-r {
-    display: flex;
+    @include flexbox;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     margin: 0.5rem auto;
     padding: 0.5rem 2rem;
+  }
+}
+
+@media only screen and (max-width: #{$mq-xs}) {
+  .basketcard {
+    &-r:first-of-type {
+      flex-wrap: wrap-reverse;
+    }
+
+    &-c {
+      margin: auto;
+    }
   }
 }

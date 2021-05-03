@@ -7,6 +7,7 @@ import { Home } from "./components/Homepage/Home";
 import { Login } from "./components/Login/Login";
 import { Basket } from "./components/Basket/Basket";
 import { NewProductForm } from "./components/Admin/NewProductForm";
+import { ProductPage } from "./components/ProductPage/ProductPage";
 
 let user = null;
 
@@ -16,9 +17,10 @@ function App() {
       <Header user={user} />
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/login" component={Login} />
+        <Route path="/login" exact component={Login} />
         <Route path="/basket" component={Basket} />
-        <Route path="/new" component={NewProductForm} />
+        <Route path="/new" exact component={NewProductForm} />
+        <Route path="/product" component={ProductPage} />
       </Switch>
       <Footer />
     </Router>

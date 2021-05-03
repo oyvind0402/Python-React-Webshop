@@ -6,8 +6,12 @@
 
 #main {
   box-sizing: border-box;
-  max-width: 1200px;
+  max-width: $main-max-width;
   margin: 0 auto;
   padding: 1rem $pg-padding-lr;
-  min-height: calc(100vh - #{$headerh} - #{$footerh} - 2rem);
+  min-height: calc(100vh - #{$headerh} - #{$footerh} - 4rem);
+}
+
+input {
+  max-width: 96%;
 }

@@ -2,7 +2,7 @@ import React from "react";
 
 export const Login = () => {
   return (
-    <div id="main" className="login">
+    <main id="main" className="login">
       <div>
         <form id="login-form">
           <div className="login-user">
@@ -41,6 +41,6 @@ export const Login = () => {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };

@@ -10,7 +10,8 @@
     color: $blue20;
   }
 
-  &-primary:hover {
+  &-primary:hover,
+  &-primary:focus {
     background-color: $blue80;
   }
 
@@ -20,7 +21,8 @@
     color: $grey20;
   }
 
-  &-secondary:hover {
+  &-secondary:hover,
+  &-secondary:focus {
     background-color: $grey80;
   }
 }

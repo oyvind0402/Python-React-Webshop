@@ -1,10 +1,10 @@
 .footer {
   @include flexbox;
-  height: $footerh;
+  min-height: $footerh;
   position: sticky;
   top: calc(100vh - #{$footerh});
   background-color: $blue20;
-  padding: 0 $pg-padding-lr;
+  padding: 0.5rem $pg-padding-lr;
   align-items: center;
   justify-content: center;
 

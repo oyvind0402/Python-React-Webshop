@@ -11,7 +11,7 @@
   background-color: #e6f2ff;
   color: #013165;
 }
-.btn-primary:hover {
+.btn-primary:hover, .btn-primary:focus {
   background-color: #9acafe;
 }
 .btn-secondary {
@@ -19,7 +19,7 @@
   background-color: #f2f2f3;
   color: #313435;
 }
-.btn-secondary:hover {
+.btn-secondary:hover, .btn-secondary:focus {
   background-color: #cacdce;
 }
 
@@ -29,6 +29,7 @@
 }
 .form-group {
   margin: 0.5rem 0;
+  display: -ms-grid;
   display: grid;
   grid-template-columns: 1fr 2fr;
   justify-content: center;
@@ -48,12 +49,17 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem 2rem;
-  min-height: calc(100vh - 5rem - 5rem - 2rem);
+  min-height: calc(100vh - 5rem - 5rem - 4rem);
+}
+
+input {
+  max-width: 96%;
 }
 
 .header {
   display: flex;
-  height: 5rem;
+  flex-wrap: wrap;
+  min-height: 5rem;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
@@ -68,27 +74,26 @@
 }
 .header-right {
   margin-left: 1rem;
-  white-space: nowrap;
-  flex-shrink: 0;
-  display: flex !important;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
-.header div {
-  display: inline-block;
-}
 .header-logo {
-  height: 5rem;
-  width: auto;
+  width: 15rem;
+  max-width: 60vw;
+  max-height: 5rem;
 }
 
 .headerbasket-fig {
-  height: 5rem;
+  max-height: 5rem;
   margin: 0;
 }
 .headerbasket-fig img {
   box-sizing: border-box;
   padding: 0.5rem;
-  height: 5rem;
+  width: 4rem;
+  max-width: 40vw;
+  max-height: 5rem;
 }
 
 .login-container {
@@ -98,13 +103,18 @@
   color: #313435;
 }
 
+@media only screen and (max-width: 450px) {
+  .header * {
+    margin: auto;
+  }
+}
 .footer {
   display: flex;
-  height: 5rem;
+  min-height: 5rem;
   position: sticky;
   top: calc(100vh - 5rem);
   background-color: #013165;
-  padding: 0 2rem;
+  padding: 0.5rem 2rem;
   align-items: center;
   justify-content: center;
 }
@@ -132,24 +142,38 @@
 }
 
 .prodcard {
-  width: 20rem;
+  max-width: 20rem;
   text-align: center;
+  margin: 1rem 0.5rem;
+  border-radius: 15px;
+  box-shadow: 1px 1px 2px #cacdce;
+}
+.prodcard:hover, .prodcard:focus-within {
+  box-shadow: 1px 1px 3px #313435;
 }
 .prodcard-name {
   font-size: 1.3rem;
   margin-bottom: 0.5rem;
 }
 .prodcard-img {
-  height: 20rem;
-}
-.prodcard-price::before {
-  content: "kr ";
+  max-width: 90vw;
+  max-height: 20rem;
 }
 .prodcard-price {
   font-size: 1.5rem;
   font-weight: 500;
   color: #313435;
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
+}
+.prodcard-price::before {
+  content: "kr ";
+}
+.prodcard-more {
+  color: #313435;
+  text-decoration: none;
+}
+.prodcard-add {
+  margin-bottom: 1.5rem;
 }
 
 .login {
@@ -200,7 +224,8 @@
   display: inline-block;
 }
 .basketcard-img {
-  height: 10rem;
+  max-height: 10rem;
+  max-width: 95%;
   margin: 0 0 1rem 0;
 }
 .basketcard-price::before {
@@ -214,8 +239,89 @@
 }
 .basketcard-r {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   margin: 0.5rem auto;
   padding: 0.5rem 2rem;
+}
+
+@media only screen and (max-width: 450px) {
+  .basketcard-r:first-of-type {
+    flex-wrap: wrap-reverse;
+  }
+  .basketcard-c {
+    margin: auto;
+  }
+}
+.productpage-title {
+  display: inline-block;
+}
+
+.push {
+  display: inline-block;
+  height: 0;
+  width: 25rem;
+  max-width: 80vw;
+}
+
+.productpage {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: -4.5rem;
+}
+.productpage-img {
+  width: 25rem;
+  max-width: 80vw;
+}
+.productpage-img img {
+  width: 25rem;
+  max-width: 80vw;
+}
+.productpage-details {
+  box-sizing: border-box;
+  width: calc(90vw - 25rem);
+  min-width: 25rem;
+}
+.productpage-details p {
+  display: block;
+}
+.productpage-buy {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+.productpage-price {
+  font-size: 1.5rem;
+  color: #013165;
+  font-weight: 600;
+}
+.productpage-price::before {
+  content: "kr ";
+}
+
+@media only screen and (max-width: 870px) {
+  .push {
+    width: 0;
+  }
+
+  .productpage {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 0;
+  }
+  .productpage * {
+    margin: auto;
+  }
+  .productpage-img {
+    width: 25rem;
+    max-width: 80vw;
+  }
+  .productpage-details {
+    min-width: 0;
+    width: 100%;
+    max-width: 90vw;
+  }
 }/*# sourceMappingURL=main.css.map */

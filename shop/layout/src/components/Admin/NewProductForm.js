@@ -2,7 +2,7 @@ import React from "react";
 
 export const NewProductForm = () => {
   return (
-    <div id="main" className="addProduct">
+    <main id="main" className="addProduct">
       <h3>Add a product</h3>
       <div className="form">
         <form
@@ -70,6 +70,6 @@ export const NewProductForm = () => {
           </div>
         </form>
       </div>
-    </div>
+    </main>
   );
 };

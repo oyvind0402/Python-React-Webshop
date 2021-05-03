@@ -1,6 +1,7 @@
 .header {
   @include flexbox;
-  height: $headerh;
+  flex-wrap: wrap;
+  min-height: $headerh;
   justify-content: space-between;
   align-items: center;
   padding: 1rem $pg-padding-lr;
@@ -16,30 +17,28 @@
   }
   &-right {
     margin-left: 1rem;
-    white-space: nowrap;
-    flex-shrink: 0;
-    display: flex !important;
+    @include flexbox;
+    flex-wrap: wrap;
     align-items: center;
   }
 
-  & div {
-    display: inline-block;
-  }
-
   &-logo {
-    height: $headerh;
-    width: auto;
+    width: 15rem;
+    max-width: 60vw;
+    max-height: $headerh;
   }
 }
 
 .headerbasket-fig {
-  height: $headerh;
+  max-height: $headerh;
   margin: 0;
 
   & img {
     box-sizing: border-box;
     padding: 0.5rem;
-    height: $headerh;
+    width: 4rem;
+    max-width: 40vw;
+    max-height: $headerh;
   }
 }
 
@@ -48,5 +47,13 @@
 
   & p {
     color: $grey20;
+  }
+}
+
+@media only screen and (max-width: #{$mq-xs}) {
+  .header {
+    & * {
+      margin: auto;
+    }
   }
 }

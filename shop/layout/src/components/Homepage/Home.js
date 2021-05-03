@@ -26,7 +26,7 @@ export const Home = () => {
   ];
 
   return (
-    <div id="main">
+    <main id="main">
       <h2>Our products</h2>
       <div className="products">
         {products.map((prod) => {
@@ -39,6 +39,6 @@ export const Home = () => {
           );
         })}
       </div>
-    </div>
+    </main>
   );
 };

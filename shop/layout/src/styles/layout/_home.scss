@@ -5,8 +5,16 @@
 }
 
 .prodcard {
-  width: 20rem;
+  max-width: 20rem;
   text-align: center;
+  margin: 1rem 0.5rem;
+  border-radius: 15px;
+  box-shadow: 1px 1px 2px $grey80;
+
+  &:hover,
+  &:focus-within {
+    box-shadow: 1px 1px 3px $grey20;
+  }
 
   &-name {
     font-size: 1.3rem;
@@ -14,16 +22,26 @@
   }
 
   &-img {
-    height: 20rem;
+    max-width: 90vw;
+    max-height: 20rem;
   }
 
-  &-price::before {
-    content: "kr ";
-  }
   &-price {
     font-size: 1.5rem;
     font-weight: 500;
     color: $grey20;
-    margin-top: 0.5rem;
+    margin-top: 0.3rem;
+
+    &::before {
+      content: "kr ";
+    }
+  }
+
+  &-more {
+    color: $grey20;
+    text-decoration: none;
+  }
+  &-add {
+    margin-bottom: 1.5rem;
   }
 }

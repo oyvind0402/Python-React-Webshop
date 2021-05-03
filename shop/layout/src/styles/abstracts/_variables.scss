@@ -10,7 +10,11 @@ $grey80: hsl(200, 3%, 80%);
 $grey95: hsl(200, 3%, 95%);
 
 /*---------------   Dimensions  ---------------*/
+$mq-xs: 450px;
+$mq-md: 870px;
+
 $pg-padding-lr: 2rem;
 $headerh: 5rem;
 $footerh: 5rem;
+$main-max-width: 1200px;
 $form-width: 500px;

@@ -28,7 +28,7 @@ export const Basket = () => {
   ];
 
   return (
-    <div id="main">
+    <main id="main">
       <h2>Your shopping basket</h2>
       <div className="basket">
         {products.map((prod) => {
@@ -45,6 +45,6 @@ export const Basket = () => {
       <div className="basket-pay-btn">
         <button className="btn btn-primary">Go to payment</button>
       </div>
-    </div>
+    </main>
   );
 };
