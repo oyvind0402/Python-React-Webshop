@@ -1,5 +1,7 @@
 .products {
   @include flexbox;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .prodcard {

@@ -5,7 +5,7 @@ import { Header } from "./components/Header/Header";
 import { Footer } from "./components/Footer/Footer";
 import { Home } from "./components/Homepage/Home";
 import { Login } from "./components/Login/Login";
-import { Basket } from "./components/Basket";
+import { Basket } from "./components/Basket/Basket";
 import { NewProductForm } from "./components/Admin/NewProductForm";
 
 let user = null;

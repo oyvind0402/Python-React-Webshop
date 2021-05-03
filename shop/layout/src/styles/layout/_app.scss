@@ -1,6 +1,6 @@
 #root {
   box-sizing: border-box;
-  height: 100vh;
+  min-height: 100vh;
   min-width: 100vw;
 }
 
@@ -9,5 +9,5 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem $pg-padding-lr;
-  height: calc(100% - #{$headerh} - #{$footerh} - 2rem);
+  min-height: calc(100vh - #{$headerh} - #{$footerh} - 2rem);
 }

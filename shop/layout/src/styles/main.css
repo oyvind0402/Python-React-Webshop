@@ -39,7 +39,7 @@
 
 #root {
   box-sizing: border-box;
-  height: 100vh;
+  min-height: 100vh;
   min-width: 100vw;
 }
 
@@ -48,7 +48,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem 2rem;
-  height: calc(100% - 5rem - 5rem - 2rem);
+  min-height: calc(100vh - 5rem - 5rem - 2rem);
 }
 
 .header {
@@ -127,6 +127,8 @@
 
 .products {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .prodcard {
@@ -174,10 +176,46 @@
   margin: 2rem auto 1.3rem auto;
 }
 .login-btn-sec {
-  margin: 0 0.2em;
+  margin: 0 0.2rem;
 }
 
 .addProduct h3 {
   max-width: 500px;
   margin: 1rem auto 2rem;
+}
+
+.basket-pay-btn {
+  display: flex;
+  justify-content: right;
+}
+
+.basketcard {
+  text-align: center;
+  background-color: #f2f2f3;
+  border-radius: 20px;
+}
+.basketcard-name {
+  font-size: 1.3rem;
+  margin: 0;
+  display: inline-block;
+}
+.basketcard-img {
+  height: 10rem;
+  margin: 0 0 1rem 0;
+}
+.basketcard-price::before {
+  content: "kr ";
+}
+.basketcard-price {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #313435;
+  margin-top: 0;
+}
+.basketcard-r {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.5rem auto;
+  padding: 0.5rem 2rem;
 }/*# sourceMappingURL=main.css.map */
