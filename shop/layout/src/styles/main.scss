@@ -2,9 +2,11 @@
 @import "abstracts/mixins";
 
 @import "components/buttons";
+@import "components/form";
 
 @import "layout/app";
 @import "layout/header";
 @import "layout/footer";
 @import "layout/home";
 @import "layout/login";
+@import "layout/admin";
