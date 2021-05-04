@@ -4,7 +4,7 @@ CREATE TABLE product (
     name VARCHAR(20) NOT NULL,
     price INT NOT NULL,
     color VARCHAR(20) NOT NULL,
-    system VARCHAR(20) NOT NULL,
+    system VARCHAR(10) NOT NULL,
     storage INT NOT NULL,
     short_desc TEXT NOT NULL,
     long_desc TEXT NOT NULL,
