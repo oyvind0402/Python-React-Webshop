@@ -1,10 +1,13 @@
 CREATE TABLE product (
     id INT AUTO_INCREMENT NOT NULL,
-    name VARCHAR(20) NOT NULL,
-    description TEXT NOT NULL,
-    price INT NOT NULL,
     brand VARCHAR(20) NOT NULL,
-    category VARCHAR(20) NOT NULL,
+    name VARCHAR(20) NOT NULL,
+    price INT NOT NULL,
+    color VARCHAR(20) NOT NULL,
+    system VARCHAR(10) NOT NULL,
+    memory INT NOT NULL,
+    short_description TEXT NOT NULL,
+    long_description TEXT NOT NULL,
     image VARCHAR(30) NOT NULL,
     PRIMARY KEY (id)
 );
