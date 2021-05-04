@@ -38,7 +38,7 @@ def getProducts():
     db = openDatabase()
     cursor = db.cursor()
     cursor.execute('SELECT * FROM product')
-    result = [{"id": id, "name": name, "description": description, "price": price, "brand": brand, "category": category, "image": image} for (id, name, description, price, brand, category, image) in cursor]
+    result = [{"id": id, "brand": brand, "name": name, "price": price, "color": color, "system": system, "storage": storage, "short_desc": short_desc, "long_desc": long_desc, "image": image} for (id, brand, name, price, color, system, storage, short_desc, long_desc, image) in cursor]
     cursor.close()
     db.close()
     return jsonify(result), 200
@@ -48,7 +48,7 @@ def getProduct(productid):
     db = openDatabase()
     cursor = db.cursor()
     cursor.execute('SELECT * FROM product WHERE id=%s', [productid])
-    result = [{"id": id, "name": name, "description": description, "price": price, "brand": brand, "category": category, "image": image} for (id, name, description, price, brand, category, image) in cursor]
+    result = [{"id": id, "brand": brand, "name": name, "price": price, "color": color, "system": system, "storage": storage, "short_desc": short_desc, "long_desc": long_desc, "image": image} for (id, brand, name, price, color, system, storage, short_desc, long_desc, image) in cursor]
     cursor.close()
     db.close()
     return jsonify(result[0]), 200
@@ -58,14 +58,17 @@ def addProduct():
     db = openDatabase()
     cursor = db.cursor()
     form = request.form
+    brand = form.get('brand')
     name = form.get('name')
     price = form.get('price')
-    description = form.get('description')
-    brand = form.get('brand')
-    category = form.get('category')
+    color = form.get('color')
+    system = form.get('system')
+    storage = form.get('storage')
+    short_desc = form.get('short_desc')
+    long_desc = form.get('long_desc')
     if not request.files.get('image'):
         filename = 'default-product-pic.png'
-        cursor.execute("INSERT INTO product (name, description, price, brand, category, image) VALUES (%s, %s, %s, %s, %s, %s)", (name, description, price, brand, category, filename))
+        cursor.execute("INSERT INTO product (brand, name, price, color, system, storage, short_desc, long_desc, image) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (brand, name, price, color, system, storage, short_desc, long_desc, filename))
         db.commit()
         cursor.close()
         db.close()
@@ -74,7 +77,7 @@ def addProduct():
     if file and validFile(file.filename):     
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        cursor.execute("INSERT INTO product (name, description, price, brand, category, image) VALUES (%s, %s, %s, %s, %s, %s)", (name, description, price, brand, category, filename))
+        cursor.execute("INSERT INTO product (brand, name, price, color, system, storage, short_desc, long_desc, image) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (brand, name, price, color, system, storage, short_desc, long_desc, filename))
         db.commit()
         cursor.close()
         db.close()

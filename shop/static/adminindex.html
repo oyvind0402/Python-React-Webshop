@@ -16,31 +16,43 @@
               <h5>Add a product</h5>
             <form action="http://localhost:5000/api/product/add" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="name">Product name</label>
+                  <label for="brand">Phone brand</label>
+                  <input type="text" class="form-control" name="brand" id="brand" required="true">
+                </div>
+                <div class="form-group">
+                    <label for="name">Phone name</label>
                     <input type="text" class="form-control" name="name" id="name" required="true">
                 </div>
                 <div class="form-group">
-                    <label for="description">Product description</label>
-                    <input type="text" class="form-control" name="description" id="description" required="true">
-                </div>
-                <div class="form-group">
-                    <label for="price">Product price</label>
+                    <label for="price">Phone price</label>
                     <input type="number" class="form-control" name="price" id="price" required="true">
                 </div>
                 <div class="form-group">
-                    <label for="brand">Product brand</label>
-                    <input type="text" class="form-control" name="brand" id="brand" required="true">
+                    <label for="color">Phone color</label>
+                    <input type="text" class="form-control" name="color" id="color" required="true">
                 </div>
                 <div class="form-group">
-                    <label for="category">Product category</label>
-                    <input type="text" class="form-control" name="category" id="category" required="true">
+                  <label for="system">Phone system</label>
+                  <input type="text" class="form-control" name="system" id="system" required="true">
                 </div>
                 <div class="form-group">
-                  <label for="image">Product image (only jpg/png/jpeg files can be uploaded)</label>
+                  <label for="storage">Phone storage</label>
+                  <input type="text" class="form-control" name="storage" id="storage" required="true">
+                </div>
+                <!-- <div class="form-group">
+                  <label for="short_desc">Phone - short description</label>
+                  <input type="text" class="form-control" name="short_desc" id="short_desc" required="true">
+                </div> 
+                <div class="form-group">
+                  <label for="long_desc">Phone - long description</label>
+                  <input type="text" class="form-control" name="long_desc" id="long_desc" required="true">
+                </div> -->
+                <div class="form-group">
+                  <label for="image">Phone image (only jpg/png/jpeg files can be uploaded)</label>
                   <input type="file" class="form-control" name="image" id="image">
                 </div>
                 <div class="form-group">
-                    <input type="submit" class="btn btn-success" name="submit" value="Add product">
+                    <input type="submit" class="btn btn-success" name="submit" value="Add phone">
                 </div>
             </form>
           </div>
