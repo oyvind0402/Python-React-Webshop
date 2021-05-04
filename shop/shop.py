@@ -38,7 +38,7 @@ def getProducts():
     db = openDatabase()
     cursor = db.cursor()
     cursor.execute('SELECT * FROM product')
-    result = [{"id": id, "brand": brand, "name": name, "price": price, "color": color, "system": system, "storage": storage, "short_desc": short_desc, "long_desc": long_desc, "image": image} for (id, brand, name, price, color, system, storage, short_desc, long_desc, image) in cursor]
+    result = [{"id": id, "brand": brand, "name": name, "price": price, "color": color, "operatingsystem": operatingsystem, "storage": storage, "short_desc": short_desc, "long_desc": long_desc, "image": image} for (id, brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image) in cursor]
     cursor.close()
     db.close()
     return jsonify(result), 200
@@ -48,7 +48,7 @@ def getProduct(productid):
     db = openDatabase()
     cursor = db.cursor()
     cursor.execute('SELECT * FROM product WHERE id=%s', [productid])
-    result = [{"id": id, "brand": brand, "name": name, "price": price, "color": color, "system": system, "storage": storage, "short_desc": short_desc, "long_desc": long_desc, "image": image} for (id, brand, name, price, color, system, storage, short_desc, long_desc, image) in cursor]
+    result = [{"id": id, "brand": brand, "name": name, "price": price, "color": color, "operatingsystem": operatingsystem, "storage": storage, "short_desc": short_desc, "long_desc": long_desc, "image": image} for (id, brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image) in cursor]
     cursor.close()
     db.close()
     return jsonify(result[0]), 200
@@ -62,13 +62,13 @@ def addProduct():
     name = form.get('name')
     price = form.get('price')
     color = form.get('color')
-    system = form.get('system')
+    operatingsystem = form.get('operatingsystem')
     storage = form.get('storage')
-    short_desc = form.get('short_desc')
-    long_desc = form.get('long_desc')
+    short_desc = "This is the new " + name + " from " + brand + "."
+    long_desc = "The " + name + " from " + brand + ", which costs " + price + "kr, is in the lovely color of " + color + ". It runs on " + operatingsystem + " and has " + storage + "GB of storage."
     if not request.files.get('image'):
         filename = 'default-product-pic.png'
-        cursor.execute("INSERT INTO product (brand, name, price, color, system, storage, short_desc, long_desc, image) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (brand, name, price, color, system, storage, short_desc, long_desc, filename))
+        cursor.execute("INSERT INTO product (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, filename))
         db.commit()
         cursor.close()
         db.close()
@@ -77,7 +77,7 @@ def addProduct():
     if file and validFile(file.filename):     
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        cursor.execute("INSERT INTO product (brand, name, price, color, system, storage, short_desc, long_desc, image) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (brand, name, price, color, system, storage, short_desc, long_desc, filename))
+        cursor.execute("INSERT INTO product (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, filename))
         db.commit()
         cursor.close()
         db.close()
