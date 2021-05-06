@@ -1,0 +1,17 @@
+#root {
+  box-sizing: border-box;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+#main {
+  box-sizing: border-box;
+  max-width: $main-max-width;
+  margin: 0 auto;
+  padding: 1rem $pg-padding-lr;
+  min-height: calc(100vh - #{$headerh} - #{$footerh} - 4rem);
+}
+
+input {
+  max-width: 96%;
+}

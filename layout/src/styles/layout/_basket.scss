@@ -1,0 +1,55 @@
+.basket {
+  &-pay-btn {
+    @include flexbox;
+    justify-content: right;
+  }
+}
+
+.basketcard {
+  text-align: center;
+  background-color: $grey95;
+  border-radius: 20px;
+
+  &-name {
+    font-size: 1.3rem;
+    margin: 0;
+    display: inline-block;
+  }
+
+  &-img {
+    max-height: 10rem;
+    max-width: 95%;
+    margin: 0 0 1rem 0;
+  }
+
+  &-price::before {
+    content: "kr ";
+  }
+  &-price {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: $grey20;
+    margin-top: 0;
+  }
+
+  &-r {
+    @include flexbox;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0.5rem auto;
+    padding: 0.5rem 2rem;
+  }
+}
+
+@media only screen and (max-width: #{$mq-xs}) {
+  .basketcard {
+    &-r:first-of-type {
+      flex-wrap: wrap-reverse;
+    }
+
+    &-c {
+      margin: auto;
+    }
+  }
+}

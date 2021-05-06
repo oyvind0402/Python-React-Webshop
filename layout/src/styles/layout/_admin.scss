@@ -1,0 +1,6 @@
+.addProduct {
+  & h3 {
+    max-width: $form-width;
+    margin: 1rem auto 2rem;
+  }
+}

@@ -1,0 +1,80 @@
+$prod-img-w: 25rem;
+
+.productpage-title {
+  display: inline-block;
+}
+.push {
+  display: inline-block;
+  height: 0;
+  width: 25rem;
+  max-width: 80vw;
+}
+
+.productpage {
+  @include flexbox;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: -4.5rem;
+  &-img {
+    width: $prod-img-w;
+    max-width: 80vw;
+    & img {
+      width: $prod-img-w;
+      max-width: 80vw;
+    }
+  }
+
+  &-details {
+    box-sizing: border-box;
+    width: calc(90vw - #{$prod-img-w});
+    min-width: $prod-img-w;
+
+    & p {
+      display: block;
+    }
+  }
+
+  &-buy {
+    @include flexbox;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  &-price {
+    font-size: 1.5rem;
+    color: $blue20;
+    font-weight: 600;
+
+    &::before {
+      content: "kr ";
+    }
+  }
+}
+
+@media only screen and (max-width: #{$mq-md}) {
+  .push {
+    width: 0;
+  }
+
+  .productpage {
+    @include flexbox;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 0;
+
+    & * {
+      margin: auto;
+    }
+
+    &-img {
+      width: $prod-img-w;
+      max-width: 80vw;
+    }
+
+    &-details {
+      min-width: 0;
+      width: 100%;
+      max-width: 90vw;
+    }
+  }
+}

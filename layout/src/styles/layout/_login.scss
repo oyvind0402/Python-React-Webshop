@@ -1,0 +1,31 @@
+.login {
+  height: 100%;
+  @include flexbox;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  & div {
+    width: 100%;
+  }
+
+  & label {
+    display: block;
+    margin: auto;
+    font-weight: 500;
+    padding-bottom: 0.4rem;
+  }
+
+  &-form {
+    display: block;
+    width: 100%;
+  }
+
+  &-password {
+    margin: 2rem auto 1.3rem auto;
+  }
+
+  &-btn-sec {
+    margin: 0 0.2rem;
+  }
+}

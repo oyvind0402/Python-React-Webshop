@@ -1,0 +1,59 @@
+.header {
+  @include flexbox;
+  flex-wrap: wrap;
+  min-height: $headerh;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem $pg-padding-lr;
+  background-color: $blue95;
+
+  &-left {
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+
+  &-center {
+    flex-grow: 100;
+  }
+  &-right {
+    margin-left: 1rem;
+    @include flexbox;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  &-logo {
+    width: 15rem;
+    max-width: 60vw;
+    max-height: $headerh;
+  }
+}
+
+.headerbasket-fig {
+  max-height: $headerh;
+  margin: 0;
+
+  & img {
+    box-sizing: border-box;
+    padding: 0.5rem;
+    width: 4rem;
+    max-width: 40vw;
+    max-height: $headerh;
+  }
+}
+
+.login-container {
+  padding-top: 1rem;
+
+  & p {
+    color: $grey20;
+  }
+}
+
+@media only screen and (max-width: #{$mq-xs}) {
+  .header {
+    & * {
+      margin: auto;
+    }
+  }
+}
