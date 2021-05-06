@@ -1,14 +1,13 @@
 Goals:
 
-1. Add get methods for specific products.
-2. Change the scripts.js file to output all the products in the index.html file for now.
-3. Need to make the product.html file change based on the product we clicked on - to show information about said product.
-4. Need to add a buy button for each product - and have that buy button add the products chosen to a list.
-5. Need to add a shopping cart button where the items in the list of the user gets displayed. Also when you click it you go to checkout.
-6. Need to create the post methods for the admin page - to be able to add new products.
-7. Need to create the admin page itself.
-8. Need to add pictures for the products to the database of products.
-9. Perhaps use React for rendering the products much more easily than normal js + html?
+1. Create a Dockerfile for the React application.
+2. Make changes to shop.py to facilitate for the new setup.
+3. Add the dockerfile for React to the docker-compose file.
+4. Create a working login solution for a user.
+5. Fetch all products from /api/products to the index page to display the data in our DB.
+6. Fetch a single product based on the prop which would be productid that gets sent to the child component when clicking on a product.
+7. Create an overview of all products for the admin as well - where the admin can delete or add products. Or maybe update?
+8. If we want to be able to update - create a PUT request in the API to be able to edit a product.
 
 Stretch goals:
 
