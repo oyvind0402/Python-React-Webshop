@@ -2,8 +2,10 @@ from flask import Flask, jsonify, send_from_directory, request
 import mysql.connector
 from werkzeug.utils import secure_filename
 import os
+from flask_cors import CORS
 
 app = Flask(__name__, static_folder="/shop/static", static_url_path="")
+CORS(app)
 app.config['SECRET_KEY'] = "AWdad12e+1daw::d1__123123dadaodo"
 
 UPLOAD_FOLDER = 'static/images'
@@ -33,7 +35,6 @@ def getUsers():
     cursor.close()
     db.close()
     response = jsonify(result)
-    response.headers.add('Access-Control-Allow-Origin', '*')
     return response, 200
 
 
@@ -46,7 +47,6 @@ def getUser(userid):
     cursor.close()
     db.close()
     response = jsonify(result)
-    response.headers.add('Access-Control-Allow-Origin', '*')
     return response, 200
 
 
@@ -103,7 +103,6 @@ def getProducts():
     cursor.close()
     db.close()
     response = jsonify(result)
-    response.headers.add('Access-Control-Allow-Origin', '*')
     return response, 200
 
 
@@ -116,7 +115,6 @@ def getProduct(productid):
     cursor.close()
     db.close()
     response = jsonify((result))
-    response.headers.add('Access-Control-Allow-Origin', '*')
     return response, 200
 
 
