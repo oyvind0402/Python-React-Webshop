@@ -32,7 +32,9 @@ def getUsers():
     result = [{"id": id, "name": name, "username": username, "password": password, "email": email} for (id, name, username, password, email) in cursor]
     cursor.close()
     db.close()
-    return jsonify(result), 200
+    response = jsonify(result)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response, 200
 
 
 @app.route('/api/users/<int:userid>', methods=["GET"])
@@ -43,7 +45,9 @@ def getUser(userid):
     result = [{"id": id, "name": name, "username": username, "password": password, "email": email} for (id, name, username, password, email) in cursor]
     cursor.close()
     db.close()
-    return jsonify(result), 200
+    response = jsonify(result)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response, 200
 
 
 @app.route('/api/user/add', methods=["POST"])
@@ -98,7 +102,9 @@ def getProducts():
     result = [{"id": id, "brand": brand, "name": name, "price": price, "color": color, "operatingsystem": operatingsystem, "storage": storage, "short_desc": short_desc, "long_desc": long_desc, "image": image} for (id, brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image) in cursor]
     cursor.close()
     db.close()
-    return jsonify(result), 200
+    response = jsonify(result)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response, 200
 
 
 @app.route('/api/product/<int:productid>', methods=["GET"])
@@ -109,7 +115,9 @@ def getProduct(productid):
     result = [{"id": id, "brand": brand, "name": name, "price": price, "color": color, "operatingsystem": operatingsystem, "storage": storage, "short_desc": short_desc, "long_desc": long_desc, "image": image} for (id, brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image) in cursor]
     cursor.close()
     db.close()
-    return jsonify(result[0]), 200
+    response = jsonify((result))
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response, 200
 
 
 @app.route('/api/product/add', methods=["POST"])
