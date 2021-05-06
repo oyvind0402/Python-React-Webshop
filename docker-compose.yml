@@ -4,6 +4,7 @@ services:
     build: ./shop
     links:
       - db
+      - react
     ports:
       - "5000:5000"
   db:
@@ -12,3 +13,7 @@ services:
       - "32000:3306"
     volumes:
       - ./db:/docker-entrypoint-initdb.d/:ro
+  react:
+    build: ./layout
+    ports:
+      - "3001:3000"
