@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, send_from_directory, request, redirect
+from flask import Flask, jsonify, send_from_directory, request
 import mysql.connector
 from werkzeug.utils import secure_filename
 import os
@@ -63,6 +63,22 @@ def addUser():
     return "Successfully registered user: {}".format(username), 201
 
 
+@app.route('/api/user/<int:userid>/update', methods=["PUT"])
+def editUser(userid):
+    db = openDatabase()
+    cursor = db.cursor()
+    form = request.form
+    name = form.get('name')
+    username = form.get('username')
+    password = form.get('password')
+    email = form.get('email')
+    cursor.execute('UPDATE user SET name=%s, username=%s, password=%s, email=%s WHERE id=%s', (name, username, password, email, userid))
+    db.commit()
+    cursor.close()
+    db.close()
+    return "User updated.", 200
+
+
 @app.route('/api/user/<int:userid>/delete', methods=["DELETE"])
 def deleteUser(userid):
     db = openDatabase()
@@ -71,7 +87,7 @@ def deleteUser(userid):
     db.commit()
     cursor.close()
     db.close()
-    return "User with id: {} deleted.".format(userid), 204
+    return "", 204
 
 
 @app.route('/api/products', methods=["GET"])
@@ -128,6 +144,36 @@ def addProduct():
     return "Could not add the product, the image chosen had the wrong extension.", 400
 
 
+@app.route('/api/product/<int:productid>/update', methods=["PUT"])
+def editProduct(productid):
+    db = openDatabase()
+    cursor = db.cursor()
+    form = request.form
+    brand = form.get('brand')
+    name = form.get('name')
+    price = form.get('price')
+    color = form.get('color')
+    operatingsystem = form.get('operatingsystem')
+    storage = form.get('storage')
+    short_desc = "This is the new " + name + " from " + brand + "."
+    long_desc = "The " + name + " from " + brand + ", which costs " + price + "kr, is in the lovely color of " + color + ". It runs on " + operatingsystem + " and has " + storage + "GB of storage."
+    if not request.files.get('image'):
+        cursor.execute("UPDATE product SET brand=%s, name=%s, price=%s, color=%s, operatingsystem=%s, storage=%s, short_desc=%s, long_desc=%s WHERE id=%s", (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, productid))
+        db.commit()
+        cursor.close()
+        db.close()
+        return "Product updated.", 200
+    file = request.files['image']
+    if file and validFile(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        cursor.execute("UPDATE product SET brand=%s, name=%s, price=%s, color=%s, operatingsystem=%s, storage=%s, short_desc=%s, long_desc=%s, image=%s WHERE id=%s", (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, filename, productid))
+        db.commit()
+        cursor.close()
+        db.close()
+        return "Product updated.", 200
+
+
 @app.route('/api/product/<int:productid>/delete', methods=["DELETE"])
 def deleteProduct(productid):
     db = openDatabase()
@@ -136,7 +182,7 @@ def deleteProduct(productid):
     db.commit()
     cursor.close()
     db.close()
-    return "Product with id: {} deleted.".format(productid), 204
+    return "", 204
 
 
 if __name__ == "__main__":
