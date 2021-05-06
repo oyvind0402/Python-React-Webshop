@@ -9,10 +9,10 @@ app.config['SECRET_KEY'] = "AWdad12e+1daw::d1__123123dadaodo"
 UPLOAD_FOLDER = 'static/images'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-images = set(['png', 'jpg', 'jpeg'])
+extensions = set(['png', 'jpg', 'jpeg'])
 
 def validFile(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in images
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in extensions
 
 def openDatabase():
     return mysql.connector.connect(user='root', host='db', port='3306', password='root', database='Portfolio2Webshop')
@@ -23,15 +23,45 @@ def openDatabase():
 def index(path):
     return send_from_directory("/shop/static", path)
 
+
 @app.route('/api/users', methods=["GET"])
 def getUsers():
     db = openDatabase()
     cursor = db.cursor()
     cursor.execute('SELECT * FROM user')
-    result = [{"id": id, "username": username, "password": password} for (id, username, password) in cursor]
+    result = [{"id": id, "name": name, "username": username, "password": password, "email": email} for (id, name, username, password, email) in cursor]
     cursor.close()
     db.close()
     return jsonify(result), 200
+
+
+@app.route('/api/users/<int:userid>', methods=["GET"])
+def getUser(userid):
+    db = openDatabase()
+    cursor = db.cursor()
+    cursor.execute('SELECT * FROM user WHERE id=%s', [userid])
+    result = [{"id": id, "name": name, "username": username, "password": password, "email": email} for (id, name, username, password, email) in cursor]
+    cursor.close()
+    db.close()
+    return jsonify(result), 200
+
+
+@app.route('/api/user/add', methods=["POST"])
+def addUser():
+    db = openDatabase()
+    cursor = db.cursor()
+    form = request.form
+    name = form.get('name')
+    username = form.get('username')
+    password = form.get('password')
+    #Can do hashing of the password here if we want
+    email = form.get('email')
+    cursor.execute('INSERT INTO user (name, username, password, email) VALUES (%s, %s, %s, %s)', (name, username, password, email))
+    db.commit()
+    cursor.close()
+    db.close()
+    return "Successfully registered user: {}".format(username), 201
+
 
 @app.route('/api/products', methods=["GET"])
 def getProducts():
@@ -43,6 +73,7 @@ def getProducts():
     db.close()
     return jsonify(result), 200
 
+
 @app.route('/api/product/<int:productid>', methods=["GET"])
 def getProduct(productid):
     db = openDatabase()
@@ -52,6 +83,7 @@ def getProduct(productid):
     cursor.close()
     db.close()
     return jsonify(result[0]), 200
+
 
 @app.route('/api/product/add', methods=["POST"])
 def addProduct():
@@ -72,7 +104,7 @@ def addProduct():
         db.commit()
         cursor.close()
         db.close()
-        return redirect("http://localhost:5000/adminindex.html")
+        return "Successfully added product named {}, no picture added, default picture will be chosen.".format(name), 201
     file = request.files['image']
     if file and validFile(file.filename):     
         filename = secure_filename(file.filename)
@@ -81,8 +113,9 @@ def addProduct():
         db.commit()
         cursor.close()
         db.close()
-        return redirect("http://localhost:5000/adminindex.html")
-    return redirect("http://localhost:5000/adminindex.html"), 400
+        return "Successfully added product named {}, product picture included.".format(name), 201
+    return "Could not add the product, the image chosen had the wrong extension.", 400
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)

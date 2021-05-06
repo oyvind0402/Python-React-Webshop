@@ -16,12 +16,14 @@ CREATE TABLE product (
 
 CREATE TABLE user (
     id INT AUTO_INCREMENT NOT NULL,
+    name VARCHAR(30) NOT NULL,
     username VARCHAR(20) NOT NULL,
     password VARCHAR(30) NOT NULL,
+    email VARCHAR(40) NOT NULL,
     PRIMARY KEY (id)
 );
 
-INSERT INTO user (username, password) VALUES ('admin', 'admin');
+INSERT INTO user (name, username, password, email) VALUES ('admin', 'admin', 'admin', 'admin@admin.com');
 
 INSERT INTO product (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image) VALUES ('Apple', 'iPhone 12', 8790, 'Purple', 'iOS', 64, 'The is the new iPhone 12 from Apple.', 'The iPhone 12 from Apple, which costs 8790kr, is in the lovely color of Purple. It runs on iOS and has 64GB of storage.', '1.png');
 INSERT INTO product (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image) VALUES ('Apple', 'iPhone 12 mini', 7890, 'Purple', 'iOS', 64, 'The is the new iPhone 12 mini from Apple.', 'The iPhone 12 mini from Apple, which costs 7890kr, is in the lovely color of Purple. It runs on iOS and has 64GB of storage.', '2.png');
