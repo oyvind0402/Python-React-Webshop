@@ -20,19 +20,23 @@ export const Login = () => {
           </div>
         </form>
         <div>
-          <button class="btn btn-primary" type="submit" htmlFor="login-form">
+          <button
+            className="btn btn-primary"
+            type="submit"
+            htmlFor="login-form"
+          >
             Log in
           </button>
           <div>
             <button
-              class="btn btn-secondary login-btn-sec"
+              className="btn btn-secondary login-btn-sec"
               type="submit"
               htmlFor="login-form"
             >
               Forgot password
             </button>
             <button
-              class="btn btn-secondary login-btn-sec"
+              className="btn btn-secondary login-btn-sec"
               type="submit"
               htmlFor="login-form"
             >
