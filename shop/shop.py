@@ -63,6 +63,17 @@ def addUser():
     return "Successfully registered user: {}".format(username), 201
 
 
+@app.route('/api/user/<int:userid>/delete', methods=["DELETE"])
+def deleteUser(userid):
+    db = openDatabase()
+    cursor = db.cursor()
+    cursor.execute('DELETE FROM user WHERE id=%s', [userid])
+    db.commit()
+    cursor.close()
+    db.close()
+    return "User with id: {} deleted.".format(userid), 204
+
+
 @app.route('/api/products', methods=["GET"])
 def getProducts():
     db = openDatabase()
@@ -115,6 +126,17 @@ def addProduct():
         db.close()
         return "Successfully added product named {}, product picture included.".format(name), 201
     return "Could not add the product, the image chosen had the wrong extension.", 400
+
+
+@app.route('/api/product/<int:productid>/delete', methods=["DELETE"])
+def deleteProduct(productid):
+    db = openDatabase()
+    cursor = db.cursor()
+    cursor.execute('DELETE FROM product WHERE id=%s', [productid])
+    db.commit()
+    cursor.close()
+    db.close()
+    return "Product with id: {} deleted.".format(productid), 204
 
 
 if __name__ == "__main__":
