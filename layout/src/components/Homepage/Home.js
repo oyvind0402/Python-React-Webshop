@@ -21,18 +21,19 @@ export const Home = () => {
 
   return (
     <main id="main">
-      <h2>Our products</h2>
-      <div className="products">
-        {/* {products.current.map((prod) => {
-          return (
-            <ProductCard
-              key={prod.id}
-              name={prod.name}
-              image={prod.image}
-              price={prod.price}
-            />
-          );
-        })} */}
+        <Filter />
+        <div className="products">
+            <h2>Our products</h2>
+            {products.current.map((prod) => {
+              return (
+                <ProductCard
+                  key={prod.id}
+                  name={prod.name}
+                  image={prod.image}
+                  price={prod.price}
+                />
+              );
+            })}
       </div>
     </main>
   );

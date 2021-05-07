@@ -1,0 +1,41 @@
+#filter {
+ margin: 0 15px 0 0;
+ overflow: auto;
+ border: #013165 1px solid;
+ width: 30%;
+ border-radius: 15px;
+}
+h3 {
+ text-align: center;
+}
+
+.filterOption{
+ margin: 25px 25px 0 25px;
+ border-top: lightgray 1px solid;
+}
+.filterOption ul {
+ margin: 0;
+}
+
+.filterOption h4 {
+ text-align: center;
+ margin: 5px 0 0 5px;
+}
+
+.checkbox {
+ width: 100%;
+}
+.filterButton {
+ margin: 25px auto 25px auto;
+ display: block;
+ padding: 10px 25px 10px 25px;
+ color: white;
+ background: #013165;
+ border-radius: 15px;
+ border: 0;
+}
+
+.filterButton:hover {
+ cursor: pointer;
+ background: green;
+}
