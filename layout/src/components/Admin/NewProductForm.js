@@ -3,7 +3,7 @@ import React from "react";
 export const NewProductForm = () => {
   return (
     <main id="main" className="addProduct">
-      <h3>Add a product</h3>
+      <h3>Add a phone</h3>
       <div className="form">
         <form
           action="http://localhost:5000/api/product/add"
@@ -11,37 +11,7 @@ export const NewProductForm = () => {
           enctype="multipart/form-data"
         >
           <div className="form-group">
-            <label for="name">Product name</label>
-            <input
-              type="text"
-              className="form-control"
-              name="name"
-              id="name"
-              required="true"
-            />
-          </div>
-          <div className="form-group">
-            <label for="description">Product description</label>
-            <input
-              type=""
-              className="form-control"
-              name="description"
-              id="description"
-              required="true"
-            />
-          </div>
-          <div className="form-group">
-            <label for="price">Product price</label>
-            <input
-              type="number"
-              className="form-control"
-              name="price"
-              id="price"
-              required="true"
-            />
-          </div>
-          <div className="form-group">
-            <label for="brand">Product brand</label>
+            <label for="brand">Phone brand</label>
             <input
               type="text"
               className="form-control"
@@ -51,12 +21,52 @@ export const NewProductForm = () => {
             />
           </div>
           <div className="form-group">
-            <label for="category">Product category</label>
+            <label for="name">Phone name</label>
             <input
               type="text"
               className="form-control"
-              name="category"
-              id="category"
+              name="name"
+              id="name"
+              required="true"
+            />
+          </div>
+          <div className="form-group">
+            <label for="price">Phone price</label>
+            <input
+              type="number"
+              className="form-control"
+              name="price"
+              id="price"
+              required="true"
+            />
+          </div>
+          <div className="form-group">
+            <label for="color">Phone color</label>
+            <input
+              type="text"
+              className="form-control"
+              name="color"
+              id="color"
+              required="true"
+            />
+          </div>
+          <div className="form-group">
+            <label for="operatingsystem">Phone operatingsystem</label>
+            <input
+              type="text"
+              className="form-control"
+              name="operatingsystem"
+              id="operatingsystem"
+              required="true"
+            />
+          </div>
+          <div className="form-group">
+            <label for="storage">Phone storage</label>
+            <input
+              type="text"
+              className="form-control"
+              name="storage"
+              id="storage"
               required="true"
             />
           </div>
@@ -65,7 +75,7 @@ export const NewProductForm = () => {
               type="submit"
               className="btn btn-primary"
               name="submit"
-              value="Add product"
+              value="Add phone"
             />
           </div>
         </form>

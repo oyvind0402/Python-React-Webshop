@@ -3,12 +3,13 @@ import mysql.connector
 from werkzeug.utils import secure_filename
 import os
 from flask_cors import CORS
+import base64
 
 app = Flask(__name__, static_folder="/shop/static", static_url_path="")
 CORS(app)
 app.config['SECRET_KEY'] = "AWdad12e+1daw::d1__123123dadaodo"
 
-UPLOAD_FOLDER = 'static/images'
+UPLOAD_FOLDER = "static/images"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 extensions = set(['png', 'jpg', 'jpeg'])
@@ -132,20 +133,25 @@ def addProduct():
     short_desc = "This is the new " + name + " from " + brand + "."
     long_desc = "The " + name + " from " + brand + ", which costs " + price + "kr, is in the lovely color of " + color + ". It runs on " + operatingsystem + " and has " + storage + "GB of storage."
     if not request.files.get('image'):
-        filename = 'default-product-pic.png'
-        cursor.execute("INSERT INTO product (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, filename))
+        file = open("./static/images/default-product-pic.png", "rb");
+        image = base64.b64encode(file.read())
+        cursor.execute("INSERT INTO product (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image))
         db.commit()
         cursor.close()
         db.close()
+        file.close()
         return "Successfully added product named {}, no picture added, default picture will be chosen.".format(name), 201
     file = request.files['image']
-    if file and validFile(file.filename):     
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        cursor.execute("INSERT INTO product (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, filename))
+    if file and validFile(file.filename): 
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+        filepath = f"static/images/{file.filename}"
+        file = open(filepath, "rb")
+        image = base64.b64encode(file.read())
+        cursor.execute("INSERT INTO product (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image))
         db.commit()
         cursor.close()
         db.close()
+        file.close()
         return "Successfully added product named {}, product picture included.".format(name), 201
     return "Could not add the product, the image chosen had the wrong extension.", 400
 
@@ -171,13 +177,16 @@ def editProduct(productid):
         return "Product updated.", 200
     file = request.files['image']
     if file and validFile(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        cursor.execute("UPDATE product SET brand=%s, name=%s, price=%s, color=%s, operatingsystem=%s, storage=%s, short_desc=%s, long_desc=%s, image=%s WHERE id=%s", (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, filename, productid))
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+        filepath = f"static/images/{file.filename}"
+        file = open(filepath, "rb")
+        image = base64.b64encode(file.read())
+        cursor.execute("UPDATE product SET brand=%s, name=%s, price=%s, color=%s, operatingsystem=%s, storage=%s, short_desc=%s, long_desc=%s, image=%s WHERE id=%s", (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image, productid))
         db.commit()
         cursor.close()
         db.close()
         return "Product updated.", 200
+    return "Could not update the product, invalid image extension.", 400
 
 
 @app.route('/api/product/<int:productid>/delete', methods=["DELETE"])

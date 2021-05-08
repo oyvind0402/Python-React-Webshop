@@ -1,19 +1,16 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Filter } from "./Filter";
 import { ProductCard } from "./ProductCard";
 
 export const Home = () => {
-  const products = useRef([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const loadData = async () => {
       const response = await fetch("http://localhost:5000/api/products");
       const data = await response.json();
-      products.current = data;
-      for (let i in products.current) {
-        console.log(products.current[i]);
-      }
+      setProducts(data);
     };
 
     loadData();
@@ -21,19 +18,20 @@ export const Home = () => {
 
   return (
     <main id="main">
-        <Filter />
-        <div className="products">
-            <h2>Our products</h2>
-            {products.current.map((prod) => {
-              return (
-                <ProductCard
-                  key={prod.id}
-                  name={prod.name}
-                  image={prod.image}
-                  price={prod.price}
-                />
-              );
-            })}
+      {/* <Filter /> */}
+      <h2>Our products</h2>
+      <div className="products">
+        {products.map((prod) => {
+          return (
+            <ProductCard
+              key={prod["id"]}
+              brand={prod["brand"]}
+              name={prod["name"]}
+              image={prod["image"]}
+              price={prod["price"]}
+            />
+          );
+        })}
       </div>
     </main>
   );

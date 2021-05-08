@@ -6,12 +6,12 @@ export const ProductCard = (props) => {
     alert("Works");
     console.log();
   }
-
+  const src = "data:image/png;base64, " + props.image;
   return (
     //TODO Make article clickable
     <article className="prodcard">
-      <h3 className="prodcard-name">{props.name}</h3>
-      <img className="prodcard-img" src={props.image} alt="" />
+      <h3 className="prodcard-name">{props.brand + " " + props.name}</h3>
+      <img className="prodcard-img" src={src} alt="" />
       <p className="prodcard-price">{props.price}</p>
       <Link to="/product" className="prodcard-more">
         <p>ⓘ Read more</p>
