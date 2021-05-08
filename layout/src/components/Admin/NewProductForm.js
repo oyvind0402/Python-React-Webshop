@@ -70,6 +70,17 @@ export const NewProductForm = () => {
               required="true"
             />
           </div>
+          <div className="form-group">
+            <label for="image">
+              Phone image, not required (only .png files can be uploaded)
+            </label>
+            <input
+              type="file"
+              className="form-control"
+              name="image"
+              id="image"
+            />
+          </div>
           <div className="form-btn">
             <input
               type="submit"
