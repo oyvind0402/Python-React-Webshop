@@ -12,8 +12,8 @@ export const ProductPage = () => {
   return (
     <main id="main">
       <div className="push"></div>
-      <h2 className="productpage-title">{test.name}</h2>
       <div className="productpage">
+        <h2 className="productpage-title">{test.name}</h2>
         <div className="productpage-img">
           <img src={test.image} alt="" />
         </div>
