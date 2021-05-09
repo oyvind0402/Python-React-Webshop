@@ -78,13 +78,6 @@ def validate_user(email, password):
     else:
         return False
 
-#JWT authentication route for logging in
-@authentication.route('/login', methods=["POST"])
-def loginUser():
-    form = request.form
-    email = form["email"]
-    password = form["password"]
-    token = validate_user(email, password)
 
 #To give some sort of frontend for the flask API server
 @app.route('/', defaults={"path": "index.html"})
