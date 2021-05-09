@@ -45,6 +45,33 @@ $prod-img-w: 25rem;
   }
 }
 
+.productSpecs {
+  width: 100%;
+  border: 1px solid $grey95;
+  border-collapse: collapse;
+  td {
+    padding: 0.5rem;
+    border: 1px solid $grey95;
+  }
+  &-row {
+    @include grid;
+    grid-template-columns: $prod-img-w 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "spec val";
+    text-transform: capitalize;
+  }
+
+  &-name {
+    grid-area: spec;
+    font-weight: 600;
+    color: $grey20;
+  }
+
+  &-value {
+    grid-area: val;
+  }
+}
+
 @media only screen and (max-width: #{$mq-md}) {
   .productpage {
     grid-template-columns: 1fr;
@@ -62,6 +89,50 @@ $prod-img-w: 25rem;
 
     &-buy {
       justify-content: center;
+    }
+  }
+
+  @media only screen and (max-width: #{$mq-md}) {
+    .productpage {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      grid-template-areas:
+        "title"
+        "img"
+        "info"
+        "buy";
+      justify-items: center;
+
+      &-details {
+        text-align: center;
+      }
+
+      &-buy {
+        justify-content: center;
+      }
+    }
+
+    .productSpecs {
+      &-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: #{$mq-xs}) {
+  .productSpecs {
+    tr {
+      margin: 1rem;
+      text-align: center;
+    }
+
+    &-row {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      grid-template-areas:
+        "spec"
+        "val";
     }
   }
 }

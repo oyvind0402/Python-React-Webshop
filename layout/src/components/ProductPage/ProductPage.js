@@ -1,4 +1,11 @@
 import React from "react";
+import { SpecsTable } from "./SpecsTable";
+
+const placeholderSpecs = [
+  ["color", "blue"],
+  ["size", "12"],
+  ["speed", "2.4GHz"],
+];
 
 export const ProductPage = () => {
   const test = {
@@ -11,7 +18,6 @@ export const ProductPage = () => {
   };
   return (
     <main id="main">
-      <div className="push"></div>
       <div className="productpage">
         <h2 className="productpage-title">{test.name}</h2>
         <div className="productpage-img">
@@ -25,6 +31,9 @@ export const ProductPage = () => {
           </div>
         </div>
       </div>
+      <table className="productSpecs">
+        <SpecsTable specs={placeholderSpecs} />
+      </table>
     </main>
   );
 };
