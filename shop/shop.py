@@ -1,73 +1,155 @@
-from flask import Flask, jsonify, send_from_directory, request
-import mysql.connector
-from werkzeug.utils import secure_filename
-import os
+from flask import Flask, jsonify, send_from_directory, request, Blueprint
 from flask_cors import CORS
+import mysql.connector
+import os
 import base64
+from werkzeug.utils import secure_filename
+from hashlib import pbkdf2_hmac
+import jwt
+
 
 app = Flask(__name__, static_folder="/shop/static", static_url_path="")
+
+
+#To eliminate CORS errors when doing post and get requests from localhost
 CORS(app)
+#For headers on responses
 app.config['SECRET_KEY'] = "AWdad12e+1daw::d1__123123dadaodo"
 
+
+#The upload settings
 UPLOAD_FOLDER = "static/images"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
 extensions = set(['png', 'jpg', 'jpeg'])
 
 def validFile(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in extensions
 
+
+#Function for opening the database
 def openDatabase():
     return mysql.connector.connect(user='root', host='db', port='3306', password='root', database='Portfolio2Webshop')
 
 
+#For JWT Authentication
+authentication = Blueprint("authentication", __name__)
+JWT_SECRET_KEY = "Aowidha9owd0192j1pond09h0h9AAD_A_DAwpdoa0w9j1"
+
+def validate_user_input(input_type, **kwargs):
+    if input_type == "authentication":
+        if len(kwargs["email"]) <= 255 and len(kwargs["password"]) <= 255:
+            return True
+        else:
+            return False
+
+def generate_salt():
+    salt = os.urandom(16)
+    return salt.hex()
+
+def generate_hash(password, password_salt):
+    password_hash = pbkdf2_hmac(
+        "sha256",
+        b"%b" % bytes(password, "utf-8"),
+        b"%b" % bytes(password_salt, "utf-8"),
+        10000,
+    )
+    return password_hash.hex()
+
+#Validating user input when logging in - creating a JWT token for authentication.
+def validate_user(email, password):
+    db = openDatabase()
+    cursor = db.cursor()
+    user = cursor.execute('SELECT * FROM user WHERE email = %s', [email])
+
+    if len(user) == 1:
+        user_password_hash = user[0]["password_hash"]
+        user_password_salt = user[0]["password_salt"]
+        password_hash = generate_hash(user_password_hash, user_password_salt)
+
+        if password_hash == user_password_hash:
+            userid = user[0]["id"]
+            encoded_content = jwt.encode({"id": id}, JWT_SECRET_KEY, algorithm="HS256")
+            jwt_token = str(encoded_content).split("'")[1]
+            db.close()
+            cursor.close()
+            return jwt_token
+        else:
+            return False
+    else:
+        return False
+
+
+#To give some sort of frontend for the flask API server
 @app.route('/', defaults={"path": "index.html"})
 @app.route('/<path>')
 def index(path):
     return send_from_directory("/shop/static", path)
 
 
+#Getting all users
 @app.route('/api/users', methods=["GET"])
 def getUsers():
     db = openDatabase()
     cursor = db.cursor()
     cursor.execute('SELECT * FROM user')
-    result = [{"id": id, "name": name, "username": username, "password": password, "email": email} for (id, name, username, password, email) in cursor]
+    result = [{"id": id, "name": name, "username": username, "password_salt": password_salt, "password_hash": password_hash, "email": email} for (id, name, username, password_salt, password_hash, email) in cursor]
     cursor.close()
     db.close()
     response = jsonify(result)
     return response, 200
 
 
+#Getting one user
 @app.route('/api/users/<int:userid>', methods=["GET"])
 def getUser(userid):
     db = openDatabase()
     cursor = db.cursor()
     cursor.execute('SELECT * FROM user WHERE id=%s', [userid])
-    result = [{"id": id, "name": name, "username": username, "password": password, "email": email} for (id, name, username, password, email) in cursor]
+    result = [{"id": id, "name": name, "username": username, "password_salt": password_salt, "password_hash": password_hash, "email": email} for (id, name, username, password_salt, password_hash, email) in cursor]
     cursor.close()
     db.close()
     response = jsonify(result)
     return response, 200
 
 
-@app.route('/api/user/add', methods=["POST"])
-def addUser():
+#JWT authentication route for registering
+@authentication.route('/register', methods=["POST"])
+def registerUser():
     db = openDatabase()
     cursor = db.cursor()
     form = request.form
     name = form.get('name')
     username = form.get('username')
     password = form.get('password')
-    #Can do hashing of the password here if we want
     email = form.get('email')
-    cursor.execute('INSERT INTO user (name, username, password, email) VALUES (%s, %s, %s, %s)', (name, username, password, email))
-    db.commit()
-    cursor.close()
-    db.close()
-    return "Successfully registered user: {}".format(username), 201
+
+    if validate_user_input("authentication", email=email, password=password):
+        password_salt = generate_salt()
+        password_hash = generate_hash(password, password_salt)
+        cursor.execute('INSERT INTO user (name, username, password_salt, password_hash, email) VALUES (%s, %s, %s, %s, %s)', (name, username, password_salt, password_hash, email))
+        db.commit()
+        cursor.close()
+        db.close()
+        return "Successfully registered user: {}".format(username), 201
+    else:
+        return "Registration failed.", 400
 
 
+#JWT authentication route for logging in
+@authentication.route('/login', methods=["POST"])
+def loginUser():
+    form = request.form
+    email = form["email"]
+    password = form["password"]
+    token = validate_user(email, password)
+
+    if token:
+        return jsonify({"jwt_token": token})
+    else:
+        return "Authentication failed", 401
+
+
+#Editing a user
 @app.route('/api/user/<int:userid>/update', methods=["PUT"])
 def editUser(userid):
     db = openDatabase()
@@ -77,13 +159,16 @@ def editUser(userid):
     username = form.get('username')
     password = form.get('password')
     email = form.get('email')
-    cursor.execute('UPDATE user SET name=%s, username=%s, password=%s, email=%s WHERE id=%s', (name, username, password, email, userid))
+    password_salt = generate_salt()
+    password_hash = generate_hash(password, password_salt)
+    cursor.execute('UPDATE user SET name=%s, username=%s, password_salt=%s, password_hash=%s, email=%s WHERE id=%s', (name, username, password_salt, password_hash, email, userid))
     db.commit()
     cursor.close()
     db.close()
     return "User updated.", 200
 
 
+#Deleting a user
 @app.route('/api/user/<int:userid>/delete', methods=["DELETE"])
 def deleteUser(userid):
     db = openDatabase()
@@ -95,6 +180,7 @@ def deleteUser(userid):
     return "", 204
 
 
+#Getting all products
 @app.route('/api/products', methods=["GET"])
 def getProducts():
     db = openDatabase()
@@ -107,6 +193,7 @@ def getProducts():
     return response, 200
 
 
+#Getting one product
 @app.route('/api/product/<int:productid>', methods=["GET"])
 def getProduct(productid):
     db = openDatabase()
@@ -119,6 +206,7 @@ def getProduct(productid):
     return response, 200
 
 
+#Adding a product
 @app.route('/api/product/add', methods=["POST"])
 def addProduct():
     db = openDatabase()
@@ -156,6 +244,7 @@ def addProduct():
     return "Could not add the product, the image chosen had the wrong extension.", 400
 
 
+#Editing a product
 @app.route('/api/product/<int:productid>/update', methods=["PUT"])
 def editProduct(productid):
     db = openDatabase()
@@ -189,6 +278,7 @@ def editProduct(productid):
     return "Could not update the product, invalid image extension.", 400
 
 
+#Deleting a product
 @app.route('/api/product/<int:productid>/delete', methods=["DELETE"])
 def deleteProduct(productid):
     db = openDatabase()
@@ -198,6 +288,10 @@ def deleteProduct(productid):
     cursor.close()
     db.close()
     return "", 204
+
+
+#Adding the authentication routes to the app
+app.register_blueprint(authentication, url_prefix="/api")
 
 
 if __name__ == "__main__":
