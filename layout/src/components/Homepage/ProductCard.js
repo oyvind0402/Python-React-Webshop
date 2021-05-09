@@ -12,10 +12,11 @@ export const ProductCard = (props) => {
     <article className="prodcard">
       <h3 className="prodcard-name">{props.brand + " " + props.name}</h3>
       <img className="prodcard-img" src={src} alt="" />
-      <p className="prodcard-price">{props.price}</p>
-      <Link to="/product" className="prodcard-more">
+      <p className="prodcard-desc">{props.sdesc}</p>
+      <Link to={"/product/" + props.id} className="prodcard-more">
         <p>ⓘ Read more</p>
       </Link>
+      <p className="prodcard-price">{props.price}</p>
       <button className="btn btn-primary prodcard-add" onClick={b}>
         Add to basket
       </button>

@@ -18,20 +18,24 @@ export const Home = () => {
 
   return (
     <main id="main">
-        <Filter />
-        <h2>Our products</h2>
+      <h2>Our products</h2>
+      <div className="home">
+        <Filter className="home-filter" />
         <div className="products">
-        {products.map((prod) => {
-          return (
-            <ProductCard
-              key={prod["id"]}
-              brand={prod["brand"]}
-              name={prod["name"]}
-              image={prod["image"]}
-              price={prod["price"]}
-            />
-          );
-        })}
+          {products.map((prod) => {
+            return (
+              <ProductCard
+                key={prod["id"]} //TODO Is there a reason why this is key? Bc it's failing for me
+                id={prod["id"]}
+                brand={prod["brand"]}
+                name={prod["name"]}
+                sdesc={prod["short_desc"]}
+                image={prod["image"]}
+                price={prod["price"]}
+              />
+            );
+          })}
+        </div>
       </div>
     </main>
   );
