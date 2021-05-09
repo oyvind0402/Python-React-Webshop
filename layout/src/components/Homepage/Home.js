@@ -18,7 +18,7 @@ export const Home = () => {
 
   return (
     <main id="main">
-      {/* <Filter /> */}
+       <Filter />
       <h2>Our products</h2>
       <div className="products">
         {products.map((prod) => {
