@@ -8,24 +8,24 @@ export const BasketCard = (props) => {
 
   return (
     <article className="basketcard">
-      <div className="basketcard-r">
-        <h3 className="basketcard-name">{props.name}</h3>
-        <button className="btn btn-secondary">x</button>
+      <h3 className="basketcard-name">{props.name}</h3>
+      <button className="btn btn-secondary basketcard-btn">x</button>
+      <div className="basketcard-img">
+        <img src={props.image} alt="" />
       </div>
-      <div className="basketcard-r">
-        <div className="basketcard-c">
-          <img className="basketcard-img" src={props.image} alt="" />
-        </div>
-        <div className="basketcard-c">
-          <p className="basketcard-price">
-            {price(props.price, props.quantity)}
-          </p>
-          <p className="basketcard-quantity">
-            Quantity: <br></br>
-            {props.quantity}
-          </p>
-        </div>
+      <div className="basketcard-quantity">
+        <button className="btn btn-secondary" alt="Reduce quantity">
+          -
+        </button>
+        <p>
+          Quantity: <br></br>
+          {props.quantity}
+        </p>
+        <button className="btn btn-secondary" alt="Increase quantity">
+          +
+        </button>
       </div>
+      <p className="basketcard-price">{price(props.price, props.quantity)}</p>
     </article>
   );
 };

@@ -2,6 +2,10 @@ import React from "react";
 
 import { BasketCard } from "./BasketCard";
 
+//TODO Bring actual data in
+//TODO Make everything-is-free discount page
+//TODO Implement state for quantity change
+
 export const Basket = () => {
   const products = [
     {
@@ -27,10 +31,18 @@ export const Basket = () => {
     },
   ];
 
+  const basketprice = () => {
+    let total = 0;
+    products.map((prod) => {
+      return (total += prod.price.replace(".", "") * prod.quantity);
+    });
+    return total;
+  };
+
   return (
     <main id="main">
       <h2>Your shopping basket</h2>
-      <div className="basket">
+      <div>
         {products.map((prod) => {
           return (
             <BasketCard
@@ -42,8 +54,13 @@ export const Basket = () => {
           );
         })}
       </div>
-      <div className="basket-pay-btn">
-        <button className="btn btn-primary">Go to payment</button>
+      <div className="basket-pay">
+        <div className="basket-pay-total">
+          <p>Total price: kr {basketprice()} </p>
+        </div>
+        <button className="btn btn-primary basket-pay-btn">
+          Go to payment
+        </button>
       </div>
     </main>
   );

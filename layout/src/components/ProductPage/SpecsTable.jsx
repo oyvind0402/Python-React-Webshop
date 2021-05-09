@@ -6,7 +6,6 @@ import React from "react";
  * @returns HTML for table body
  */
 export const SpecsTable = (data) => {
-  console.log(data.specs);
   return (
     <tbody>
       {data.specs.map((spec) => {

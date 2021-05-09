@@ -1,25 +1,80 @@
-.basket {
-  &-pay-btn {
-    @include flexbox;
-    justify-content: right;
+.basket-pay {
+  @include flexbox;
+  flex-wrap: wrap;
+  justify-content: right;
+  &-btn {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  &-total{
+    width: 100%;
+    text-align: right;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: $blue20;
   }
 }
 
 .basketcard {
-  text-align: center;
-  background-color: $grey95;
+  @include grid;
+  grid-template-columns: 10rem 1fr 10rem;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "title title x"
+    "img . qty"
+    "img . price";
+  align-items: center;
+  margin: 1rem 0;
+  padding: 1rem 2rem;
   border-radius: 20px;
+  background-color: $grey95;
 
   &-name {
     font-size: 1.3rem;
-    margin: 0;
-    display: inline-block;
+    margin: 0 1rem 1rem 0;
+    grid-area: title;
+    justify-self: left;
+  }
+
+  &-btn {
+    place-self: center;
+    justify-self: right;
   }
 
   &-img {
-    max-height: 10rem;
-    max-width: 95%;
-    margin: 0 0 1rem 0;
+    width: 20vw;
+    height: 20vw;
+    min-height: 10rem;
+    min-width: 10rem;
+    max-height: 17rem;
+    max-width: 17rem;
+    margin-right: 1rem;
+    grid-area: img;
+    background: white;
+    border-radius: 20px;
+    text-align: center;
+  }
+  &-img img {
+    max-height: 100%;
+    max-width: 100%;
+
+    border-radius: 20px;
+  }
+
+  &-quantity {
+    grid-area: qty;
+    justify-self: right;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+    & p {
+      margin: 0 0.7rem;
+    }
+    & button {
+      padding: 0.2rem 0.5rem;
+      height: auto;
+    }
   }
 
   &-price::before {
@@ -29,27 +84,45 @@
     font-size: 1.5rem;
     font-weight: 500;
     color: $grey20;
-    margin-top: 0;
-  }
-
-  &-r {
-    @include flexbox;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0.5rem auto;
-    padding: 0.5rem 2rem;
+    margin: 0;
+    grid-area: price;
+    justify-self: right;
   }
 }
 
-@media only screen and (max-width: #{$mq-xs}) {
+@media only screen and (max-width: #{$mq-sm}) {
   .basketcard {
-    &-r:first-of-type {
-      flex-wrap: wrap-reverse;
+    @include grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "x"
+      "title"
+      "img"
+      "qty"
+      "price";
+    justify-items: center;
+
+    &-name,
+    &-price {
+      justify-self: inherit;
     }
 
-    &-c {
-      margin: auto;
+    &-quantity {
+      font-size: 1.1rem;
+      padding: 0.5rem 0.9rem;
+      justify-self: inherit;
+    }
+
+    &-img {
+      width: 70vw;
+      height: 70vw;
+      max-height: 25rem;
+      max-width: 25rem;
+      margin-right: 1rem;
+      grid-area: img;
+      background: white;
+      border-radius: 20px;
     }
   }
 }
