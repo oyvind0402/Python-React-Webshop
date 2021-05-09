@@ -206,6 +206,57 @@ def getProduct(productid):
     return response, 200
 
 
+#Getting distinct values from products
+@app.route('/api/product/distinctvalues', methods=["GET"])
+def getValues():
+    db = openDatabase()
+    cursor = db.cursor()
+    #Getting the distinct values for some columns of values
+    cursor.execute('SELECT DISTINCT brand, color, storage FROM product')
+    results = [{"brand": brand, "color": color, "storage": storage} for (brand, color, storage) in cursor]
+    response = []
+    
+    brands = ["brand"]
+    prices = ["price"]
+    colors = ["color"]
+    storages = ["storage"]
+    specific_brands = []
+    specific_colors = []
+    specific_storages = []
+    specific_prices = []
+    
+    for result in results:
+        if result["brand"] not in specific_brands:
+            specific_brands.append(result["brand"])
+        if result["color"] not in specific_colors:
+            specific_colors.append(result["color"])
+        if result["storage"] not in specific_storages:
+            specific_storages.append(result["storage"])
+
+    brands.append(specific_brands)
+    colors.append(specific_colors)
+    storages.append(specific_storages)
+
+    response.append(brands)
+    response.append(colors)
+    response.append(storages)
+
+    #Getting minimum and maximum price for the filter in the frontend
+    cursor.execute('SELECT MIN(price) FROM product')
+    results = cursor.fetchone()
+    specific_prices.append(results[0])
+    cursor.execute('SELECT MAX(price) FROM product')
+    results = cursor.fetchone()
+    specific_prices.append(results[0])
+    prices.append(specific_prices)
+
+    response.append(prices)
+
+    cursor.close()
+    db.close()
+    return jsonify(response), 200
+
+
 #Adding a product
 @app.route('/api/product/add', methods=["POST"])
 def addProduct():
