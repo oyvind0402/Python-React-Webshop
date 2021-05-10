@@ -4,7 +4,7 @@ import mysql.connector
 import os
 import base64
 from werkzeug.utils import secure_filename
-from hashlib import pbkdf2_hmac
+import bcrypt
 import jwt
 
 
@@ -32,52 +32,43 @@ def openDatabase():
 
 
 #For JWT Authentication
-authentication = Blueprint("authentication", __name__)
 JWT_SECRET_KEY = "Aowidha9owd0192j1pond09h0h9AAD_A_DAwpdoa0w9j1"
 
-def validate_user_input(input_type, **kwargs):
-    if input_type == "authentication":
-        if len(kwargs["email"]) <= 255 and len(kwargs["password"]) <= 255:
-            return True
-        else:
-            return False
-
-def generate_salt():
-    salt = os.urandom(16)
-    return salt.hex()
+def validate_user_input(**kwargs):
+    if len(kwargs["email"]) <= 255 and len(kwargs["password"]) <= 255:
+        return True
+    else:
+        return False
 
 def generate_hash(password, password_salt):
-    password_hash = pbkdf2_hmac(
-        "sha256",
-        b"%b" % bytes(password, "utf-8"),
-        b"%b" % bytes(password_salt, "utf-8"),
-        10000,
-    )
-    return password_hash.hex()
+    passwordhash = bcrypt.hashpw(password, password_salt)
+    return passwordhash
 
 #Validating user input when logging in - creating a JWT token for authentication.
 def validate_user(email, password):
     db = openDatabase()
     cursor = db.cursor()
-    user = cursor.execute('SELECT * FROM user WHERE email = %s', [email])
+    
+    cursor.execute('SELECT * FROM user WHERE email=%s', [email])
+    user = [{"id": id, "name": name, "username": username, "password_salt": password_salt, "password_hash": password_hash, "email": email} for (id, name, username, password_salt, password_hash, email) in cursor]
 
-    if len(user) == 1:
-        user_password_hash = user[0]["password_hash"]
-        user_password_salt = user[0]["password_salt"]
-        password_hash = generate_hash(user_password_hash, user_password_salt)
+    if user is None:
+        return False
+    else:
+        if len(user) == 1:
+            user_password_hash = user[0]["password_hash"]
 
-        if password_hash == user_password_hash:
-            userid = user[0]["id"]
-            encoded_content = jwt.encode({"id": id}, JWT_SECRET_KEY, algorithm="HS256")
-            jwt_token = str(encoded_content).split("'")[1]
-            db.close()
-            cursor.close()
-            return jwt_token
+            if bcrypt.checkpw(password.encode('utf-8'), user_password_hash.encode('utf-8')):
+                userid = user[0]["id"]
+                jwtencoded = jwt.encode({"id": userid}, JWT_SECRET_KEY, algorithm="HS256")
+                jwt_token = str(jwtencoded).split(".")[1]
+                db.close()
+                cursor.close()
+                return jwt_token
+            else:
+                return False
         else:
             return False
-    else:
-        return False
-
 
 #To give some sort of frontend for the flask API server
 @app.route('/', defaults={"path": "index.html"})
@@ -112,8 +103,8 @@ def getUser(userid):
     return response, 200
 
 
-#JWT authentication route for registering
-@authentication.route('/register', methods=["POST"])
+#Route for registering
+@app.route('/api/register', methods=["POST"])
 def registerUser():
     db = openDatabase()
     cursor = db.cursor()
@@ -123,24 +114,24 @@ def registerUser():
     password = form.get('password')
     email = form.get('email')
 
-    if validate_user_input("authentication", email=email, password=password):
-        password_salt = generate_salt()
-        password_hash = generate_hash(password, password_salt)
+    if validate_user_input(email=email, password=password):
+        password_salt = bcrypt.gensalt()
+        password_hash = generate_hash(password.encode('utf-8'), password_salt)
         cursor.execute('INSERT INTO user (name, username, password_salt, password_hash, email) VALUES (%s, %s, %s, %s, %s)', (name, username, password_salt, password_hash, email))
         db.commit()
         cursor.close()
         db.close()
-        return "Successfully registered user: {}".format(username), 201
+        return "", 204
     else:
         return "Registration failed.", 400
 
 
-#JWT authentication route for logging in
-@authentication.route('/login', methods=["POST"])
+#Route for logging in
+@app.route('/api/login', methods=["POST"])
 def loginUser():
     form = request.form
-    email = form["email"]
-    password = form["password"]
+    email = form.get('email')
+    password = form.get('password')
     token = validate_user(email, password)
 
     if token:
@@ -339,11 +330,6 @@ def deleteProduct(productid):
     cursor.close()
     db.close()
     return "", 204
-
-
-#Adding the authentication routes to the app
-app.register_blueprint(authentication, url_prefix="/api")
-
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)

@@ -8,7 +8,7 @@ export const NewProductForm = () => {
         <form
           action="http://localhost:5000/api/product/add"
           method="POST"
-          enctype="multipart/form-data"
+          encType="multipart/form-data"
         >
           <div className="form-group">
             <label for="brand">Phone brand</label>
