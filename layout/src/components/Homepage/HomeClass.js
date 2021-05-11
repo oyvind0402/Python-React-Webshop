@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 
 // import { Filter } from "./Filter";
-import { Filter } from "./Filter";
+import Filter from "./FilterClass";
 import { ProductCard } from "./ProductCard";
 
 export const Home = () => {
   const [products, setProducts] = useState([]);
 
+
   useEffect(() => {
+    console.log(Filter.state)
     const loadData = async () => {
       const response = await fetch("http://localhost:5000/api/products");
       const data = await response.json();
@@ -21,7 +23,7 @@ export const Home = () => {
     <main id="main">
       <h2>Our products</h2>
       <div className="home">
-        <Filter className="home-filter" />
+        <Filter className="home-filter" getNewProduct={this.getNewProducts}/>
         <div className="products">
           {products.map((prod) => {
             return (

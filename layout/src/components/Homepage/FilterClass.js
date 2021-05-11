@@ -61,13 +61,6 @@ class Filter extends Component {
                                                 name={parsedCheckbox}
                                                 value={checkbox}
                                             />
-                                            {/*<input*/}
-                                            {/*    onChange={this.checkboxChange}*/}
-                                            {/*    type="checkbox"*/}
-                                            {/*    id={parsedCheckbox}*/}
-                                            {/*    name={parsedCheckbox}*/}
-                                            {/*    value={checkbox}*/}
-                                            {/*/>*/}
                                             <label className="filter-by-label" htmlFor={parsedCheckbox}>
                                                 {checkbox}
                                             </label>
@@ -79,9 +72,6 @@ class Filter extends Component {
                     );
                 })}
                 <div className="filter-btn">
-                    {/*<button className="btn btn-primary" onClick={this.setState({*/}
-                    {/*    filterOptions*/}
-                    {/*})}>Filter</button>*/}
                     <button className="btn btn-primary" onClick={() => this.setState({filterOptions})}>Filter</button>
                 </div>
             </div>
