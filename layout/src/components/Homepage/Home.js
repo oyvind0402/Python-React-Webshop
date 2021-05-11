@@ -9,12 +9,26 @@ export default function Home(props) {
   const [products, setProducts] = useState([]);
 
   async function getProduct(filterOptions) {
-    console.log(filterOptions)
-    const response = await fetch("http://localhost:5000/api/products");
-    const data = await response.json();
+    // const response = await fetch("http://localhost:5000/api/products");
+    // let data = await response.json();
+    let data = [
+      {brand: "Apple", color: "Yellow"},
+      {brand: "Samsung", color: "Green"},
+      {brand: "Nokia", color: "Blue"},
+    ]
     console.log(data)
+
+
+    data.filter(function(product){
+      filterOptions.forEach((filter) => {
+        if(filter[1].length !== 0) {
+          filter[1].forEach((element) =>{
+            /*here i have to loop through the json which is a pain in the ass*/
+          })
+        }
+      })
+    })
     setProducts(data);
-    console.log("setProducts is updated")
   }
 
   useEffect(() => {
