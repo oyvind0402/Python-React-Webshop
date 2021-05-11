@@ -16,13 +16,15 @@ export default function Home(props) {
       {brand: "Samsung", color: "Green"},
       {brand: "Nokia", color: "Blue"},
     ]
-    console.log(data)
-
 
     data.filter(function(product){
       filterOptions.forEach((filter) => {
         if(filter[1].length !== 0) {
           filter[1].forEach((element) =>{
+            // product = new JSONObject(product)
+            // for (let attribute in product){
+            //   console.log()
+            // }
             /*here i have to loop through the json which is a pain in the ass*/
           })
         }
