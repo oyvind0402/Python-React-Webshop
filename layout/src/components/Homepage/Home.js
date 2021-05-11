@@ -9,9 +9,11 @@ export default function Home(props) {
   const [products, setProducts] = useState([]);
 
   async function getProduct(filterOptions) {
+    console.log(filterOptions)
     const response = await fetch("http://localhost:5000/api/products");
     const data = await response.json();
     setProducts(data);
+    console.log("setProducts is updated")
   }
 
   useEffect(() => {
@@ -35,7 +37,7 @@ export default function Home(props) {
     <main id="main">
       <h2>Our products</h2>
       <div className="home">
-        <Filter className="home-filter" getProduct={getProduct(filterOption)}/>
+        <Filter className="home-filter" onchange={(filter) => getProduct(filter)}/>
         <div className="products">
           {products.map((prod) => {
             return (
