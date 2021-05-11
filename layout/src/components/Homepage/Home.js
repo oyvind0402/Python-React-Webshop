@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import { Filter } from "./Filter";
+// import { Filter } from "./Filter";
+import Filter from "./FilterClass";
 import { ProductCard } from "./ProductCard";
 
 export const Home = () => {

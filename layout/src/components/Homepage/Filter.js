@@ -25,7 +25,29 @@ export const Filter = () => {
     ["color", ["yellow", "green", "blue"]],
   ];
 
-  return (
+  const filterOptions = []
+    attributes.forEach((value) => filterOptions.push([value[0], []]))
+
+  function searchValues(category, attribute) {
+      filterOptions.forEach(filter => {
+          if(filter[0].toLocaleLowerCase() === category){ //Searching for matching category
+              let inList = false
+              filter[1] = filter[1].filter(function(elementInList){ //Looping through array to see if element in array
+                  if( elementInList !== attribute){ // no? return element since it remains in the array
+                      return elementInList
+                  } else { // yes? element will be removed by not adding it to the array
+                      inList = true
+                  }
+              })
+              if(inList === false){ // Element not in list? add it
+                  filter[1].push(attribute)
+              }
+          }
+      })
+  }
+
+
+    return (
     <div className="filter">
       <h3 className="filter-title">Product filter</h3>
       {attributes.map((att) => {
@@ -38,6 +60,7 @@ export const Filter = () => {
                 return (
                   <div className="filter-by-item">
                     <input
+                        onChange={event => searchValues(att[0], event.target.value)}
                       type="checkbox"
                       id={parsedCheckbox}
                       name={parsedCheckbox}
@@ -54,7 +77,9 @@ export const Filter = () => {
         );
       })}
       <div className="filter-btn">
-        <button className="btn btn-primary">Filter</button>
+        <button className="btn btn-primary" onClick={this.setState({
+            filterOptions
+        })}>Filter</button>
       </div>
     </div>
   );
