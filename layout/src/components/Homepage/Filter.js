@@ -24,26 +24,30 @@ export const Filter = (props) => {
     ["brand", ["samsung", "apple", "nokia"]],
     ["color", ["yellow", "green", "blue"]],
   ];
+    let filterOptions = []
 
-  const filterOptions = []
-    attributes.forEach((value) => filterOptions.push([value[0], []]))
+    function searchValues(category, attribute, checked) {
+       filterOptions = []
+       attributes.forEach((filter) => filterOptions.push([filter[0], []]))
 
-  function searchValues(category, attribute) {
-      filterOptions.forEach(filter => {
-          if(filter[0].toLocaleLowerCase() === category){ //Searching for matching category
-              let inList = false
-              filter[1] = filter[1].filter(function(elementInList){ //Looping through array to see if element in array
-                  if( elementInList !== attribute){ // no? return element since it remains in the array
-                      return elementInList
-                  } else { // yes? element will be removed by not adding it to the array
-                      inList = true
+      const checkedBoxes = document.querySelectorAll('input[type=checkbox]:checked');
+      checkedBoxes.forEach((box) => {
+          filterOptions.forEach(filter => {
+              if (filter[0] === box.getAttribute("location")) {
+                  let inList = false
+                  filter[1].forEach((element) => {
+                      if(element === box.id){
+                          inList = true
+                      }
+                  })
+                  if(!inList){
+                      filter[1].push(box.id)
                   }
-              })
-              if(inList === false){ // Element not in list? add it
-                  filter[1].push(attribute)
               }
-          }
+          })
       })
+      props.onchange(filterOptions)
+
   }
 
 
@@ -60,11 +64,12 @@ export const Filter = (props) => {
                     return (
                       <div className="filter-by-item">
                         <input
-                            onChange={event => searchValues(att[0], event.target.value)}
+                            onChange={event => searchValues(att[0], event.target.value, event.target.checked)}
                           type="checkbox"
                           id={parsedCheckbox}
                           name={parsedCheckbox}
                           value={checkbox}
+                          location={att[0]}
                         />
                         <label className="filter-by-label" htmlFor={parsedCheckbox}>
                           {checkbox}
