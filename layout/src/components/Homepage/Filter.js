@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { ProductCard } from "./ProductCard";
 
-export const Filter = () => {
+export const Filter = (props) => {
   // const attributes = useRef([]);
 
   // useEffect(() => {
@@ -48,37 +48,41 @@ export const Filter = () => {
 
 
     return (
-    <div className="filter">
-      <h3 className="filter-title">Product filter</h3>
-      {attributes.map((att) => {
-        return (
-          <div className="filter-by">
-            <h4 className="filter-by-title">{att[0]}</h4>
-            <ul>
-              {att[1].map((checkbox) => {
-                const parsedCheckbox = checkbox.replace(" ", "-");
-                return (
-                  <div className="filter-by-item">
-                    <input
-                        onChange={event => searchValues(att[0], event.target.value)}
-                      type="checkbox"
-                      id={parsedCheckbox}
-                      name={parsedCheckbox}
-                      value={checkbox}
-                    />
-                    <label className="filter-by-label" htmlFor={parsedCheckbox}>
-                      {checkbox}
-                    </label>
-                  </div>
-                );
-              })}
-            </ul>
+        <div className="filter">
+          <h3 className="filter-title">Product filter</h3>
+          {attributes.map((att) => {
+            return (
+              <div className="filter-by">
+                <h4 className="filter-by-title">{att[0]}</h4>
+                <ul>
+                  {att[1].map((checkbox) => {
+                    const parsedCheckbox = checkbox.replace(" ", "-");
+                    return (
+                      <div className="filter-by-item">
+                        <input
+                            onChange={event => searchValues(att[0], event.target.value)}
+                          type="checkbox"
+                          id={parsedCheckbox}
+                          name={parsedCheckbox}
+                          value={checkbox}
+                        />
+                        <label className="filter-by-label" htmlFor={parsedCheckbox}>
+                          {checkbox}
+                        </label>
+                      </div>
+                    );
+                  })}
+                </ul>
+              </div>
+            );
+          })}
+          <div className="filter-btn">
+            <button className="btn btn-primary" onClick={() =>
+
+
+
+                props.setAttribute(filterOptions)}>Filter</button>
           </div>
-        );
-      })}
-      <div className="filter-btn">
-        <button className="btn btn-primary">Filter</button>
-      </div>
-    </div>
+        </div>
   );
 };

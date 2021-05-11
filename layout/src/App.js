@@ -3,7 +3,7 @@ import "./styles/main.scss";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Header } from "./components/Header/Header";
 import { Footer } from "./components/Footer/Footer";
-import { Home } from "./components/Homepage/Home";
+import Home from "./components/Homepage/Home";
 import { Login } from "./components/Login/Login";
 import { SignUp } from "./components/Signup/Signup";
 import { Basket } from "./components/Basket/Basket";

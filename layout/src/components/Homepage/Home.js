@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-// import { Filter } from "./Filter";
 import { Filter } from "./Filter";
+// import Filter from "./FilterClass";
 import { ProductCard } from "./ProductCard";
 
-export const Home = () => {
+export default function Home(props) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -17,11 +17,17 @@ export const Home = () => {
     loadData();
   }, []);
 
+  const [attribute, setAttribute] = useState({})
+
+  const changeState = (filterOption) => {
+    setstate({});
+  };
+
   return (
     <main id="main">
       <h2>Our products</h2>
       <div className="home">
-        <Filter className="home-filter" />
+        <Filter className="home-filter" setAttribute={setAttribute}/>
         <div className="products">
           {products.map((prod) => {
             return (
