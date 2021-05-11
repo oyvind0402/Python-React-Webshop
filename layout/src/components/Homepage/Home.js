@@ -4,8 +4,15 @@ import { Filter } from "./Filter";
 // import Filter from "./FilterClass";
 import { ProductCard } from "./ProductCard";
 
+
 export default function Home(props) {
   const [products, setProducts] = useState([]);
+
+  async function getProduct(filterOptions) {
+    const response = await fetch("http://localhost:5000/api/products");
+    const data = await response.json();
+    setProducts(data);
+  }
 
   useEffect(() => {
     const loadData = async () => {
@@ -17,17 +24,18 @@ export default function Home(props) {
     loadData();
   }, []);
 
-  const [attribute, setAttribute] = useState({})
 
-  const changeState = (filterOption) => {
-    setstate({});
-  };
+  // const [attribute, setAttribute] = useState({})
+  //
+  // const changeState = (filterOption) => {
+  //   setstate({});
+  // };
 
   return (
     <main id="main">
       <h2>Our products</h2>
       <div className="home">
-        <Filter className="home-filter" setAttribute={setAttribute}/>
+        <Filter className="home-filter" getProduct={getProduct(filterOption)}/>
         <div className="products">
           {products.map((prod) => {
             return (

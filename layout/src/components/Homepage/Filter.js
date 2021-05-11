@@ -77,11 +77,7 @@ export const Filter = (props) => {
             );
           })}
           <div className="filter-btn">
-            <button className="btn btn-primary" onClick={() =>
-
-
-
-                props.setAttribute(filterOptions)}>Filter</button>
+            <button className="btn btn-primary" onClick={() => props.getProduct(filterOptions)}>Filter</button>
           </div>
         </div>
   );
