@@ -18,15 +18,10 @@ export default function Home(props) {
   }, []);
 
   async function getProduct(filterOptions) {
-    //   I AM NOT GETTING THE LATEST VERSION OF FILTEROPTIONS
     const response = await fetch("http://localhost:5000/api/products");
     let data = await response.json();
-    // let data = [
-    //   {brand: "Apple", color: "yellow"},
-    //   {brand: "Samsung", color: "green"},
-    //   {brand: "Nokia", color: "Blue"},
-    // ];
     let newProducts = [];
+
     filterOptions.forEach((filter) => { //Loops through all the filters
       if (filter[1].length !== 0) { //If filter is not empty we will have a further look
         filter[1].forEach((element) => { //Loops through all the elements of a attribute
