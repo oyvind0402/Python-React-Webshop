@@ -44,8 +44,10 @@ export const Filter = (props) => {
             if (filter[0] === "price"){ //price filter
                 let lowValue = document.getElementById("lowInput").value
                 let highValue = document.getElementById("highInput").value
-                filter[1].push(lowValue)
-                filter[1].push(highValue)
+                if(lowValue !== "" && highValue !== "" && lowValue < highValue) { //if values are valid
+                    filter[1].push(lowValue)
+                    filter[1].push(highValue)
+                }
             }
         })
        props.onchange(filterOptions)

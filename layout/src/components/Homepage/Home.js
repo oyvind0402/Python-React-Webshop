@@ -28,7 +28,6 @@ export default function Home(props) {
         emptyFilter = false;
       }
     })
-    console.log(filterOptions)
     if(emptyFilter){
       updateProducts(data)
     } else {
