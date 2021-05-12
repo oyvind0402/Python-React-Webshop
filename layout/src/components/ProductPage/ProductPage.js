@@ -1,38 +1,60 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { SpecsTable } from "./SpecsTable";
 
-const placeholderSpecs = [
-  ["color", "blue"],
-  ["size", "12"],
-  ["speed", "2.4GHz"],
-];
+export const ProductPage = (props) => {
 
-export const ProductPage = () => {
-  const test = {
-    name: "iPhone 12 Blue",
-    image:
-      "https://shop.jtglobal.com/wp-content/uploads/2020/10/iphone-12-blue.jpg",
-    price: "12.000",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque illum mollitia sint commodi consectetur id reprehenderit voluptates ut unde rem sit iusto odio velit, voluptas aspernatur at iure a fugit?",
-  };
+      const [product, productUpdate] = useState([
+        {"id": "placeholder"},
+        {"brand": "placeholder"},
+        {"name": "placeholder"},
+        {"price": "placeholder"},
+        {"color": "placeholder"},
+        {"operatingsystem": "placeholder"},
+        {"storage": "placeholder"},
+        {"short_desc": "placeholder"},
+        {"long_desc": "placeholder"},
+        {"image": "placeholder"},
+      ]);
+
+  useEffect(() => {
+    const loadData = async () =>{
+      const link = window.location.href
+      const sku = link.split("/")[4]
+      const apiLink = "http://localhost:5000/api/product/" + sku
+
+      const response = await fetch(apiLink);
+      let data = await response.json();
+      console.log(data)
+      productUpdate(data)
+      console.log(product)
+      console.log(product[0].name)
+    }
+    loadData()
+  }, []);
+
   return (
     <main id="main">
       <div className="productpage">
-        <h2 className="productpage-title">{test.name}</h2>
+        <h2 className="productpage-title">{product[0].name}</h2>
         <div className="productpage-img">
-          <img src={test.image} alt="" />
+          <img src={"data:image/png;base64, " + product[0].image} alt={product[0].name} />
         </div>
         <div className="productpage-details">
-          <p>{test.description}</p>
+          <p>{product[0].long_desc}</p>
           <div className="productpage-buy">
-            <p className="productpage-price">{test.price}</p>
+            <p className="productpage-price">{product[0].price}</p>
             <button className="btn btn-primary">Add to basket</button>
           </div>
         </div>
       </div>
       <table className="productSpecs">
-        <SpecsTable specs={placeholderSpecs} />
+        <SpecsTable specs={[
+                ["brand", product[0].brand],
+                ["name", product[0].name],
+                ["color", product[0].color],
+                ["storage", product[0].storage],
+                ["operatingsystem", product[0].operatingsystem]
+        ]} />
       </table>
     </main>
   );

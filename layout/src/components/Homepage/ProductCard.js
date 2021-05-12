@@ -2,10 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export const ProductCard = (props) => {
+
   function b(e) {
     alert("Works");
     console.log();
   }
+
   const src = "data:image/png;base64, " + props.image;
   return (
     //TODO Make article clickable

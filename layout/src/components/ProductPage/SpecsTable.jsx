@@ -13,6 +13,9 @@ export const SpecsTable = (data) => {
           <tr className="productSpecs-row">
             <td className="productSpecs-name">{spec[0]}</td>
             <td className="productSpecs-value">{spec[1]}</td>
+            <td className="productSpecs-value">{spec[2]}</td>
+            <td className="productSpecs-value">{spec[3]}</td>
+            <td className="productSpecs-value">{spec[4]}</td>
           </tr>
         );
       })}
