@@ -1,29 +1,22 @@
 import React, {useEffect, useRef, useState} from "react";
-import { ProductCard } from "./ProductCard";
 
 export const Filter = (props) => {
-  // const attributes = useRef([]);
 
-  // useEffect(() => {
-  // const loadData = async () => {
-  //     // const response = await fetch("http://localhost:5000/api/getAllAtributes");
-  //     // const data = await response.json();
-  //     // attributes.current = data;
-  //     // for (let i in attributes.current) {
-  //     //     console.log(attributes)
-  //     // }
-  // };
+    const [attributes, updateAttributes] = useState([]);
 
-  //     const attributes = [["brand", ["samung", "apple", "nokia"]], ["color", ["yellow", "green", "blue"]]];
-  //
-  //
-  //     loadData();
-  // }, []);
+    useEffect(() => {
+        const loadData = async () =>{
+            const response = await fetch("http://localhost:5000/api/product/distinctvalues");
+            let data = await response.json();
+            updateAttributes(data);
+        }
+        loadData()
+    }, []);
 
-  const attributes = [
-    ["brand", ["samsung", "apple", "nokia"]],
-    ["color", ["yellow", "green", "blue"]],
-  ];
+  // const attributes = [
+  //   ["brand", ["Samsung", "Apple", "Xiaomi"]],
+  //   ["color", ["Purple", "Green", "Blue"]],
+  // ];
     let filterOptions = []
 
     function searchValues(category, attribute, checked) {
@@ -60,18 +53,17 @@ export const Filter = (props) => {
                 <h4 className="filter-by-title">{att[0]}</h4>
                 <ul>
                   {att[1].map((checkbox) => {
-                    const parsedCheckbox = checkbox.replace(" ", "-");
                     return (
                       <div className="filter-by-item">
                         <input
                             onChange={event => searchValues(att[0], event.target.value, event.target.checked)}
                           type="checkbox"
-                          id={parsedCheckbox}
-                          name={parsedCheckbox}
+                          id={checkbox}
+                          name={checkbox}
                           value={checkbox}
                           location={att[0]}
                         />
-                        <label className="filter-by-label" htmlFor={parsedCheckbox}>
+                        <label className="filter-by-label" htmlFor={checkbox}>
                           {checkbox}
                         </label>
                       </div>
@@ -81,9 +73,9 @@ export const Filter = (props) => {
               </div>
             );
           })}
-          <div className="filter-btn">
-            <button className="btn btn-primary" onClick={() => props.onchange(filterOptions)}>Filter</button>
-          </div>
+          {/*<div className="filter-btn">*/}
+          {/*  <button className="btn btn-primary" onClick={() => props.onchange(filterOptions)}>Filter</button>*/}
+          {/*</div>*/}
         </div>
   );
 };

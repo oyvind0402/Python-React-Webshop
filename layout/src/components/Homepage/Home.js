@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import { Filter } from "./Filter";
-// import Filter from "./FilterClass";
 import { ProductCard } from "./ProductCard";
 
 
@@ -27,8 +26,8 @@ export default function Home(props) {
         filter[1].forEach((element) => { //Loops through all the elements of a attribute
           data.forEach((product) => { //Loops through all the products received from API
             for (let attribute in product) { // Looks at all the attributes of a product
-              if (filter[0].toLowerCase() === attribute) { //if the match continue
-                if (element.toLowerCase() === product[attribute].toLowerCase()) { // if element in filter equals from api we want it to show
+              if (filter[0] === attribute) { //if the match continue
+                if (element === product[attribute]) { // if element in filter equals from api we want it to show
                   let alreadyInList = false;
                   newProducts.forEach((oldProduct) => { //Checks if product is already in list
                     if (oldProduct === product) {
