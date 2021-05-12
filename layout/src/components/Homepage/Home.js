@@ -21,33 +21,75 @@ export default function Home(props) {
     let data = await response.json();
     let newProducts = [];
 
-    filterOptions.forEach((filter) => { //Loops through all the filters
-      if (filter[1].length !== 0) { //If filter is not empty we will have a further look
-        filter[1].forEach((element) => { //Loops through all the elements of a attribute
-          data.forEach((product) => { //Loops through all the products received from API
-            for (let attribute in product) { // Looks at all the attributes of a product
-              if (filter[0] === attribute) { //if the match continue
-                if (element === product[attribute]) { // if element in filter equals from api we want it to show
-                  let alreadyInList = false;
-                  newProducts.forEach((oldProduct) => { //Checks if product is already in list
-                    if (oldProduct === product) {
-                      alreadyInList = true;
-                    }
-                  })
-                  if (!alreadyInList) {
-                    newProducts.push(product);
-                  }
-                }
-              }
-            }
-          })
-        })
+    let emptyFilter = true;
+
+    filterOptions.forEach((filter) => {
+      if(filter[1].length !== 0){
+        emptyFilter = false;
       }
     })
 
-    updateProducts(newProducts);
+    if(emptyFilter){
+      updateProducts(data)
+    } else {
+
+      let firstFilter = true;
+
+      filterOptions.forEach((filter) => {
+        if (filter[1].length !== 0) {
+          if(firstFilter){
+            newProducts = matchProductsWithFilter(filter, data, newProducts, firstFilter)
+            firstFilter = false
+          } else{
+            newProducts = matchProductsWithFilter(filter, data, newProducts, firstFilter)
+          }
+        }
+
+      })
+
+      if(newProducts.length === 0){ // if no products left after filtering
+        updateProducts(data)
+        const delay = ms => new Promise(res => setTimeout(res, ms));
+        await delay(1000)
+        alert("There were no products found")
+      } else{
+        updateProducts(newProducts)
+      }
+    }
   }
 
+  function matchProductsWithFilter(filter, apiProducts, newProducts, firstFilter){
+    if(firstFilter){ //This is the first filter so all products matching the condition should be added
+      filter[1].forEach((element) => { //Loops through all the chosen filters of a category
+        apiProducts.forEach((product) => { //Loops through all the products received from API
+          for (let attribute in product) { // Looks at all the attributes of a product
+            if (filter[0] == attribute) { //if chosen filter match the product attribute continue
+              if (element == product[attribute]) { // if element in filter equals product value we want it to add
+                newProducts.push(product); // all products matching the condition will be added
+              }
+            }
+          }
+        })
+      })
+      return newProducts
+    } else { // first products have been added so now we need to remove them according to the other filters
+      let renewedFilterProducts = []
+      newProducts.filter((filterProduct) => {
+        filter[1].forEach((element) => { //Loops through all the chosen filters of a category
+          for (let attribute in filterProduct) { // Looks at all the attributes of the filtered product
+            if (filter[0] == attribute) { //if chosen filter match the product attribute continue
+              if (element == filterProduct[attribute]) { // if element in filter equals product value we want it to add
+                renewedFilterProducts.push(filterProduct) // this product matches all the condition
+                //products that dont match the condition will not be returned and therefore removed from the array
+              }
+            }
+          }
+        })
+      })
+
+      return renewedFilterProducts
+    }
+}
 
 
   return (

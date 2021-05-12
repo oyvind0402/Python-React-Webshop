@@ -19,7 +19,7 @@ export const Filter = (props) => {
   // ];
     let filterOptions = []
 
-    function searchValues(category, attribute, checked) {
+    function searchValues() {
        filterOptions = []
        attributes.forEach((filter) => filterOptions.push([filter[0], []]))
 
@@ -48,30 +48,51 @@ export const Filter = (props) => {
         <div className="filter">
           <h3 className="filter-title">Product filter</h3>
           {attributes.map((att) => {
-            return (
-              <div className="filter-by">
-                <h4 className="filter-by-title">{att[0]}</h4>
-                <ul>
-                  {att[1].map((checkbox) => {
-                    return (
-                      <div className="filter-by-item">
-                        <input
-                            onChange={event => searchValues(att[0], event.target.value, event.target.checked)}
-                          type="checkbox"
-                          id={checkbox}
-                          name={checkbox}
-                          value={checkbox}
-                          location={att[0]}
-                        />
-                        <label className="filter-by-label" htmlFor={checkbox}>
-                          {checkbox}
-                        </label>
+              if(att[0] === "price"){
+                  return (
+                      <div className="filter-by">
+                          <h4 className="filter-by-title">{att[0]}</h4>
+                          <input type={"number"}/>
+                          {/*<label className="filter-by-label" htmlFor={checkbox}>*/}
+                          {/*{checkbox}*/}
+                          {/*</label>*/}
+                          {/*<input type={"number"}/>*/}
+                          {/*<label className="filter-by-label" htmlFor={checkbox}>*/}
+                          {/*    {checkbox}*/}
+                          {/*</label>*/}
+                          <div className="filter-btn">
+                            <button className="btn btn-primary" onClick={searchValues}>Filter</button>
+                          </div>
                       </div>
-                    );
-                  })}
-                </ul>
-              </div>
-            );
+                  );
+              }else{
+                  return (
+                      <div className="filter-by">
+                          <h4 className="filter-by-title">{att[0]}</h4>
+                          <ul>
+                              {att[1].map((checkbox) => {
+                                  return (
+                                      <div className="filter-by-item">
+                                          <input
+                                              onChange={searchValues}
+                                              type={"checkbox"}
+                                              id={checkbox}
+                                              name={checkbox}
+                                              value={checkbox}
+                                              location={att[0]}
+                                          />
+                                          <label className="filter-by-label" htmlFor={checkbox}>
+                                              {checkbox}
+                                          </label>
+                                      </div>
+                                  );
+                              })}
+                          </ul>
+                      </div>
+                  );
+              }
+
+
           })}
           {/*<div className="filter-btn">*/}
           {/*  <button className="btn btn-primary" onClick={() => props.onchange(filterOptions)}>Filter</button>*/}
