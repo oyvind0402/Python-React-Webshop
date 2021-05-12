@@ -43,6 +43,14 @@ export const Filter = (props) => {
 
   }
 
+  function filterPrice(){
+      let lowValue = document.getElementById("lowInput").value
+      let highValue = document.getElementById("highInput").value
+      console.log(lowValue + " " + highValue)
+
+      // searchValues
+  }
+
 
     return (
         <div className="filter">
@@ -52,16 +60,10 @@ export const Filter = (props) => {
                   return (
                       <div className="filter-by">
                           <h4 className="filter-by-title">{att[0]}</h4>
-                          <input type={"number"}/>
-                          {/*<label className="filter-by-label" htmlFor={checkbox}>*/}
-                          {/*{checkbox}*/}
-                          {/*</label>*/}
-                          {/*<input type={"number"}/>*/}
-                          {/*<label className="filter-by-label" htmlFor={checkbox}>*/}
-                          {/*    {checkbox}*/}
-                          {/*</label>*/}
+                          <input id={"lowInput"} className={"priceInput"} type={"number"} min={0} max={att[1][1]} placeholder={"From"}/>
+                          <input id={"highInput"} className={"priceInput"} type={"number"} min={0} max={att[1][1]} placeholder={"To"}/>
                           <div className="filter-btn">
-                            <button className="btn btn-primary" onClick={searchValues}>Filter</button>
+                            <button className="btn btn-primary" onClick={filterPrice}>Filter</button>
                           </div>
                       </div>
                   );
