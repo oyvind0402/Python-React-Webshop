@@ -52,7 +52,7 @@ export default function Home(props) {
             }
           }
         }
-
+        console.log("test")
       })
 
       if(newProducts.length === 0){ // if no products left after filtering
