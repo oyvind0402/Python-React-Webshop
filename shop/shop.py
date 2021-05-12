@@ -224,6 +224,7 @@ def getValues():
         if result["storage"] not in specific_storages:
             specific_storages.append(result["storage"])
 
+    specific_storages.sort()
     brands.append(specific_brands)
     colors.append(specific_colors)
     storages.append(specific_storages)
