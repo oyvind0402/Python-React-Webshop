@@ -23,32 +23,42 @@ export const Filter = (props) => {
        filterOptions = []
        attributes.forEach((filter) => filterOptions.push([filter[0], []]))
 
-      const checkedBoxes = document.querySelectorAll('input[type=checkbox]:checked');
-      checkedBoxes.forEach((box) => {
-          filterOptions.forEach(filter => {
-              if (filter[0] === box.getAttribute("location")) {
-                  let inList = false
-                  filter[1].forEach((element) => {
-                      if(element === box.id){
-                          inList = true
-                      }
-                  })
-                  if(!inList){
-                      filter[1].push(box.id)
-                  }
-              }
-          })
-      })
-      props.onchange(filterOptions)
+       const checkedBoxes = document.querySelectorAll('input[type=checkbox]:checked');
+       checkedBoxes.forEach((box) => {
+           filterOptions.forEach(filter => {
+               if (filter[0] === box.getAttribute("location")) {
+                   let inList = false
+                   filter[1].forEach((element) => {
+                       if(element === box.id){
+                           inList = true
+                       }
+                   })
+                   if(!inList){
+                       filter[1].push(box.id)
+                   }
+               }
+           })
+       })
 
+        filterOptions.forEach((filter) =>{
+            if (filter[0] === "price"){ //price filter
+                let lowValue = document.getElementById("lowInput").value
+                let highValue = document.getElementById("highInput").value
+                filter[1].push(lowValue)
+                filter[1].push(highValue)
+            }
+        })
+       props.onchange(filterOptions)
   }
 
   function filterPrice(){
       let lowValue = document.getElementById("lowInput").value
       let highValue = document.getElementById("highInput").value
-      console.log(lowValue + " " + highValue)
-
-      // searchValues
+      if(lowValue >= highValue || lowValue === "" || highValue === ""){ //if values are not valid
+          alert("Wrong input, wasn't able to filter")
+      } else{
+          searchValues()
+      }
   }
 
 

@@ -28,7 +28,7 @@ export default function Home(props) {
         emptyFilter = false;
       }
     })
-
+    console.log(filterOptions)
     if(emptyFilter){
       updateProducts(data)
     } else {
@@ -38,10 +38,18 @@ export default function Home(props) {
       filterOptions.forEach((filter) => {
         if (filter[1].length !== 0) {
           if(firstFilter){
-            newProducts = matchProductsWithFilter(filter, data, newProducts, firstFilter)
+            if(filter[0] === "price") {
+              newProducts = filterPrice(filter, data, newProducts, firstFilter)
+            } else {
+              newProducts = matchProductsWithFilter(filter, data, newProducts, firstFilter)
+            }
             firstFilter = false
           } else{
-            newProducts = matchProductsWithFilter(filter, data, newProducts, firstFilter)
+            if(filter[0] === "price") {
+              newProducts = filterPrice(filter, data, newProducts, firstFilter)
+            } else {
+              newProducts = matchProductsWithFilter(filter, data, newProducts, firstFilter)
+            }
           }
         }
 
@@ -50,7 +58,7 @@ export default function Home(props) {
       if(newProducts.length === 0){ // if no products left after filtering
         updateProducts(data)
         const delay = ms => new Promise(res => setTimeout(res, ms));
-        await delay(1000)
+        await delay(1000) //small delay so products can catch up
         alert("There were no products found")
       } else{
         updateProducts(newProducts)
@@ -73,22 +81,52 @@ export default function Home(props) {
       })
       return newProducts
     } else { // first products have been added so now we need to remove them according to the other filters
-      let renewedFilterProducts = []
+      let tempProducts = []
       newProducts.filter((filterProduct) => {
         filter[1].forEach((element) => { //Loops through all the chosen filters of a category
           for (let attribute in filterProduct) { // Looks at all the attributes of the filtered product
             if (filter[0] == attribute) { //if chosen filter match the product attribute continue
               if (element == filterProduct[attribute]) { // if element in filter equals product value we want it to add
-                renewedFilterProducts.push(filterProduct) // this product matches all the condition
+                tempProducts.push(filterProduct) // this product matches all the condition
                 //products that dont match the condition will not be returned and therefore removed from the array
               }
             }
           }
         })
       })
-      return renewedFilterProducts
+      return tempProducts
     }
-}
+  }
+
+  function filterPrice(filter, apiProducts, newProducts, firstFilter){
+    let lowestValue = filter[1][0] //lowest value (first value)
+    let highestValue = filter[1][1] //highest value (first value)
+
+    if(firstFilter){ // we have to add products
+      apiProducts.filter((product) =>{
+        for (let attribute in product) {
+          if (filter[0] === attribute) {
+            if(product[attribute] >= lowestValue && product[attribute] <= highestValue){
+              newProducts.push(product)
+            }
+          }
+        }
+      })
+      return newProducts
+    } else { //we have to remove products
+      let tempProducts = []
+      newProducts.filter((product) =>{
+        for (let attribute in product) {
+          if (filter[0] === attribute) {
+            if(product[attribute] > lowestValue && product[attribute] < highestValue){ //compare price of product with value
+              tempProducts.push(product)
+            }
+          }
+        }
+      })
+      return tempProducts
+    }
+  }
 
 
   return (
