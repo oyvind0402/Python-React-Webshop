@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useCart, useDispatchCart } from "../CartContext/CartProvider";
 import { BasketCard } from "./BasketCard";
 
@@ -9,7 +9,7 @@ import { BasketCard } from "./BasketCard";
 export const Basket = () => {
   // const [products, updateProducts] = useState([useCart()]);
   const products = useCart();
-    // const productsExtra = useCart();
+  // const productsExtra = useCart();
   const dispatch = useDispatchCart();
   const totalPrice = products.reduce((total, b) => total + b.price, 0);
 
@@ -17,12 +17,12 @@ export const Basket = () => {
     dispatch({ type: "REMOVE", index });
   };
 
-    // useEffect(() => {
-    //     const array = useCart();
-    //     console.log(productsExtra)
-    //     console.log(array)
-    //     updateProducts(array)
-    // }, []);
+  // useEffect(() => {
+  //     const array = useCart();
+  //     console.log(productsExtra)
+  //     console.log(array)
+  //     updateProducts(array)
+  // }, []);
 
   if (products.length === 0) {
     return (

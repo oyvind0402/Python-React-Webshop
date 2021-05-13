@@ -6,7 +6,12 @@ export const ProductPage = () => {
   const dispatch = useDispatchCart();
 
   const addToCart = (item) => {
+    document.getElementById("addBtn").disabled = true;
     dispatch({ type: "ADD", item });
+    productUpdate(product);
+    setTimeout(() => {
+      document.getElementById("addBtn").disabled = false;
+    }, 500);
   };
 
   const [product, productUpdate] = useState({});
@@ -27,7 +32,9 @@ export const ProductPage = () => {
   return (
     <main id="main">
       <div className="productpage">
-        <h2 className="productpage-title">{product["name"]}</h2>
+        <h2 className="productpage-title">
+          {product["brand"] + " " + product["name"]}
+        </h2>
         <div className="productpage-img">
           <img
             src={"data:image/png;base64, " + product["image"]}
@@ -37,8 +44,9 @@ export const ProductPage = () => {
         <div className="productpage-details">
           <p>{product["long_desc"]}</p>
           <div className="productpage-buy">
-            <p className="productpage-price">{product["name"]}</p>
+            <p className="productpage-price">{product["price"]}</p>
             <button
+              id="addBtn"
               className="btn btn-primary"
               onClick={() => addToCart(product)}
             >
