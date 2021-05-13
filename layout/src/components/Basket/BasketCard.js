@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatchCart } from "../CartContext/CartProvider";
 
-export const BasketCard = ({ product, index, handleRemove }) => {
+export const BasketCard = ({ product, index, handleRemove, updateTotal }) => {
   // const price = (pr, qt) => {
   //   pr = pr.replace(".", "");
   //   return pr * qt;
@@ -14,6 +14,7 @@ export const BasketCard = ({ product, index, handleRemove }) => {
     changeQty((qty) => qty + 1);
     product["qty"] = qty;
     addToCart(product);
+    updateTotal(product.price);
   };
   const minusQty = () => {
     if (qty > 1) {
@@ -23,14 +24,23 @@ export const BasketCard = ({ product, index, handleRemove }) => {
     } else {
       handleRemove(index);
     }
+    updateTotal(-product.price);
   };
 
   const addToCart = (item) => {
+    document.getElementById("plusBtn").disabled = true;
     dispatch({ type: "ADD", item });
+    setTimeout(() => {
+      document.getElementById("plusBtn").disabled = false;
+    }, 500);
   };
 
   const reduceFromCart = (item) => {
+    document.getElementById("minusBtn").disabled = true;
     dispatch({ type: "REDUCE", item });
+    setTimeout(() => {
+      document.getElementById("minusBtn").disabled = false;
+    }, 500);
   };
 
   const src = "data:image/png;base64, " + product["image"];
@@ -51,6 +61,7 @@ export const BasketCard = ({ product, index, handleRemove }) => {
       </div>
       <div className="basketcard-quantity">
         <button
+          id="minusBtn"
           className="btn btn-secondary"
           alt="Reduce quantity"
           onClick={() => minusQty()}
@@ -62,6 +73,7 @@ export const BasketCard = ({ product, index, handleRemove }) => {
           {qty}
         </p>
         <button
+          id="plusBtn"
           className="btn btn-secondary"
           alt="Increase quantity"
           onClick={() => plusQty()}

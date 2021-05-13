@@ -11,7 +11,25 @@ export const Basket = () => {
   const products = useCart();
   // const productsExtra = useCart();
   const dispatch = useDispatchCart();
-  const totalPrice = products.reduce((total, b) => total + b.price, 0);
+
+  const initialTotal = (prod) => {
+    let total = 0;
+    prod.map((p) => {
+      console.log("price", p["price"]);
+      return (total += p["price"] * p["quantity"]);
+    });
+    return total;
+  };
+
+  const [totalprice, updateTotalprice] = useState(initialTotal(products));
+  const totalUpdater = (value) => {
+    updateTotalprice((total) => total + value);
+  };
+
+  const totalPrice = products.reduce(
+    (total, b) => total + b.price * b.quantity,
+    0
+  );
 
   const handleRemove = (index) => {
     dispatch({ type: "REMOVE", index });
@@ -50,6 +68,7 @@ export const Basket = () => {
               key={index}
               product={item}
               index={index}
+              updateTotal={totalUpdater}
             />
           );
         })}
@@ -58,7 +77,7 @@ export const Basket = () => {
         <div className="basket-pay-total">
           <p>
             Total price:{" "}
-            {totalPrice.toLocaleString("en", {
+            {totalprice.toLocaleString("en", {
               style: "currency",
               currency: "NOK",
             })}{" "}
