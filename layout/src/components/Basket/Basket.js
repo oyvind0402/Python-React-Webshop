@@ -7,8 +7,9 @@ import { BasketCard } from "./BasketCard";
 //TODO Implement state for quantity change
 
 export const Basket = () => {
-  // const [products, updateProducts] = useState([]);
-    const products = useCart();
+  // const [products, updateProducts] = useState([useCart()]);
+  const products = useCart();
+    // const productsExtra = useCart();
   const dispatch = useDispatchCart();
   const totalPrice = products.reduce((total, b) => total + b.price, 0);
 
@@ -18,6 +19,8 @@ export const Basket = () => {
 
     // useEffect(() => {
     //     const array = useCart();
+    //     console.log(productsExtra)
+    //     console.log(array)
     //     updateProducts(array)
     // }, []);
 

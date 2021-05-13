@@ -6,6 +6,7 @@ import { ProductCard } from "./ProductCard";
 
 export default function Home(props) {
   const [products, updateProducts] = useState([]);
+  const [filter, updateFilter] = useState([])
 
   useEffect(() => {
     const loadData = async () => {
@@ -16,7 +17,7 @@ export default function Home(props) {
     loadData();
   }, []);
 
-  let filterList = []
+  let filterList = [{"brand": "samsung"}]
 
   async function getProduct(filterOptions) {
     const response = await fetch("http://localhost:5000/api/products");
