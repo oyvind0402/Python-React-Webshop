@@ -8,8 +8,10 @@ export const ProductCard = ( props ) => {
     const dispatch = useDispatchCart();
 
   const addToCart = (item) => {
+    document.getElementById("button" + props.product["id"]).disabled =true;
     dispatch({ type: "ADD", item });
-    props.onchange(props.filter)
+    props.onchange(props.filter);
+    setTimeout(() =>{document.getElementById("button" + props.product["id"]).disabled =false;}, 500 );
   };
 
   const src = "data:image/png;base64, " + props.product["image"];
@@ -27,6 +29,7 @@ export const ProductCard = ( props ) => {
       <p className="prodcard-price">{props.product["price"]}</p>
       <button
         className="btn btn-primary prodcard-add"
+        id={"button" + props.product["id"]}
         onClick={() => addToCart(props.product)}
       >
         Add to basket

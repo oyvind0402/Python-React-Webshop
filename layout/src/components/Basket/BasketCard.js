@@ -1,10 +1,17 @@
 import React from "react";
+import {useDispatchCart} from "../CartContext/CartProvider";
 
 export const BasketCard = ({ product, index, handleRemove }) => {
   // const price = (pr, qt) => {
   //   pr = pr.replace(".", "");
   //   return pr * qt;
   // };
+
+    const dispatch = useDispatchCart();
+
+    const addToCart = (item) => {
+        dispatch({ type: "ADD", item });
+    };
   const src = "data:image/png;base64, " + product["image"];
   return (
     <article className="basketcard">
@@ -28,11 +35,11 @@ export const BasketCard = ({ product, index, handleRemove }) => {
           Quantity: /br>
           {product.quantity}
         </p>
-        <button className="btn btn-secondary" alt="Increase quantity">
+        <button className="btn btn-secondary" alt="Increase quantity" onClick={() => addToCart(product)}>
           +
         </button>
       </div>
-      <p className="basketcard-price">{product.price}</p>
+      <p className="basketcard-price">{product.price * product.quantity}</p>
     </article>
   );
 };

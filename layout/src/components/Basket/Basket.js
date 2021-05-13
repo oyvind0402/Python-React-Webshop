@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { useCart, useDispatchCart } from "../CartContext/CartProvider";
 import { BasketCard } from "./BasketCard";
 
@@ -7,13 +7,19 @@ import { BasketCard } from "./BasketCard";
 //TODO Implement state for quantity change
 
 export const Basket = () => {
-  const products = useCart();
+  // const [products, updateProducts] = useState([]);
+    const products = useCart();
   const dispatch = useDispatchCart();
   const totalPrice = products.reduce((total, b) => total + b.price, 0);
 
   const handleRemove = (index) => {
     dispatch({ type: "REMOVE", index });
   };
+
+    // useEffect(() => {
+    //     const array = useCart();
+    //     updateProducts(array)
+    // }, []);
 
   if (products.length === 0) {
     return (

@@ -19,7 +19,6 @@ export default function Home(props) {
   let filterList = []
 
   async function getProduct(filterOptions) {
-    console.log("rerender")
     const response = await fetch("http://localhost:5000/api/products");
     let data = await response.json();
     let newProducts = [];
