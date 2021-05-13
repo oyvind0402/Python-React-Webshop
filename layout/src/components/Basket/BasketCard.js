@@ -24,10 +24,10 @@ export const BasketCard = ({ product, index, handleRemove }) => {
         <button className="btn btn-secondary" alt="Reduce quantity">
           -
         </button>
-        {/* <p>
-          Quantity: <br></br>
+        <p>
+          Quantity: /br>
           {product.quantity}
-        </p> */}
+        </p>
         <button className="btn btn-secondary" alt="Increase quantity">
           +
         </button>

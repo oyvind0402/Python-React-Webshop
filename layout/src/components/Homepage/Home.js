@@ -4,11 +4,7 @@ import { Filter } from "./Filter";
 import { ProductCard } from "./ProductCard";
 
 export default function Home(props) {
-  const [products, updateProducts] = useState([
-    [{ name: "product 1", price: 10, color: "green" }],
-    [{ name: "product 2", price: 20, color: "yellow" }],
-    [{ name: "product 3", price: 30, color: "purple" }],
-  ]);
+  const [products, updateProducts] = useState([]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -68,8 +64,8 @@ export default function Home(props) {
       if (newProducts.length === 0) {
         // if no products left after filtering
         updateProducts(data);
-        const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-        await delay(1000); //small delay so products can catch up
+        // const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+        // await delay(1000); //small delay so products can catch up
         alert("There were no products found");
       } else {
         updateProducts(newProducts);
