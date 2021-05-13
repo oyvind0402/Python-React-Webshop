@@ -5,7 +5,14 @@ import { ProductCard } from "./ProductCard";
 
 
 export default function Home(props) {
-  const [products, updateProducts] = useState([]);
+  const [products, updateProducts] = useState([
+      [{name: "product 1", price: 10, color: "green"}],
+      [{name: "product 2", price: 20, color: "yellow"}],
+      [{name: "product 3", price: 30, color: "purple"}],
+
+
+
+  ]);
 
   useEffect(() => {
     const loadData = async () =>{
