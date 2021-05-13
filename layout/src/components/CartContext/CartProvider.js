@@ -8,23 +8,24 @@ const CartDispatchContext = createContext();
 const reducer = (state, action) => {
   switch (action.type) {
     case "ADD":
-      const currentBasket = [...state];
-      let alreadyInBasket = false;
-      for(let i = 0; i <currentBasket.length; i++){
-        let product = currentBasket[i]
-        if(product["id"] === action.item.id) {
-          product["quantity"] += 1
-          alreadyInBasket = true
-          break
-        }
-      }
-
-      if(!alreadyInBasket){
-        action.item.quantity = 1;
-        return [...state, action.item];
-      } else{
-        return currentBasket
-      }
+      return [...state, action.item];
+      // const currentBasket = [...state];
+      // let alreadyInBasket = false;
+      // for(let i = 0; i <currentBasket.length; i++){
+      //   let product = currentBasket[i]
+      //   if(product["id"] === action.item.id) {
+      //     product["quantity"] += 1
+      //     alreadyInBasket = true
+      //     break
+      //   }
+      // }
+      //
+      // if(!alreadyInBasket){
+      //   action.item.quantity = 1;
+      //   return [...state, action.item];
+      // } else{
+      //   return currentBasket
+      // }
 
     case "REMOVE":
       const basket = [...state];
