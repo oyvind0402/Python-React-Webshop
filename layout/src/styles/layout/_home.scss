@@ -45,10 +45,6 @@
     font-weight: 500;
     color: $grey20;
     margin-top: 0.3rem;
-
-    &::before {
-      content: "kr ";
-    }
   }
   &-desc {
     width: 70%;

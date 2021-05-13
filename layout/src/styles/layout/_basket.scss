@@ -1,17 +1,24 @@
-.basket-pay {
-  @include flexbox;
-  flex-wrap: wrap;
-  justify-content: right;
-  &-btn {
-    font-size: 1.5rem;
+.basket {
+  &-empty > p {
+    font-size: 2rem;
     font-weight: 600;
-  }
-  &-total{
-    width: 100%;
-    text-align: right;
-    font-size: 1.4rem;
-    font-weight: 500;
     color: $blue20;
+  }
+  &-pay {
+    @include flexbox;
+    flex-wrap: wrap;
+    justify-content: right;
+    &-btn {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    &-total {
+      width: 100%;
+      text-align: right;
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: $blue20;
+    }
   }
 }
 
@@ -77,16 +84,23 @@
     }
   }
 
-  &-price::before {
-    content: "kr ";
-  }
   &-price {
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: $grey20;
     margin: 0;
     grid-area: price;
     justify-self: right;
+    &-unit {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 500;
+      color: $grey50;
+      text-align: right;
+    }
+    &-total {
+      margin-top: 0;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: $grey20;
+    }
   }
 }
 

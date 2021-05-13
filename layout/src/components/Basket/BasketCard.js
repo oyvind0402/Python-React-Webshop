@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import { useDispatchCart } from "../CartContext/CartProvider";
+import { formatNOK } from "../utils";
 
 export const BasketCard = ({ product, index, handleRemove, updateTotal }) => {
-  // const price = (pr, qt) => {
-  //   pr = pr.replace(".", "");
-  //   return pr * qt;
-  // };
   const dispatch = useDispatchCart();
 
   const [qty, changeQty] = useState(product.quantity);
-
   const plusQty = () => {
     changeQty((qty) => qty + 1);
-    product["qty"] = qty;
+    product.qty = qty;
     addToCart(product);
     updateTotal(product.price);
   };
@@ -81,7 +77,14 @@ export const BasketCard = ({ product, index, handleRemove, updateTotal }) => {
           +
         </button>
       </div>
-      <p className="basketcard-price">{product.price * qty}</p>
+      <div className="basketcard-price">
+        <p className="basketcard-price-unit">
+          {qty} x {formatNOK(product.price)}
+        </p>
+        <p className="basketcard-price-total">
+          {formatNOK(product.price * qty)}
+        </p>
+      </div>
     </article>
   );
 };

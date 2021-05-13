@@ -1,17 +1,18 @@
-import React, {useState} from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatchCart } from "../CartContext/CartProvider";
+import { formatNOK } from "../utils";
 
-export const ProductCard = ( props ) => {
-
-
-    const dispatch = useDispatchCart();
+export const ProductCard = (props) => {
+  const dispatch = useDispatchCart();
 
   const addToCart = (item) => {
-    document.getElementById("button" + props.product["id"]).disabled =true;
+    document.getElementById("button" + props.product["id"]).disabled = true;
     dispatch({ type: "ADD", item });
     props.onchange(props.filter);
-    setTimeout(() =>{document.getElementById("button" + props.product["id"]).disabled =false;}, 500 );
+    setTimeout(() => {
+      document.getElementById("button" + props.product["id"]).disabled = false;
+    }, 500);
   };
 
   const src = "data:image/png;base64, " + props.product["image"];
@@ -26,7 +27,7 @@ export const ProductCard = ( props ) => {
       <Link to={"/product/" + props.product["id"]} className="prodcard-more">
         <p>ⓘ Read more</p>
       </Link>
-      <p className="prodcard-price">{props.product["price"]}</p>
+      <p className="prodcard-price">{formatNOK(props.product["price"])}</p>
       <button
         className="btn btn-primary prodcard-add"
         id={"button" + props.product["id"]}

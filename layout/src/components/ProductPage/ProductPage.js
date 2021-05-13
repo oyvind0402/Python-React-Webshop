@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SpecsTable } from "./SpecsTable";
 import { useDispatchCart } from "../CartContext/CartProvider";
+import { formatNOK } from "../utils";
 
 export const ProductPage = () => {
   const dispatch = useDispatchCart();
@@ -44,7 +45,7 @@ export const ProductPage = () => {
         <div className="productpage-details">
           <p>{product["long_desc"]}</p>
           <div className="productpage-buy">
-            <p className="productpage-price">{product["price"]}</p>
+            <p className="productpage-price">{formatNOK(product["price"])}</p>
             <button
               id="addBtn"
               className="btn btn-primary"
