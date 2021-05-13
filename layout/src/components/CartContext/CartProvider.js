@@ -9,7 +9,6 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "ADD":
       const currentBasket = [...state];
-      console.log(currentBasket)
       let alreadyInBasket = false;
       for(let i = 0; i <currentBasket.length; i++){
         let product = currentBasket[i]

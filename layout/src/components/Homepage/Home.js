@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Filter } from "./Filter";
 import { ProductCard } from "./ProductCard";
 
+
 export default function Home(props) {
   const [products, updateProducts] = useState([]);
 
@@ -15,7 +16,10 @@ export default function Home(props) {
     loadData();
   }, []);
 
+  let filterList = []
+
   async function getProduct(filterOptions) {
+    console.log("rerender")
     const response = await fetch("http://localhost:5000/api/products");
     let data = await response.json();
     let newProducts = [];
@@ -63,11 +67,13 @@ export default function Home(props) {
 
       if (newProducts.length === 0) {
         // if no products left after filtering
+        filterList = filterOptions
         updateProducts(data);
         // const delay = (ms) => new Promise((res) => setTimeout(res, ms));
         // await delay(1000); //small delay so products can catch up
         alert("There were no products found");
       } else {
+        filterList = filterOptions
         updateProducts(newProducts);
       }
     }
@@ -170,7 +176,7 @@ export default function Home(props) {
         />
         <div className="products">
           {products.map((prod) => {
-            return <ProductCard key={prod["id"]} product={prod} />;
+            return <ProductCard key={prod["id"]} product={prod} filter={filterList} onchange={(filterList) => getProduct(filterList)}/>;
           })}
         </div>
       </div>
