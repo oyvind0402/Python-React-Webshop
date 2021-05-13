@@ -193,7 +193,7 @@ def getProduct(productid):
     result = [{"id": id, "brand": brand, "name": name, "price": price, "color": color, "operatingsystem": operatingsystem, "storage": storage, "short_desc": short_desc, "long_desc": long_desc, "image": image} for (id, brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image) in cursor]
     cursor.close()
     db.close()
-    response = jsonify((result))
+    response = jsonify((result[0]))
     return response, 200
 
 

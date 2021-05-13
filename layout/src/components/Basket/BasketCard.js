@@ -1,31 +1,38 @@
 import React from "react";
 
-export const BasketCard = (props) => {
-  const price = (pr, qt) => {
-    pr = pr.replace(".", "");
-    return pr * qt;
-  };
-
+export const BasketCard = ({ product, index, handleRemove }) => {
+  // const price = (pr, qt) => {
+  //   pr = pr.replace(".", "");
+  //   return pr * qt;
+  // };
+  const src = "data:image/png;base64, " + product["image"];
   return (
     <article className="basketcard">
-      <h3 className="basketcard-name">{props.name}</h3>
-      <button className="btn btn-secondary basketcard-btn">x</button>
+      <h3 className="basketcard-name">
+        {product.brand} {product.name}
+      </h3>
+      <button
+        className="btn btn-secondary basketcard-btn"
+        onClick={() => handleRemove(index)}
+      >
+        x
+      </button>
       <div className="basketcard-img">
-        <img src={props.image} alt="" />
+        <img src={src} alt="" />
       </div>
       <div className="basketcard-quantity">
         <button className="btn btn-secondary" alt="Reduce quantity">
           -
         </button>
-        <p>
+        {/* <p>
           Quantity: <br></br>
-          {props.quantity}
-        </p>
+          {product.quantity}
+        </p> */}
         <button className="btn btn-secondary" alt="Increase quantity">
           +
         </button>
       </div>
-      <p className="basketcard-price">{price(props.price, props.quantity)}</p>
+      <p className="basketcard-price">{product.price}</p>
     </article>
   );
 };

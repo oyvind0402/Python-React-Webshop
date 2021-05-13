@@ -1,60 +1,62 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { SpecsTable } from "./SpecsTable";
+import { useDispatchCart } from "../CartContext/CartProvider";
 
-export const ProductPage = (props) => {
+export const ProductPage = () => {
+  const dispatch = useDispatchCart();
 
-      const [product, productUpdate] = useState([
-        {"id": "placeholder"},
-        {"brand": "placeholder"},
-        {"name": "placeholder"},
-        {"price": "placeholder"},
-        {"color": "placeholder"},
-        {"operatingsystem": "placeholder"},
-        {"storage": "placeholder"},
-        {"short_desc": "placeholder"},
-        {"long_desc": "placeholder"},
-        {"image": "placeholder"},
-      ]);
+  const addToCart = (item) => {
+    dispatch({ type: "ADD", item });
+  };
+
+  const [product, productUpdate] = useState({});
 
   useEffect(() => {
-    const loadData = async () =>{
-      const link = window.location.href
-      const sku = link.split("/")[4]
-      const apiLink = "http://localhost:5000/api/product/" + sku
+    const loadData = async () => {
+      const link = window.location.href;
+      const sku = link.split("/")[4];
+      const apiLink = "http://localhost:5000/api/product/" + sku;
 
       const response = await fetch(apiLink);
       let data = await response.json();
-      console.log(data)
-      productUpdate(data)
-      console.log(product)
-      console.log(product[0].name)
-    }
-    loadData()
+      productUpdate(data);
+    };
+    loadData();
   }, []);
 
   return (
     <main id="main">
       <div className="productpage">
-        <h2 className="productpage-title">{product[0].name}</h2>
+        <h2 className="productpage-title">{product["name"]}</h2>
         <div className="productpage-img">
-          <img src={"data:image/png;base64, " + product[0].image} alt={product[0].name} />
+          <img
+            src={"data:image/png;base64, " + product["image"]}
+            alt={product["name"]}
+          />
         </div>
         <div className="productpage-details">
-          <p>{product[0].long_desc}</p>
+          <p>{product["long_desc"]}</p>
           <div className="productpage-buy">
-            <p className="productpage-price">{product[0].price}</p>
-            <button className="btn btn-primary">Add to basket</button>
+            <p className="productpage-price">{product["name"]}</p>
+            <button
+              className="btn btn-primary"
+              onClick={() => addToCart(product)}
+            >
+              Add to basket
+            </button>
           </div>
         </div>
       </div>
       <table className="productSpecs">
-        <SpecsTable specs={[
-                ["brand", product[0].brand],
-                ["name", product[0].name],
-                ["color", product[0].color],
-                ["storage", product[0].storage],
-                ["operatingsystem", product[0].operatingsystem]
-        ]} />
+        <SpecsTable
+          specs={[
+            ["brand", product["brand"]],
+            ["name", product["name"]],
+            ["color", product["color"]],
+            ["storage", product["storage"]],
+            ["operatingsystem", product["operatingsystem"]],
+          ]}
+        />
       </table>
     </main>
   );
