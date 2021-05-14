@@ -123,7 +123,7 @@ def registerUser():
         db.close()
         return "", 204
     else:
-        return "Registration failed.", 400
+        return jsonify({"msg": "Registration failed.")}, 400
 
 
 #Route for logging in
@@ -135,9 +135,9 @@ def loginUser():
     token = validate_user(email, password)
 
     if token:
-        return jsonify({"jwt_token": token})
+        return jsonify({"jwt_token": token}), 200
     else:
-        return "Authentication failed", 401
+        return jsonify({"msg": "Authentication failed"}), 401
 
 
 #Editing a user

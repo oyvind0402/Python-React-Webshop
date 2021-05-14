@@ -11,67 +11,67 @@ export const NewProductForm = () => {
           encType="multipart/form-data"
         >
           <div className="form-group">
-            <label for="brand">Phone brand</label>
+            <label htmlFor="brand">Phone brand</label>
             <input
               type="text"
               className="form-control"
               name="brand"
               id="brand"
-              required="true"
+              required={true}
             />
           </div>
           <div className="form-group">
-            <label for="name">Phone name</label>
+            <label htmlFor="name">Phone name</label>
             <input
               type="text"
               className="form-control"
               name="name"
               id="name"
-              required="true"
+              required={true}
             />
           </div>
           <div className="form-group">
-            <label for="price">Phone price</label>
+            <label htmlFor="price">Phone price</label>
             <input
               type="number"
               className="form-control"
               name="price"
               id="price"
-              required="true"
+              required={true}
             />
           </div>
           <div className="form-group">
-            <label for="color">Phone color</label>
+            <label htmlFor="color">Phone color</label>
             <input
               type="text"
               className="form-control"
               name="color"
               id="color"
-              required="true"
+              required={true}
             />
           </div>
           <div className="form-group">
-            <label for="operatingsystem">Phone operatingsystem</label>
+            <label htmlFor="operatingsystem">Phone operatingsystem</label>
             <input
               type="text"
               className="form-control"
               name="operatingsystem"
               id="operatingsystem"
-              required="true"
+              required={true}
             />
           </div>
           <div className="form-group">
-            <label for="storage">Phone storage</label>
+            <label htmlFor="storage">Phone storage</label>
             <input
               type="text"
               className="form-control"
               name="storage"
               id="storage"
-              required="true"
+              required={true}
             />
           </div>
           <div className="form-group">
-            <label for="image">
+            <label htmlFor="image">
               Phone image, not required (only .png files can be uploaded)
             </label>
             <input

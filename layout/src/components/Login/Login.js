@@ -1,17 +1,53 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 export const Login = () => {
+  //If the user is stored in localStorage no need to login again - redirects to new. :)
+  const history = useHistory();
+  useEffect(() => {
+    if (localStorage.getItem("user-info")) {
+      history.push("/");
+    }
+  }, []);
+
+  async function login(event) {
+    //Added to stop the page from reloading when pressing login
+    event.preventDefault();
+
+    //Creating a new formdata to insert our values into
+    const data = new FormData();
+    const password = document.getElementById("password").value
+    const email = document.getElementById("email").value
+    data.append("email", email)
+    data.append("password", password);
+
+    let result = await fetch("http://localhost:5000/api/login", {
+      method: "POST",
+      header: {
+        "Authorization": "AWdad12e+1daw::d1__123123dadaodo",
+        "Content-type": "multipart/form-data"
+      },
+      body: data,
+    });
+    result = await result.json();
+
+    //If the admin is trying to log in we do not store the token in localStorage - we just redirect to the adminpage
+    if ((email === "admin@admin.com") & (password === "admin")) {
+      console.log("Inside here!");
+      history.push("/new");
+    } else if (result.status === 200) {
+      localStorage.setItem(JSON.stringify(result));
+      history.push("/");
+    } else {
+      alert(result);
+    }
+  }
+
   return (
     <main id="main" className="login">
       <div>
         <h1>Log in to generic companys webshop!</h1>
-        <form
-          id="login-form"
-          action="http://localhost:5000/api/login"
-          method="POST"
-          encType="multipart/form-data"
-        >
+        <form id="login-form" onSubmit={login}>
           <div className="login-user">
             <label htmlFor="email">Email</label>
             <input
