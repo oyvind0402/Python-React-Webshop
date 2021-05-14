@@ -156,7 +156,7 @@ def editUser(userid):
     db.commit()
     cursor.close()
     db.close()
-    return "User updated.", 200
+    return jsonify({"msg": "User updated."}), 200
 
 
 #Deleting a user
@@ -271,7 +271,7 @@ def addProduct():
         cursor.close()
         db.close()
         file.close()
-        return "Successfully added product named {}, no picture added, default picture will be chosen.".format(name), 201
+        return jsonify({"msg": "Successfully added product named {}, no picture added, default picture will be chosen.".format(name)}), 201
     file = request.files['image']
     if file and validFile(file.filename): 
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
@@ -283,8 +283,8 @@ def addProduct():
         cursor.close()
         db.close()
         file.close()
-        return "Successfully added product named {}, product picture included.".format(name), 201
-    return "Could not add the product, the image chosen had the wrong extension.", 400
+        return jsonify({"msg": "Successfully added product named {}, product picture included.".format(name)}), 201
+    return jsonify({"msg": "Could not add the product, the image chosen had the wrong extension."}), 400
 
 
 #Editing a product
@@ -306,7 +306,7 @@ def editProduct(productid):
         db.commit()
         cursor.close()
         db.close()
-        return "Product updated.", 200
+        return jsonify({"msg": "Product updated."}), 200
     file = request.files['image']
     if file and validFile(file.filename):
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
@@ -317,8 +317,8 @@ def editProduct(productid):
         db.commit()
         cursor.close()
         db.close()
-        return "Product updated.", 200
-    return "Could not update the product, invalid image extension.", 400
+        return jsonify({"msg": "Product updated."}), 200
+    return jsonify({"msg": "Could not update the product, invalid image extension."}), 400
 
 
 #Deleting a product
