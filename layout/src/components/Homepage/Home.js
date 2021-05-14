@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 
 import { Filter } from "./Filter";
 import { ProductCard } from "./ProductCard";
+import { Header } from "../Header/Header";
+import { useCart, useDispatchCart } from "../CartContext/CartProvider";
+
 
 export default function Home() {
   const [products, updateProducts] = useState([]);
   const [filter, updateFilter] = useState([]);
+  const dispatch = useDispatchCart();
 
   useEffect(() => {
     const loadData = async () => {
@@ -167,6 +171,7 @@ export default function Home() {
   }
 
   return (
+      <>
     <main id="main">
       <h2>Our products</h2>
       <div className="home">
@@ -188,5 +193,6 @@ export default function Home() {
         </div>
       </div>
     </main>
+        </>
   );
 }

@@ -6,9 +6,15 @@ import { HeaderLogin } from "./HeaderLogin";
 import { HeaderBasket } from "./HeaderBasket";
 
 import logo_svg from "../../static/generic_logo.svg";
+import {useCart} from "../CartContext/CartProvider";
 
 export const Header = (props) => {
-  return (
+    // let totalNumber = 0;
+
+
+    let totalNumber = 0;
+
+    return (
     <header className="header">
       <div className="header-left">
         <Link to="/">
@@ -20,7 +26,12 @@ export const Header = (props) => {
         <HeaderLogin user={props.user} />
         <Link to="/basket">
           <HeaderBasket />
+            { useCart().map((product) => {
+                totalNumber += product["quantity"]
+                return null
+            })}
         </Link>
+          <p>({totalNumber})</p>
       </div>
     </header>
   );
