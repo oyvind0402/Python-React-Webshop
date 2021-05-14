@@ -32,12 +32,12 @@ export const Basket = () => {
         document.getElementById("basket-pay").style.setProperty("display", "none");
         document.getElementById("basket-empty").style.setProperty("display", "block");
 
-      }, 500)
+      }, 100)
     } else {
       setTimeout( () => {
         document.getElementById("basket-pay").style.setProperty("display", "block");
         document.getElementById("basket-empty").style.setProperty("display", "none");
-      }, 500)
+      }, 100)
     }
   }
 

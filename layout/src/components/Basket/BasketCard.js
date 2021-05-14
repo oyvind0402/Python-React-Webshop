@@ -8,8 +8,6 @@ export const BasketCard = (props) => {
   const plusQty = () => {
     let newQty = props.product.quantity + 1
     addToCart(props.product, newQty);
-    let newTotalPrice = props.product.price * props.product.quantity
-    props.updateTotal(newTotalPrice);
   };
   const minusQty = () => {
     let reducedQty = props.product.quantity - 1
