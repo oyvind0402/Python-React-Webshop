@@ -10,12 +10,10 @@ import { Basket } from "./components/Basket/Basket";
 import { NewProductForm } from "./components/Admin/NewProductForm";
 import { ProductPage } from "./components/ProductPage/ProductPage";
 
-let user = null;
-
 function App() {
   return (
     <Router>
-      <Header user={user} />
+      <Header/>
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/login" exact component={Login} />

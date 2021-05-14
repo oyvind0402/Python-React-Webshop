@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 export const Login = () => {
   //If the user is stored in localStorage no need to login again - redirects to new. :)
   const history = useHistory();
   useEffect(() => {
-    if (localStorage.getItem("user-info")) {
+    if (localStorage.getItem("jwt_token")) {
       history.push("/");
+    } else if (localStorage.getItem("admin")) {
+      history.push("/new");
     }
-  }, []);
+  });
 
   async function login(event) {
     //Added to stop the page from reloading when pressing login
@@ -16,24 +18,26 @@ export const Login = () => {
 
     //Creating a new formdata to insert our values into
     const data = new FormData();
-    const password = document.getElementById("password").value
-    const email = document.getElementById("email").value
-    data.append("email", email)
+    const password = document.getElementById("password").value;
+    const email = document.getElementById("email").value;
+    data.append("email", email);
     data.append("password", password);
 
     let result = await fetch("http://localhost:5000/api/login", {
       method: "POST",
       header: {
-        "Authorization": "AWdad12e+1daw::d1__123123dadaodo",
-        "Content-type": "multipart/form-data"
+        Authorization: "AWdad12e+1daw::d1__123123dadaodo",
+        "Content-type": "multipart/form-data",
       },
       body: data,
     });
     result = await result.json();
+    console.log(result);
 
     //If the admin is trying to log in we do not store the token in localStorage - we just redirect to the adminpage
     if ((email === "admin@admin.com") & (password === "admin")) {
       console.log("Inside here!");
+      localStorage.setItem("admin", "true");
       history.push("/new");
     } else if (result.status === 200) {
       localStorage.setItem(JSON.stringify(result));

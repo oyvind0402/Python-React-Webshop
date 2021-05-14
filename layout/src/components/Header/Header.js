@@ -8,7 +8,7 @@ import { HeaderBasket } from "./HeaderBasket";
 import logo_svg from "../../static/generic_logo.svg";
 import {useCart} from "../CartContext/CartProvider";
 
-export const Header = (props) => {
+export const Header = () => {
     // let totalNumber = 0;
 
 
@@ -23,7 +23,7 @@ export const Header = (props) => {
       </div>
       <div className="header-centre"></div>
       <div className="header-right">
-        <HeaderLogin user={props.user} />
+        <HeaderLogin />
         <Link to="/basket">
           <HeaderBasket />
             { useCart().map((product) => {
