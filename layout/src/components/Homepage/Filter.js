@@ -68,10 +68,10 @@ export const Filter = (props) => {
   return (
     <div className="filter">
       <h3 className="filter-title">Product filter</h3>
-      {attributes.map((att) => {
+      {attributes.map((att, index) => {
         if (att[0] === "price") {
           return (
-            <div className="filter-by">
+            <div key={index} className="filter-by">
               <h4 className="filter-by-title">{att[0]}</h4>
               <input
                 id={"lowInput"}
@@ -98,12 +98,12 @@ export const Filter = (props) => {
           );
         } else {
           return (
-            <div className="filter-by">
+            <div key={index} className="filter-by">
               <h4 className="filter-by-title">{att[0]}</h4>
               <ul>
-                {att[1].map((checkbox) => {
+                {att[1].map((checkbox, index) => {
                   return (
-                    <div className="filter-by-item">
+                    <div key={index} className="filter-by-item">
                       <input
                         onChange={searchValues}
                         type={"checkbox"}
