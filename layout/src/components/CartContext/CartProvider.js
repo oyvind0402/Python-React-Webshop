@@ -26,12 +26,22 @@ const reducer = (state, action) => {
       } else {
         return currentBasket;
       }
+    case "ADDQUANTITY":
+      const addBasket = [...state]
+      for (let i = 0; i < addBasket.length; i++) {
+        let product = addBasket[i];
+        if (product["id"] === action.item.id) {
+          product["quantity"] = action.changeQuantity;
+          break;
+        }
+      }
+      return addBasket;
     case "REDUCE":
       const badCustomerWantsToHaveLessProductsNoNo = [...state];
       for (let i = 0; i < badCustomerWantsToHaveLessProductsNoNo.length; i++) {
         let product = badCustomerWantsToHaveLessProductsNoNo[i];
         if (product["id"] === action.item.id) {
-          product["quantity"] -= 1;
+          product["quantity"] = action.reducedQuantity;
           break;
         }
       }

@@ -2,53 +2,44 @@ import React, { useState } from "react";
 import { useDispatchCart } from "../CartContext/CartProvider";
 import { formatNOK } from "../utils";
 
-export const BasketCard = ({ product, index, handleRemove, updateTotal }) => {
+export const BasketCard = (props) => {
   const dispatch = useDispatchCart();
 
-  const [qty, changeQty] = useState(product.quantity);
   const plusQty = () => {
-    changeQty((qty) => qty + 1);
-    product.qty = qty;
-    addToCart(product);
-    updateTotal(product.price);
+    let newQty = props.product.quantity + 1
+    addToCart(props.product, newQty);
+    let newTotalPrice = props.product.price * props.product.quantity
+    props.updateTotal(newTotalPrice);
   };
   const minusQty = () => {
-    if (qty > 1) {
-      changeQty((qty) => qty - 1);
-      product["qty"] = qty;
-      reduceFromCart(product);
+    let reducedQty = props.product.quantity - 1
+    if (reducedQty === 0){
+      props.handleRemove(props.index);
     } else {
-      handleRemove(index);
+      reduceFromCart(props.product, reducedQty);
     }
-    updateTotal(-product.price);
   };
 
-  const addToCart = (item) => {
-    document.getElementById("plusBtn").disabled = true;
-    dispatch({ type: "ADD", item });
-    setTimeout(() => {
-      document.getElementById("plusBtn").disabled = false;
-    }, 500);
+  const addToCart = (item, changeQuantity) => {
+    dispatch({ type: "ADDQUANTITY", item, changeQuantity });
+    props.onchange("Rerender")
   };
 
-  const reduceFromCart = (item) => {
-    document.getElementById("minusBtn").disabled = true;
-    dispatch({ type: "REDUCE", item });
-    setTimeout(() => {
-      document.getElementById("minusBtn").disabled = false;
-    }, 500);
+  const reduceFromCart = (item, reducedQuantity) => {
+    dispatch({ type: "REDUCE", item, reducedQuantity });
+    props.onchange("Rerender")
   };
 
-  const src = "data:image/png;base64, " + product["image"];
+  const src = "data:image/png;base64, " + props.product["image"];
 
   return (
     <article className="basketcard">
       <h3 className="basketcard-name">
-        {product.brand} {product.name}
+        {props.product.brand} {props.product.name}
       </h3>
       <button
         className="btn btn-secondary basketcard-btn"
-        onClick={() => handleRemove(index)}
+        onClick={() => props.handleRemove(props.index)}
       >
         x
       </button>
@@ -66,7 +57,7 @@ export const BasketCard = ({ product, index, handleRemove, updateTotal }) => {
         </button>
         <p>
           Quantity: <br />
-          {qty}
+          {props.product.quantity}
         </p>
         <button
           id="plusBtn"
@@ -79,10 +70,10 @@ export const BasketCard = ({ product, index, handleRemove, updateTotal }) => {
       </div>
       <div className="basketcard-price">
         <p className="basketcard-price-unit">
-          {qty} x {formatNOK(product.price)}
+          {props.product.quantity} x {formatNOK(props.product.price)}
         </p>
         <p className="basketcard-price-total">
-          {formatNOK(product.price * qty)}
+          {formatNOK(props.product.price * props.product.quantity)}
         </p>
       </div>
     </article>

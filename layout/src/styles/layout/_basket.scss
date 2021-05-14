@@ -22,6 +22,10 @@
   }
 }
 
+#basket-pay {
+  display: block;
+}
+
 .basketcard {
   @include grid;
   grid-template-columns: 10rem 1fr 10rem;
