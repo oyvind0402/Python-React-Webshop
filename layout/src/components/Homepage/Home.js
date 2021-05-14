@@ -96,7 +96,8 @@ export default function Home() {
             // Looks at all the attributes of a product
             if (filter[0] === attribute) {
               //if chosen filter match the product attribute continue
-              if (element === product[attribute]) {
+              if (element == product[attribute]) {
+                // the element is string and product[attribute] can i case of storage be int therefore two ==
                 // if element in filter equals product value we want it to add
                 newProducts.push(product); // all products matching the condition will be added
               }
@@ -115,7 +116,8 @@ export default function Home() {
             // Looks at all the attributes of the filtered product
             if (filter[0] === attribute) {
               //if chosen filter match the product attribute continue
-              if (element === filterProduct[attribute]) {
+              if (element == filterProduct[attribute]) {
+                // the element is string and product[attribute] can i case of storage be int therefore two ==
                 // if element in filter equals product value we want it to add
                 tempProducts.push(filterProduct); // this product matches all the condition
                 //products that dont match the condition will not be returned and therefore removed from the array
