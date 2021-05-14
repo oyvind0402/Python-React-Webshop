@@ -9,7 +9,8 @@ export const Basket = () => {
   const [render, rerender] = useState();
   const dispatch = useDispatchCart();
 
-  function startRerender (string) {
+  function startRerender (string) { //force rerender page
+    console.log(render)
     rerender(string);
   }
 
@@ -27,29 +28,19 @@ export const Basket = () => {
 
   function checkAmountOfBasket(length) {
 
-    if(length === 0 ) {
+    if(length === 0 ) { //if shoppingcart is empt
       setTimeout( () => {
         document.getElementById("basket-pay").style.setProperty("display", "none");
         document.getElementById("basket-empty").style.setProperty("display", "block");
 
       }, 100)
     } else {
-      setTimeout( () => {
+      setTimeout( () => { // when shoppingcart isnt empty
         document.getElementById("basket-pay").style.setProperty("display", "block");
         document.getElementById("basket-empty").style.setProperty("display", "none");
       }, 100)
     }
   }
-
-  // if (useCart().length === 0) {
-  //   return (
-  //     <main id="main">
-  //       <div className="basket-empty">
-  //         <p>Your shopping basket is empty.</p>
-  //       </div>
-  //     </main>
-  //   );
-  // }
 
   return (
     <main id="main">

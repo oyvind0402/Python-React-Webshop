@@ -6,12 +6,12 @@ export const BasketCard = (props) => {
   const dispatch = useDispatchCart();
 
   const plusQty = () => {
-    let newQty = props.product.quantity + 1
+    let newQty = props.product.quantity + 1 //new quantity
     addToCart(props.product, newQty);
   };
   const minusQty = () => {
     let reducedQty = props.product.quantity - 1
-    if (reducedQty === 0){
+    if (reducedQty === 0){ // products has to be removed from shopping cart
       props.handleRemove(props.index);
     } else {
       reduceFromCart(props.product, reducedQty);
