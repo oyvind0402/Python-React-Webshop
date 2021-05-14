@@ -123,7 +123,7 @@ def registerUser():
         db.close()
         return "", 204
     else:
-        return jsonify({"msg": "Registration failed.")}, 400
+        return jsonify({"msg": "Registration failed."}), 400
 
 
 #Route for logging in
@@ -334,3 +334,7 @@ def deleteProduct(productid):
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
+    #Below is for SSL/TLS
+    #Need to add "pyopenssl" to requirements.txt for it to work
+    #This will change the url for localhost from http to https
+    #, ssl_context='adhoc')
