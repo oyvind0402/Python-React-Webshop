@@ -141,7 +141,7 @@ def loginUser():
 
 
 #Editing a user
-@app.route('/api/user/<int:userid>/update', methods=["PUT"])
+@app.route('/api/user/<int:userid>/update', methods=["POST"])
 def editUser(userid):
     db = openDatabase()
     cursor = db.cursor()
@@ -160,7 +160,7 @@ def editUser(userid):
 
 
 #Deleting a user
-@app.route('/api/user/<int:userid>/delete', methods=["DELETE"])
+@app.route('/api/user/<int:userid>/delete', methods=["POST"])
 def deleteUser(userid):
     db = openDatabase()
     cursor = db.cursor()
