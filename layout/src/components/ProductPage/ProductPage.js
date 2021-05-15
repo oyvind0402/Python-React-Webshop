@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SpecsTable } from "./SpecsTable";
 import { useCart, useDispatchCart } from "../CartContext/CartProvider";
+import { Header } from "../Header/Header";
 
 export const ProductPage = () => {
   const dispatch = useDispatchCart();
@@ -39,46 +40,49 @@ export const ProductPage = () => {
   }, []);
 
   return (
-    <main id="main">
-      <div className="productpage">
-        <h2 className="productpage-title">
-          {product["brand"] + " " + product["name"]}
-        </h2>
-        <div className="productpage-img">
-          <img
-            src={"data:image/png;base64, " + product["image"]}
-            alt={product["name"]}
-          />
-        </div>
-        {useCart().map((product) => {
-          return console.log(product);
-        })}
-        <div className="productpage-details">
-          <p>{product["long_desc"]}</p>
-          <div className="productpage-buy">
-            <p className="productpage-price">{product["price"]}</p>
-            {/*formatNOK(product["price"])*/}
-            <button
-              id="addBtn"
-              className="btn btn-primary"
-              onClick={() => addToCart(product)}
-            >
-              Add to basket
-            </button>
+    <>
+      <Header />
+      <main id="main">
+        <div className="productpage">
+          <h2 className="productpage-title">
+            {product["brand"] + " " + product["name"]}
+          </h2>
+          <div className="productpage-img">
+            <img
+              src={"data:image/png;base64, " + product["image"]}
+              alt={product["name"]}
+            />
+          </div>
+          {useCart().map((product) => {
+            return console.log(product);
+          })}
+          <div className="productpage-details">
+            <p>{product["long_desc"]}</p>
+            <div className="productpage-buy">
+              <p className="productpage-price">{product["price"]}</p>
+              {/*formatNOK(product["price"])*/}
+              <button
+                id="addBtn"
+                className="btn btn-primary"
+                onClick={() => addToCart(product)}
+              >
+                Add to basket
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      <table className="productSpecs">
-        <SpecsTable
-          specs={[
-            ["brand", product["brand"]],
-            ["name", product["name"]],
-            ["color", product["color"]],
-            ["storage", product["storage"]],
-            ["operatingsystem", product["operatingsystem"]],
-          ]}
-        />
-      </table>
-    </main>
+        <table className="productSpecs">
+          <SpecsTable
+            specs={[
+              ["brand", product["brand"]],
+              ["name", product["name"]],
+              ["color", product["color"]],
+              ["storage", product["storage"]],
+              ["operatingsystem", product["operatingsystem"]],
+            ]}
+          />
+        </table>
+      </main>
+    </>
   );
 };
