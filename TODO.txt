@@ -3,19 +3,19 @@ Goals:
 1. Create a Dockerfile for the React application. CHECK
 2. Make changes to shop.py to facilitate for the new setup. CHECK
 3. Add the dockerfile for React to the docker-compose file. CHECK
-4. Create a working login solution for a user.
+4. Create a working login solution for a user. CHECK
 5. Fetch all products from /api/products to the index page to display the data in our DB. CHECK
-6. Fetch a single product based on the prop which would be productid that gets sent to the child component when clicking on a product.
-7. Create an overview of all products for the admin as well - where the admin can delete or add products. Or maybe update?
+6. Fetch a single product based on the prop which would be productid that gets sent to the child component when clicking on a product. CHECK
+7. Create an overview of all products for the admin as well - where the admin can delete or add products. Or maybe update? CHECK
 8. If we want to be able to update - create a PUT request in the API to be able to edit a product. CHECK
 
 Stretch goals:
 
 1. Secure all API endpoints with TLS(SSL/TLS).
 2. Add monitoring using Prometheus to track the resource usage of our service.
-3. Add proper authentication using OAuth2 or another service.
+3. Add proper authentication using OAuth2 or another service (JWT). CHECK
 
 Extended functionality:
 
-1. Registering with a username and email to log in.
+1. Registering with a username and email to log in. CHECK
 2. If you're logged in you can see a list of your orders on your user page.
