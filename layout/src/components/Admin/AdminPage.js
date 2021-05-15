@@ -20,6 +20,8 @@ const AdminPage = () => {
             <Link to="/new">Add a product</Link>
             <br />
             <Link to="/delete">Delete a product</Link>
+            <br />
+            <Link to="/update">Update a product</Link>
           </div>
         </main>
       </>

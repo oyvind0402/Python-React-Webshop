@@ -1,16 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { Header } from "../Header/Header";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Header } from "../Header/Header";
 
-export const NewProductForm = () => {
+const UpdateProductPage = () => {
   const [admin, setAdmin] = useState(false);
+  const [product, updateProduct] = useState([]);
+
   useEffect(() => {
     if (localStorage.getItem("admin")) {
       setAdmin(true);
     }
+    const loadData = async () => {
+      const link = window.location.href;
+      const sku = link.split("/")[4];
+      const apiLink = "http://localhost:5000/api/product/" + sku;
+
+      const response = await fetch(apiLink);
+      let data = await response.json();
+      updateProduct(data);
+    };
+    loadData();
   }, []);
 
-  async function addPhone() {
+  async function updatePhone(event) {
+    event.preventDefault();
+
     const data = new FormData();
     const brand = document.getElementById("brand").value;
     const name = document.getElementById("name").value;
@@ -27,34 +41,44 @@ export const NewProductForm = () => {
     data.append("storage", storage);
     data.append("image", image);
 
-    let response = await fetch("http://localhost:5000/api/product/add", {
-      method: "POST",
-      header: {
-        Authorization: "AWdad12e+1daw::d1__123123dadaodo",
-        "Content-type": "multipart/form-data",
-      },
-      body: data,
-    });
+    const link = window.location.href;
+    const id = link.split("/")[4];
+    const response = await fetch(
+      "http://localhost:5000/api/product/update/" + id,
+      {
+        method: "POST",
+        header: {
+          Authorization: "AWdad12e+1daw::d1__123123dadaodo",
+          "Content-type": "multipart/form-data",
+        },
+        body: data,
+      }
+    );
     const reply = await response.json();
     console.log(reply);
 
     if (response.status === 201) {
+      const apiLink = `http://localhost:5000/api/product/${id}`;
+      const response2 = await fetch(apiLink);
+      let data2 = await response2.json();
+      updateProduct(data2);
       alert(JSON.stringify(reply["msg"]));
     } else {
       alert(JSON.stringify(reply["msg"]));
     }
   }
 
+  const src = "data:image/png;base64, " + product["image"];
+
   if (admin) {
     return (
       <>
         <Header />
-
-        <main id="main" className="addProduct">
+        <main id="main">
           <Link to="/admin">Back to admin</Link>
-          <h3>Add a phone</h3>
+          <h3>Update a phone</h3>
           <div className="form">
-            <form onSubmit={addPhone}>
+            <form onSubmit={updatePhone}>
               <div className="form-group">
                 <label htmlFor="brand">Phone brand</label>
                 <input
@@ -117,7 +141,7 @@ export const NewProductForm = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="image">
-                  Phone image, not required (only .png files can be uploaded)
+                  Phone image (only .png files can be uploaded)
                 </label>
                 <input
                   type="file"
@@ -131,11 +155,19 @@ export const NewProductForm = () => {
                   type="submit"
                   className="btn btn-primary"
                   name="submit"
-                  value="Add phone"
+                  value="Update phone"
                 />
               </div>
             </form>
           </div>
+          <article className="prodcard">
+            <h3 className="prodcard-name">
+              {product["brand"] + " " + product["name"]}
+            </h3>
+            <img className="prodcard-img" src={src} alt={product["name"]} />
+            <p className="prodcard-desc">{product["short_desc"]}</p>
+            <p className="prodcard-price">{product["price"]}</p>
+          </article>
         </main>
       </>
     );
@@ -144,9 +176,11 @@ export const NewProductForm = () => {
       <>
         <Header />
         <main id="main">
-          <p>You do not have admin privileges...</p>
+          <p>You dont have admin privileges...</p>
         </main>
       </>
     );
   }
 };
+
+export default UpdateProductPage;

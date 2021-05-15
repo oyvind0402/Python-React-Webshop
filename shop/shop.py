@@ -288,7 +288,7 @@ def addProduct():
 
 
 #Editing a product
-@app.route('/api/product/<int:productid>/update', methods=["PUT"])
+@app.route('/api/product/update/<int:productid>', methods=["POST"])
 def editProduct(productid):
     db = openDatabase()
     cursor = db.cursor()
@@ -306,7 +306,7 @@ def editProduct(productid):
         db.commit()
         cursor.close()
         db.close()
-        return jsonify({"msg": "Product updated."}), 200
+        return jsonify({"msg": "Product updated."}), 201
     file = request.files['image']
     if file and validFile(file.filename):
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
@@ -317,7 +317,7 @@ def editProduct(productid):
         db.commit()
         cursor.close()
         db.close()
-        return jsonify({"msg": "Product updated."}), 200
+        return jsonify({"msg": "Product updated."}), 201
     return jsonify({"msg": "Could not update the product, invalid image extension."}), 400
 
 
