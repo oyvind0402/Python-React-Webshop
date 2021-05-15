@@ -1,21 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { SpecsTable } from "./SpecsTable";
-import { useDispatchCart } from "../CartContext/CartProvider";
+import {useCart, useDispatchCart} from "../CartContext/CartProvider";
 import { formatNOK } from "../utils";
 
 export const ProductPage = () => {
   const dispatch = useDispatchCart();
 
-  const addToCart = (item) => {
+  const addToCart = async (item) => {
     document.getElementById("addBtn").disabled = true;
-    dispatch({ type: "ADD", item });
-    productUpdate(product);
+    const link = window.location.href;
+    const sku = link.split("/")[4];
+    const apiLink = "http://localhost:5000/api/product/" + sku;
+
+    const response = await fetch(apiLink);
+    let data = await response.json();
+    productUpdate(data);
+    dispatch({type: "ADD", item});
+    reRender("reRender");
+    console.log(render);
     setTimeout(() => {
       document.getElementById("addBtn").disabled = false;
     }, 500);
   };
 
   const [product, productUpdate] = useState({});
+  const [render, reRender] = useState("");
 
   useEffect(() => {
     const loadData = async () => {
@@ -42,10 +51,14 @@ export const ProductPage = () => {
             alt={product["name"]}
           />
         </div>
+        {useCart().map((product)=> {
+          console.log(product)
+        })}
         <div className="productpage-details">
           <p>{product["long_desc"]}</p>
           <div className="productpage-buy">
-            <p className="productpage-price">{formatNOK(product["price"])}</p>
+            <p className="productpage-price">{product["price"]}</p>
+            {/*formatNOK(product["price"])*/}
             <button
               id="addBtn"
               className="btn btn-primary"

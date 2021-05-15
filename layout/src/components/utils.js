@@ -1,5 +1,5 @@
 const formatNOK = (value) => {
-  return value.toLocaleString("en", {
+  return value.toLocaleString({
     style: "currency",
     currency: "NOK",
   });

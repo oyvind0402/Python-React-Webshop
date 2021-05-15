@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {Header} from "../Header/Header";
 
 export const NewProductForm = () => {
   const [admin, setAdmin] = useState(false);
@@ -10,6 +11,8 @@ export const NewProductForm = () => {
 
   if (admin) {
     return (
+        <>
+      <Header />
       <main id="main" className="addProduct">
         <h3>Add a phone</h3>
         <div className="form">
@@ -100,6 +103,7 @@ export const NewProductForm = () => {
           </form>
         </div>
       </main>
+          </>
     );
   } else {
     return <div>You do not have admin privileges...</div>;
