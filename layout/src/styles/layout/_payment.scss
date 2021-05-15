@@ -1,0 +1,54 @@
+.form {
+  &-group-2 {
+    margin: 0.5rem 0;
+    @include grid;
+    grid-template-columns: 1.08fr 0.92fr 0.5fr 0.5fr;
+    grid-template-areas: "date-lbl date-in cvc-lbl cvc-in";
+    justify-content: center;
+  }
+
+  &-lbl-date {
+    grid-area: date-lbl;
+  }
+  &-in-date {
+    grid-area: date-in;
+    max-width: 7rem;
+  }
+  &-lbl-cvc {
+    grid-area: cvc-lbl;
+    text-align: right;
+    box-sizing: border-box;
+    padding: 0 0.5rem 0 1.5rem;
+  }
+  &-in-cvc {
+    grid-area: cvc-in;
+    max-width: 6rem;
+  }
+}
+
+@media only screen and (max-width: #{$mq-xs}) {
+  .form {
+    &-group {
+      grid-template-columns: 1fr;
+      margin: 1.5rem 0;
+    }
+    &-group-2 {
+      grid-template-columns: 1fr;
+      grid-template-areas: "date-lbl" "date-in" "cvc-lbl" "cvc-in";
+      margin: 1.5rem 0;
+    }
+    &-in-date {
+      max-width: inherit;
+    }
+    &-lbl-cvc {
+      grid-area: cvc-lbl;
+      text-align: left;
+      padding: 0;
+      margin-top: 1.5rem;
+    }
+    &-in-cvc {
+      grid-area: cvc-in;
+      max-width: inherit;
+    }
+  }
+}

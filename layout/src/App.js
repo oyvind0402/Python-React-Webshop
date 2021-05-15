@@ -15,6 +15,7 @@ import { Basket } from "./components/Basket/Basket";
 import { NewProductForm } from "./components/Admin/NewProductForm";
 import { ProductPage } from "./components/ProductPage/ProductPage";
 import { Error404 } from "./components/Error404/Error404";
+import { Payment } from "./components/Payment/Payment";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/login" exact component={Login} />
         <Route path="/signup" exact component={SignUp} />
         <Route path="/basket" component={Basket} />
+        <Route path="/payment" component={Payment} />
         <Route path="/new" exact component={NewProductForm} />
         <Route path="/product" component={ProductPage} />
         <Route path="/404" component={Error404} />
