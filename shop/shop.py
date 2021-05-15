@@ -321,8 +321,8 @@ def editProduct(productid):
     return jsonify({"msg": "Could not update the product, invalid image extension."}), 400
 
 
-#Deleting a product
-@app.route('/api/product/<int:productid>/delete', methods=["DELETE"])
+#Deleting a product, had to make it POST couldnt use DELETE with flask
+@app.route('/api/product/delete/<int:productid>', methods=["POST"])
 def deleteProduct(productid):
     db = openDatabase()
     cursor = db.cursor()

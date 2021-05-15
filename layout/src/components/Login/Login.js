@@ -9,7 +9,7 @@ export const Login = () => {
     if (localStorage.getItem("jwt_token")) {
       history.push("/");
     } else if (localStorage.getItem("admin")) {
-      history.push("/new");
+      history.push("/admin");
     }
   });
 
@@ -37,9 +37,8 @@ export const Login = () => {
 
     //If the admin is trying to log in we do not store the token in localStorage - we just redirect to the adminpage
     if ((email === "admin@admin.com") & (password === "admin")) {
-      console.log("Inside here!");
       localStorage.setItem("admin", "true");
-      history.push("/new");
+      history.push("/admin");
     } else if (response.status === 200) {
       localStorage.setItem(JSON.stringify(response));
       history.push("/");

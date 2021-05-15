@@ -32,6 +32,8 @@ export const HeaderLogin = () => {
           <p>Log in</p>
         </Link>
       )}
+      {admin ? <Link to="/admin">Admin</Link> : null}
+      {userLoggedIn ? <Link to="/user">Profile</Link> : null}
     </div>
   );
 };

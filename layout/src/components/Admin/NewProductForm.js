@@ -137,6 +137,10 @@ export const NewProductForm = () => {
       </>
     );
   } else {
-    return <div>You do not have admin privileges...</div>;
+    return (
+      <main id="main">
+        <p>You do not have admin privileges...</p>
+      </main>
+    );
   }
 };

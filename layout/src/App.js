@@ -8,6 +8,9 @@ import { SignUp } from "./components/Signup/Signup";
 import { Basket } from "./components/Basket/Basket";
 import { NewProductForm } from "./components/Admin/NewProductForm";
 import { ProductPage } from "./components/ProductPage/ProductPage";
+import AdminPage from "./components/Admin/AdminPage";
+import DeleteProduct from "./components/Admin/DeleteProduct";
+import UserPage from "./components/Login/UserPage";
 
 function App() {
   return (
@@ -19,6 +22,9 @@ function App() {
         <Route path="/basket" component={Basket} />
         <Route path="/new" exact component={NewProductForm} />
         <Route path="/product" component={ProductPage} />
+        <Route path="/admin" exact component={AdminPage} />
+        <Route path="/delete" exact component={DeleteProduct} />
+        <Route path="/user" exact component={UserPage} />
       </Switch>
       <Footer />
     </Router>
