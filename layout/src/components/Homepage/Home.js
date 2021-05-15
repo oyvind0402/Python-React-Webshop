@@ -5,7 +5,6 @@ import { ProductCard } from "./ProductCard";
 import { Header } from "../Header/Header";
 import { useCart, useDispatchCart } from "../CartContext/CartProvider";
 
-
 export default function Home() {
   const [products, updateProducts] = useState([]);
   const [filter, updateFilter] = useState([]);
@@ -173,28 +172,29 @@ export default function Home() {
   }
 
   return (
-      <>
-    <main id="main">
-      <h2>Our products</h2>
-      <div className="home">
-        <Filter
-          className="home-filter"
-          onchange={(filter) => getProduct(filter)}
-        />
-        <div className="products">
-          {products.map((prod) => {
-            return (
-              <ProductCard
-                key={prod["id"]}
-                product={prod}
-                filter={filter}
-                onchange={(filter) => getProduct(filter)}
-              />
-            );
-          })}
+    <>
+      <Header />
+      <main id="main">
+        <h2>Our products</h2>
+        <div className="home">
+          <Filter
+            className="home-filter"
+            onchange={(filter) => getProduct(filter)}
+          />
+          <div className="products">
+            {products.map((prod) => {
+              return (
+                <ProductCard
+                  key={prod["id"]}
+                  product={prod}
+                  filter={filter}
+                  onchange={(filter) => getProduct(filter)}
+                />
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </main>
-        </>
+      </main>
+    </>
   );
 }

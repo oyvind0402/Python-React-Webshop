@@ -1,7 +1,6 @@
 import "./styles/main.scss";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Header } from "./components/Header/Header";
 import { Footer } from "./components/Footer/Footer";
 import Home from "./components/Homepage/Home";
 import { Login } from "./components/Login/Login";
@@ -13,7 +12,6 @@ import { ProductPage } from "./components/ProductPage/ProductPage";
 function App() {
   return (
     <Router>
-      <Header/>
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/login" exact component={Login} />
