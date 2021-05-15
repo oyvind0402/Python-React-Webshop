@@ -37,7 +37,7 @@ export const Login = () => {
 
     //If the admin is trying to log in we do not store the token in localStorage - we just redirect to the adminpage
     if ((email === "admin@admin.com") & (password === "admin")) {
-      localStorage.setItem("admin", "true");
+      localStorage.setItem("admin", reply["jwt_token"]);
       history.push("/admin");
     } else if (response.status === 200) {
       localStorage.setItem(Object.keys(reply), reply["jwt_token"]);
