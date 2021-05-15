@@ -12,8 +12,8 @@ const UpdateProductPage = () => {
     }
     const loadData = async () => {
       const link = window.location.href;
-      const sku = link.split("/")[4];
-      const apiLink = "http://localhost:5000/api/product/" + sku;
+      const id = link.split("/")[4];
+      const apiLink = "http://localhost:5000/api/product/" + id;
 
       const response = await fetch(apiLink);
       let data = await response.json();

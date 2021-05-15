@@ -19,12 +19,9 @@ const DeleteProduct = () => {
   }, []);
 
   async function deleteProduct(id) {
-    const response2 = await fetch(
-      `http://localhost:5000/api/product/delete/${id}`,
-      {
-        method: "POST",
-      }
-    );
+    await fetch(`http://localhost:5000/api/product/delete/${id}`, {
+      method: "POST",
+    });
     const response = await fetch("http://localhost:5000/api/products");
     let data = await response.json();
     updateProducts(data);

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SpecsTable } from "./SpecsTable";
-import {useCart, useDispatchCart} from "../CartContext/CartProvider";
-import { formatNOK } from "../utils";
+import { useCart, useDispatchCart } from "../CartContext/CartProvider";
 
 export const ProductPage = () => {
   const dispatch = useDispatchCart();
@@ -15,7 +14,7 @@ export const ProductPage = () => {
     const response = await fetch(apiLink);
     let data = await response.json();
     productUpdate(data);
-    dispatch({type: "ADD", item});
+    dispatch({ type: "ADD", item });
     reRender("reRender");
     console.log(render);
     setTimeout(() => {
@@ -51,8 +50,8 @@ export const ProductPage = () => {
             alt={product["name"]}
           />
         </div>
-        {useCart().map((product)=> {
-          console.log(product)
+        {useCart().map((product) => {
+          return console.log(product);
         })}
         <div className="productpage-details">
           <p>{product["long_desc"]}</p>
