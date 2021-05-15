@@ -18,7 +18,7 @@ const DeleteProduct = () => {
     loadData();
   }, []);
 
-  async function deleteProduct(id) {
+  async function deletePhone(id) {
     await fetch(`http://localhost:5000/api/product/delete/${id}`, {
       method: "POST",
     });
@@ -45,7 +45,7 @@ const DeleteProduct = () => {
                   <p className="prodcard-desc">{prod["short_desc"]}</p>
                   <button
                     className="btn"
-                    onClick={() => deleteProduct(prod["id"])}
+                    onClick={() => deletePhone(prod["id"])}
                   >
                     Delete
                   </button>

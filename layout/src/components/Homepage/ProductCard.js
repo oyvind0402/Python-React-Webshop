@@ -22,7 +22,7 @@ export const ProductCard = (props) => {
       <h3 className="prodcard-name">
         {props.product["brand"] + " " + props.product["name"]}
       </h3>
-      <img className="prodcard-img" src={src} alt="" />
+      <img className="prodcard-img" src={src} alt={props.product["name"]} />
       <p className="prodcard-desc">{props.product["short_desc"]}</p>
       <Link to={"/product/" + props.product["id"]} className="prodcard-more">
         <p>ⓘ Read more</p>
