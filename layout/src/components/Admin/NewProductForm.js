@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "../Header/Header";
+import { Link } from "react-router-dom";
 
 export const NewProductForm = () => {
   const [admin, setAdmin] = useState(false);
@@ -48,7 +49,9 @@ export const NewProductForm = () => {
     return (
       <>
         <Header />
+
         <main id="main" className="addProduct">
+          <Link to="/admin">Back to admin</Link>
           <h3>Add a phone</h3>
           <div className="form">
             <form onSubmit={addPhone}>

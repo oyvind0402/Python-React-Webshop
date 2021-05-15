@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Header } from "../Header/Header";
 
 const DeleteProduct = () => {
   const [admin, setAdmin] = useState(false);
   const [products, updateProducts] = useState([]);
-  const history = useHistory();
 
   useEffect(() => {
     if (localStorage.getItem("admin")) {
