@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatchCart } from "../CartContext/CartProvider";
 import { formatNOK } from "../utils";
 
@@ -6,12 +6,13 @@ export const BasketCard = (props) => {
   const dispatch = useDispatchCart();
 
   const plusQty = () => {
-    let newQty = props.product.quantity + 1 //new quantity
+    let newQty = props.product.quantity + 1; //new quantity
     addToCart(props.product, newQty);
   };
   const minusQty = () => {
-    let reducedQty = props.product.quantity - 1
-    if (reducedQty === 0){ // products has to be removed from shopping cart
+    let reducedQty = props.product.quantity - 1;
+    if (reducedQty === 0) {
+      // products has to be removed from shopping cart
       props.handleRemove(props.index);
     } else {
       reduceFromCart(props.product, reducedQty);
@@ -20,12 +21,12 @@ export const BasketCard = (props) => {
 
   const addToCart = (item, changeQuantity) => {
     dispatch({ type: "ADDQUANTITY", item, changeQuantity });
-    props.onchange("Rerender")
+    props.onchange("Rerender");
   };
 
   const reduceFromCart = (item, reducedQuantity) => {
     dispatch({ type: "REDUCE", item, reducedQuantity });
-    props.onchange("Rerender")
+    props.onchange("Rerender");
   };
 
   const src = "data:image/png;base64, " + props.product["image"];

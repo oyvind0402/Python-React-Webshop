@@ -9,17 +9,17 @@ export const Basket = () => {
   const [render, rerender] = useState();
   const dispatch = useDispatchCart();
 
-  function startRerender (string) { //force rerender page
-    console.log(render)
+  function startRerender(string) {
+    //force rerender page
+    console.log(render);
     rerender(string);
   }
 
   let totalPrice = 0;
 
-
-  function newTotalUpdater (item) {
-    let newValue = item["quantity"] * item["price"]
-    totalPrice = totalPrice + newValue
+  function newTotalUpdater(item) {
+    let newValue = item["quantity"] * item["price"];
+    totalPrice = totalPrice + newValue;
   }
 
   const handleRemove = (index) => {
@@ -27,18 +27,26 @@ export const Basket = () => {
   };
 
   function checkAmountOfBasket(length) {
-
-    if(length === 0 ) { //if shoppingcart is empt
-      setTimeout( () => {
-        document.getElementById("basket-pay").style.setProperty("display", "none");
-        document.getElementById("basket-empty").style.setProperty("display", "block");
-
-      }, 100)
+    if (length === 0) {
+      //if shoppingcart is empty
+      setTimeout(() => {
+        document
+          .getElementById("basket-pay")
+          .style.setProperty("display", "none");
+        document
+          .getElementById("basket-empty")
+          .style.setProperty("display", "block");
+      }, 100);
     } else {
-      setTimeout( () => { // when shoppingcart isnt empty
-        document.getElementById("basket-pay").style.setProperty("display", "block");
-        document.getElementById("basket-empty").style.setProperty("display", "none");
-      }, 100)
+      setTimeout(() => {
+        // when shoppingcart isnt empty
+        document
+          .getElementById("basket-pay")
+          .style.setProperty("display", "flex");
+        document
+          .getElementById("basket-empty")
+          .style.setProperty("display", "none");
+      }, 100);
     }
   }
 
@@ -46,8 +54,8 @@ export const Basket = () => {
     <main id="main">
       <h2>Your shopping basket</h2>
       <div>
-        { useCart().map((item, index) => {
-            newTotalUpdater(item)
+        {useCart().map((item, index) => {
+          newTotalUpdater(item);
           return (
             <BasketCard
               handleRemove={handleRemove}
@@ -67,7 +75,11 @@ export const Basket = () => {
           Go to payment
         </button>
       </div>
-      <div className="basket-empty" id="basket-empty" onLoad={checkAmountOfBasket(useCart().length)}>
+      <div
+        className="basket-empty"
+        id="basket-empty"
+        onLoad={checkAmountOfBasket(useCart().length)}
+      >
         <p>Your shopping basket is empty.</p>
       </div>
     </main>
