@@ -43,32 +43,7 @@ def validate_user_input(**kwargs):
 def generate_hash(password, password_salt):
     passwordhash = bcrypt.hashpw(password, password_salt)
     return passwordhash
-
-#Validating user input when logging in - creating a JWT token for authentication.
-def validate_user(email, password):
-    db = openDatabase()
-    cursor = db.cursor()
-    
-    cursor.execute('SELECT * FROM user WHERE email=%s', [email])
-    user = [{"id": id, "name": name, "username": username, "password_salt": password_salt, "password_hash": password_hash, "email": email} for (id, name, username, password_salt, password_hash, email) in cursor]
-
-    if user is None:
-        return False
-    else:
-        if len(user) == 1:
-            user_password_hash = user[0]["password_hash"]
-
-            if bcrypt.checkpw(password.encode('utf-8'), user_password_hash.encode('utf-8')):
-                userid = user[0]["id"]
-                jwtencoded = jwt.encode({"id": userid}, JWT_SECRET_KEY, algorithm="HS256")
-                jwt_token = str(jwtencoded).split(".")[1]
-                db.close()
-                cursor.close()
-                return jwt_token
-            else:
-                return False
-        else:
-            return False
+ 
 
 #To give some sort of frontend for the flask API server
 @app.route('/', defaults={"path": "index.html"})
@@ -129,15 +104,31 @@ def registerUser():
 #Route for logging in
 @app.route('/api/login', methods=["POST"])
 def loginUser():
+    db = openDatabase()
+    cursor = db.cursor()
+    
     form = request.form
     email = form.get('email')
     password = form.get('password')
-    token = validate_user(email, password)
 
-    if token:
-        return jsonify({"jwt_token": token}), 200
+    cursor.execute('SELECT * FROM user WHERE email=%s', [email])
+    user = [{"id": id, "name": name, "username": username, "password_salt": password_salt, "password_hash": password_hash, "email": email} for (id, name, username, password_salt, password_hash, email) in cursor]
+    
+    if user is None:
+        return jsonify({"msg": "No account with that email"}), 401
     else:
-        return jsonify({"msg": "Authentication failed"}), 401
+        if len(user) == 1:
+            user_password_hash = user[0]["password_hash"]
+
+            if bcrypt.checkpw(password.encode('utf-8'), user_password_hash.encode('utf-8')):
+                userid = user[0]["id"]
+                jwtencoded = jwt.encode({"id": userid}, JWT_SECRET_KEY, algorithm="HS256")
+                token = str(jwtencoded).split(".")[1]
+                db.close()
+                cursor.close()
+                return jsonify({"id": user[0]["id"], "name": user[0]["name"], "username": user[0]["username"], "email": user[0]["email"], "jwt_token": token}), 200
+            else:
+                return jsonify({"msg": "Incorrect password"}), 401
 
 
 #Editing a user

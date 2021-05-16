@@ -40,7 +40,14 @@ export const Login = () => {
       localStorage.setItem("admin", reply["jwt_token"]);
       history.push("/admin");
     } else if (response.status === 200) {
-      localStorage.setItem(Object.keys(reply), reply["jwt_token"]);
+      localStorage.setItem("jwt_token", reply["jwt_token"]);
+      let user_info = {
+        id: reply["id"],
+        name: reply["name"],
+        username: reply["username"],
+        email: reply["email"],
+      };
+      localStorage.setItem("user-info", JSON.stringify(user_info));
       history.push("/");
     } else {
       alert(reply["msg"]);
