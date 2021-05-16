@@ -7,7 +7,9 @@ export const ProductCard = (props) => {
   const dispatch = useDispatchCart();
 
   const addToCart = (item) => {
-    document.getElementById("button" + props.product["id"]).disabled = true;
+    setTimeout(() => {
+        document.getElementById("button" + props.product["id"]).disabled = true;
+    }, 25);
     dispatch({ type: "ADD", item });
     props.onchange(props.filter);
     setTimeout(() => {
