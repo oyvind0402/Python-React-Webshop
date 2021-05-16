@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, send_from_directory, request, Blueprint
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import mysql.connector
 import os
@@ -8,7 +8,7 @@ import bcrypt
 import jwt
 
 
-app = Flask(__name__, static_folder="/shop/static", static_url_path="")
+app = Flask(__name__)
 
 
 #To eliminate CORS errors when doing post and get requests from localhost
@@ -43,13 +43,11 @@ def validate_user_input(**kwargs):
 def generate_hash(password, password_salt):
     passwordhash = bcrypt.hashpw(password, password_salt)
     return passwordhash
- 
 
-#To give some sort of frontend for the flask API server
-@app.route('/', defaults={"path": "index.html"})
-@app.route('/<path>')
-def index(path):
-    return send_from_directory("/shop/static", path)
+
+@app.route('/')
+def index():
+    return '<div style="text-align: center; margin-top: 200px; font-size: 30px;">This is the webshop API.<br/><br/>Go to <a href="https://localhost:5000/api/users">Users</a> to see all users.<br/>Go to <a href="https://localhost:5000/api/products">Products</a> to see all products.</div>'
 
 
 #Getting all users

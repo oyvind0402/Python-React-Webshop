@@ -5,3 +5,7 @@
 You need to delete the container to reset the database, if you so wish.
 You can do that with 'docker-compose down'.
 Then you follow steps 1 through 3 again to see the default state of our data.
+The URL for the API is https://localhost:5000, it's https since its secured by a selfsigned SSL key pair.
+
+Go to https://localhost:5000/api/users to see all users.
+Go to https://localhost:5000/api/products to see all products.
