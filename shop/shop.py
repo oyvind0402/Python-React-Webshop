@@ -322,4 +322,4 @@ def deleteProduct(productid):
     return "", 204
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True, ssl_context=('./webshop.crt', './webshop.key'))
+    app.run(host='0.0.0.0', debug=True, ssl_context=('./static/TLS/webshop.crt', './static/TLS/webshop.key'))
