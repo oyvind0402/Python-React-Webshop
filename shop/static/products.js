@@ -27,6 +27,6 @@ function render_products(data) {
   document.getElementById("product-image").src = src;
 }
 
-fetch("http://localhost:5000/api/products")
+fetch("https://localhost:5000/api/products")
   .then((response) => response.json())
   .then((data) => render_products(data));

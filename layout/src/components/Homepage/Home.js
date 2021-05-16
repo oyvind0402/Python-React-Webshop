@@ -12,7 +12,7 @@ export default function Home() {
 
   useEffect(() => {
     const loadData = async () => {
-      const response = await fetch("http://localhost:5000/api/products");
+      const response = await fetch("https://localhost:5000/api/products");
       let data = await response.json();
       updateProducts(data);
     };
@@ -20,7 +20,7 @@ export default function Home() {
   }, []);
 
   async function getProduct(filterOptions) {
-    const response = await fetch("http://localhost:5000/api/products");
+    const response = await fetch("https://localhost:5000/api/products");
     let data = await response.json();
     let newProducts = [];
 

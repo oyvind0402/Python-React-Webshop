@@ -11,7 +11,7 @@ const UpdateProduct = () => {
       setAdmin(true);
     }
     const loadData = async () => {
-      const response = await fetch("http://localhost:5000/api/products");
+      const response = await fetch("https://localhost:5000/api/products");
       let data = await response.json();
       updateProducts(data);
     };

@@ -27,7 +27,7 @@ export const NewProductForm = () => {
     data.append("storage", storage);
     data.append("image", image);
 
-    let response = await fetch("http://localhost:5000/api/product/add", {
+    let response = await fetch("https://localhost:5000/api/product/add", {
       method: "POST",
       header: {
         Authorization: "AWdad12e+1daw::d1__123123dadaodo",

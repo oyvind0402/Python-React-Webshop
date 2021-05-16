@@ -13,7 +13,7 @@ const UpdateProductPage = () => {
     const loadData = async () => {
       const link = window.location.href;
       const id = link.split("/")[4];
-      const apiLink = "http://localhost:5000/api/product/" + id;
+      const apiLink = "https://localhost:5000/api/product/" + id;
 
       const response = await fetch(apiLink);
       let data = await response.json();
@@ -44,7 +44,7 @@ const UpdateProductPage = () => {
     const link = window.location.href;
     const id = link.split("/")[4];
     const response = await fetch(
-      "http://localhost:5000/api/product/update/" + id,
+      "https://localhost:5000/api/product/update/" + id,
       {
         method: "POST",
         header: {
@@ -58,7 +58,7 @@ const UpdateProductPage = () => {
     console.log(reply);
 
     if (response.status === 201) {
-      const apiLink = `http://localhost:5000/api/product/${id}`;
+      const apiLink = `https://localhost:5000/api/product/${id}`;
       const response2 = await fetch(apiLink);
       let data2 = await response2.json();
       updateProduct(data2);

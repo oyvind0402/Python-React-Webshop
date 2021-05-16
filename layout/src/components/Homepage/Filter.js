@@ -6,7 +6,7 @@ export const Filter = (props) => {
   useEffect(() => {
     const loadData = async () => {
       const response = await fetch(
-        "http://localhost:5000/api/product/distinctvalues"
+        "https://localhost:5000/api/product/distinctvalues"
       );
       let data = await response.json();
       updateAttributes(data);

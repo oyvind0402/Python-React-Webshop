@@ -11,7 +11,7 @@ export const SignUp = () => {
           <h1>Sign up to generic companys webshop!</h1>
           <form
             id="signup-form"
-            action="http://localhost:5000/api/register"
+            action="https://localhost:5000/api/register"
             method="POST"
             encType="multipart/form-data"
           >

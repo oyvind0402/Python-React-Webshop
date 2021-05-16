@@ -324,8 +324,4 @@ def deleteProduct(productid):
     return "", 204
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
-    #Below is for SSL/TLS
-    #Need to add "pyopenssl" to requirements.txt for it to work
-    #This will change the url for localhost from http to https
-    #, ssl_context='adhoc')
+    app.run(host='0.0.0.0', debug=True, ssl_context=('./webshop.crt', './webshop.key'))

@@ -24,7 +24,7 @@ export const Login = () => {
     data.append("email", email);
     data.append("password", password);
 
-    let response = await fetch("http://localhost:5000/api/login", {
+    let response = await fetch("https://localhost:5000/api/login", {
       method: "POST",
       header: {
         Authorization: "AWdad12e+1daw::d1__123123dadaodo",
