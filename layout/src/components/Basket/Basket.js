@@ -42,11 +42,11 @@ export const Basket = () => {
       setTimeout(() => {
         // when shoppingcart isnt empty
         document
-          .getElementById("basket-pay")
-          .style.setProperty("display", "block");
+            .getElementById("basket-pay")
+            .style.setProperty("display", "block");
         document
-          .getElementById("basket-empty")
-          .style.setProperty("display", "none");
+            .getElementById("basket-empty")
+            .style.setProperty("display", "none");
       }, 100);
     }
   }

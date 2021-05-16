@@ -43,7 +43,7 @@ export const BasketCard = (props) => {
         x
       </button>
       <div className="basketcard-img">
-        <img src={src} alt={props.props.name} />
+        <img src={src} alt={props.name} />
       </div>
       <div className="basketcard-quantity">
         <button
