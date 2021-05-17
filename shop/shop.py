@@ -322,18 +322,29 @@ def deleteProduct(productid):
     return "", 204
 
 
-#Adding a product to a users orders
-@app.route('/api/user/<int:userid>/product/<int:productid>/size/<int:quantity>/order', methods=["POST"])
-def addOrder(userid, productid, quantity):
+#Adding an orderdetail for an order
+@app.route('/api/product/<int:productid>/size/<int:quantity>/order/<int:orderid>', methods=["POST"])
+def addOrderDetails(orderid, userid, productid, quantity):
+    db = openDatabase()
+    cursor = db.cursor()
+    cursor.execute('INSERT INTO OrderDetails (orderID, productID, quantity) VALUES (%s, %s, %s)', (orderid, productid, quantity))
+    db.commit()
+    cursor.close()
+    db.close()
+    return jsonify({"msg": "Orderdetails placed for orderid={}.".format(orderid)}), 201
+
+
+#Adding an order for a user
+@app.route('/api/user/<int:userid>/order', methods=["POST"])
+def addOrder(userid):
     db = openDatabase()
     cursor = db.cursor()
     cursor.execute('INSERT INTO UserOrder (userID) VALUES (%s)', [userid])
     id = cursor.lastrowid
-    cursor.execute('INSERT INTO OrderDetails (orderID, productID, quantity) VALUES (%s, %s, %s)', (id, productid, quantity))
     db.commit()
     cursor.close()
     db.close()
-    return jsonify({"msg": "Order placed for user."}), 201
+    return jsonify({"orderID": id}), 201
 
 
 #Getting a users orders
