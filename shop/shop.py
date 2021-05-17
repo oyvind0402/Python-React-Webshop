@@ -321,5 +321,33 @@ def deleteProduct(productid):
     db.close()
     return "", 204
 
+
+#Adding a product to a users orders
+@app.route('/api/user/<int:userid>/product/<int:productid>/size/<int:quantity>/order', methods=["POST"])
+def addOrder(userid, productid, quantity):
+    db = openDatabase()
+    cursor = db.cursor()
+    cursor.execute('INSERT INTO UserOrder (userID) VALUES (%s)', [userid])
+    id = cursor.lastrowid
+    cursor.execute('INSERT INTO OrderDetails (orderID, productID, quantity) VALUES (%s, %s, %s)', (id, productid, quantity))
+    db.commit()
+    cursor.close()
+    db.close()
+    return jsonify({"msg": "Order placed for user."}), 201
+
+
+#Getting a users orders
+@app.route('/api/user/<int:userid>/orders', methods=["GET"])
+def getOrders(userid):
+    db = openDatabase()
+    cursor = db.cursor()
+    sql_query = "SELECT OD.orderID, OD.productID, OD.quantity FROM OrderDetails as OD INNER JOIN UserOrder as UD on OD.orderID=UD.id WHERE UD.userID=%s"
+    cursor.execute(sql_query, [userid])
+    response = [{"orderID": orderID, "productID": productID, "quantity": quantity} for (orderID, productID, quantity) in cursor]
+    cursor.close()
+    db.close()
+    return jsonify(response), 200
+
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, ssl_context=('./static/TLS/webshop.crt', './static/TLS/webshop.key'))
