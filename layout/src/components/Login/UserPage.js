@@ -40,7 +40,9 @@ const UserPage = (props) => {
     return (
       <>
         <Header />
-        <main id="main"></main>
+        <main id="main">
+          <p>Youre not logged in!</p>
+        </main>
       </>
     );
   }
