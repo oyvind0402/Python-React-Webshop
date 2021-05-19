@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useCart, useDispatchCart } from "../CartContext/CartProvider";
 import { formatNOK } from "../utils";
 import { BasketCard } from "./BasketCard";
+import { Link } from "react-router-dom";
 
 //TODO Make everything-is-free discount page
 
@@ -71,9 +72,11 @@ export const Basket = () => {
         <div className="basket-pay-total">
           <p>Total price: {formatNOK(totalPrice)} </p>
         </div>
-        <button className="btn btn-primary basket-pay-btn">
-          Go to payment
-        </button>
+        <Link to="/payment">
+          <button className="btn btn-primary basket-pay-btn">
+            Go to payment
+          </button>
+        </Link>
       </div>
       <div
         className="basket-empty"

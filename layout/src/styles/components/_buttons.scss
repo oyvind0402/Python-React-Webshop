@@ -17,18 +17,25 @@
   }
 
   &-primary:hover,
-  &-primary:focus {
+  &-primary:focus-visible {
     background-color: $blue80;
   }
 
   &-secondary {
-    border-color: $grey80;
-    background-color: $grey95;
-    color: $grey20;
+    border-color: $blue95;
+    background-color: white;
+    color: $blue50;
   }
 
   &-secondary:hover,
-  &-secondary:focus {
-    background-color: $grey80;
+  &-secondary:focus-visible {
+    background-color: $blue95;
+  }
+
+  &-disabled {
+    pointer-events: none;
+    border-color: $grey80;
+    background-color: $grey95;
+    color: $grey20;
   }
 }
