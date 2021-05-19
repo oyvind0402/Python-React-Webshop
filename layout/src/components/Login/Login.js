@@ -33,7 +33,6 @@ export const Login = () => {
       body: data,
     });
     const reply = await response.json();
-    console.log(reply);
 
     //If the admin is trying to log in we do not store the token in localStorage - we just redirect to the adminpage
     if ((email === "admin@admin.com") & (password === "admin")) {

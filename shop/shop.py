@@ -283,34 +283,44 @@ def addProduct():
 def editProduct(productid):
     db = openDatabase()
     cursor = db.cursor()
+    
+    #Getting the current values in case the admin doesnt want to update some values
     response = requests.get("https://localhost:5000/api/product/{}".format(productid), verify=False)
     response = response.json()
+
     form = request.form
+
+    #If the brand needs to be updated
     if form.get('brand'):
         brand = form.get('brand')
     else:
         brand = response["brand"]
-    
+
+    #If the name needs to be updated
     if form.get('name'):
         name = form.get('name')
     else:
         name = response["name"]
-    
+
+    #If the price needs to be updated
     if form.get('price'):
         price = form.get('price')
     else:
         price = response["price"]
-    
+
+    #If the color needs to be updated
     if form.get('color'):
         color = form.get('color')
     else:
         color = response["color"]
-    
+
+    #If the operatingsystem needs to be updated
     if form.get('operatingsystem'):
         operatingsystem = form.get('operatingsystem')
     else:
         operatingsystem = response["operatingsystem"]
-    
+
+    #If the storage needs to be updated
     if form.get('storage'):
         storage = form.get('storage')
     else:
