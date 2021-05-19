@@ -375,7 +375,7 @@ def addOrder(userid):
     db.close()
     return jsonify({"orderID": id}), 201
 
-
+#Route to get all orderids for a user - to check for bugs can be removed probably if its not needed.
 @app.route('/api/user/<int:userid>/orderids', methods=["GET"])
 def getAllOrders(userid):
     db = openDatabase()
