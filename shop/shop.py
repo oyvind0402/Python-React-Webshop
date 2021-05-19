@@ -1,11 +1,13 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+import requests
 import mysql.connector
 import os
 import base64
 from werkzeug.utils import secure_filename
 import bcrypt
 import jwt
+import time
 
 
 app = Flask(__name__)
@@ -281,15 +283,41 @@ def addProduct():
 def editProduct(productid):
     db = openDatabase()
     cursor = db.cursor()
+    response = requests.get("https://localhost:5000/api/product/{}".format(productid), verify=False)
+    response = response.json()
     form = request.form
-    brand = form.get('brand')
-    name = form.get('name')
-    price = form.get('price')
-    color = form.get('color')
-    operatingsystem = form.get('operatingsystem')
-    storage = form.get('storage')
+    if form.get('brand'):
+        brand = form.get('brand')
+    else:
+        brand = response["brand"]
+    
+    if form.get('name'):
+        name = form.get('name')
+    else:
+        name = response["name"]
+    
+    if form.get('price'):
+        price = form.get('price')
+    else:
+        price = response["price"]
+    
+    if form.get('color'):
+        color = form.get('color')
+    else:
+        color = response["color"]
+    
+    if form.get('operatingsystem'):
+        operatingsystem = form.get('operatingsystem')
+    else:
+        operatingsystem = response["operatingsystem"]
+    
+    if form.get('storage'):
+        storage = form.get('storage')
+    else:
+        storage = response["storage"]
+
     short_desc = "This is the new " + name + " from " + brand + "."
-    long_desc = "The " + name + " from " + brand + ", which costs " + price + "kr, is in the lovely color of " + color + ". It runs on " + operatingsystem + " and has " + storage + "GB of storage."
+    long_desc = "The " + name + " from " + brand + ", which costs " + str(price) + "kr, is in the lovely color of " + color + ". It runs on " + operatingsystem + " and has " + str(storage) + "GB of storage."
     if not request.files.get('image'):
         cursor.execute("UPDATE product SET brand=%s, name=%s, price=%s, color=%s, operatingsystem=%s, storage=%s, short_desc=%s, long_desc=%s WHERE id=%s", (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, productid))
         db.commit()
@@ -323,11 +351,12 @@ def deleteProduct(productid):
 
 
 #Adding an orderdetail for an order
-@app.route('/api/product/<int:productid>/size/<int:quantity>/order/<int:orderid>', methods=["POST"])
-def addOrderDetails(orderid, userid, productid, quantity):
+@app.route('/api/product/<int:productid>/size/<int:quantity>/order/<int:orderid>', methods=["POST", "GET"])
+def addOrderDetails(orderid, productid, quantity):
     db = openDatabase()
     cursor = db.cursor()
-    cursor.execute('INSERT INTO OrderDetails (orderID, productID, quantity) VALUES (%s, %s, %s)', (orderid, productid, quantity))
+    now = time.strftime('%Y-%m-%d %H:%M:%S')
+    cursor.execute("INSERT INTO OrderDetails (orderID, productID, orderDate, quantity) VALUES (%s, %s, %s, %s)", (orderid, productid, now, quantity))
     db.commit()
     cursor.close()
     db.close()
@@ -335,7 +364,7 @@ def addOrderDetails(orderid, userid, productid, quantity):
 
 
 #Adding an order for a user
-@app.route('/api/user/<int:userid>/order', methods=["POST"])
+@app.route('/api/user/<int:userid>/order', methods=["POST", "GET"])
 def addOrder(userid):
     db = openDatabase()
     cursor = db.cursor()
@@ -345,6 +374,17 @@ def addOrder(userid):
     cursor.close()
     db.close()
     return jsonify({"orderID": id}), 201
+
+
+@app.route('/api/user/<int:userid>/orderids', methods=["GET"])
+def getAllOrders(userid):
+    db = openDatabase()
+    cursor = db.cursor()
+    cursor.execute('SELECT * FROM UserOrder WHERE userID=%s', [userid])
+    result = cursor.fetchall()
+    cursor.close()
+    db.close()
+    return jsonify(result), 200
 
 
 #Getting a users orders

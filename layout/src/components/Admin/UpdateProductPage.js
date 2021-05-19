@@ -86,7 +86,6 @@ const UpdateProductPage = () => {
                   className="form-control"
                   name="brand"
                   id="brand"
-                  required={true}
                 />
               </div>
               <div className="form-group">
@@ -96,7 +95,6 @@ const UpdateProductPage = () => {
                   className="form-control"
                   name="name"
                   id="name"
-                  required={true}
                 />
               </div>
               <div className="form-group">
@@ -106,7 +104,6 @@ const UpdateProductPage = () => {
                   className="form-control"
                   name="price"
                   id="price"
-                  required={true}
                 />
               </div>
               <div className="form-group">
@@ -116,7 +113,6 @@ const UpdateProductPage = () => {
                   className="form-control"
                   name="color"
                   id="color"
-                  required={true}
                 />
               </div>
               <div className="form-group">
@@ -126,7 +122,6 @@ const UpdateProductPage = () => {
                   className="form-control"
                   name="operatingsystem"
                   id="operatingsystem"
-                  required={true}
                 />
               </div>
               <div className="form-group">
@@ -136,7 +131,6 @@ const UpdateProductPage = () => {
                   className="form-control"
                   name="storage"
                   id="storage"
-                  required={true}
                 />
               </div>
               <div className="form-group">

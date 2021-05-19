@@ -4,3 +4,4 @@ flask_cors
 pyjwt
 bcrypt
 pyopenssl
+requests
