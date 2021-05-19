@@ -32,10 +32,21 @@
     background-color: $blue95;
   }
 
-  &-disabled {
-    pointer-events: none;
+  &-grey {
     border-color: $grey80;
     background-color: $grey95;
     color: $grey20;
+  }
+
+  &-grey:hover,
+  &-grey:focus-visible {
+    background-color: $grey80;
+  }
+
+  &-disabled {
+    pointer-events: none !important;
+    border-color: $grey95 !important;
+    background-color: $grey95 !important;
+    color: $grey50 !important;
   }
 }

@@ -37,7 +37,7 @@ export const BasketCard = (props) => {
         {props.product.brand} {props.product.name}
       </h3>
       <button
-        className="btn btn-secondary basketcard-btn"
+        className="btn btn-grey basketcard-btn"
         onClick={() => props.handleRemove(props.index)}
       >
         x
@@ -48,7 +48,7 @@ export const BasketCard = (props) => {
       <div className="basketcard-quantity">
         <button
           id="minusBtn"
-          className="btn btn-secondary"
+          className="btn btn-grey"
           alt="Reduce quantity"
           onClick={() => minusQty()}
         >
@@ -60,7 +60,7 @@ export const BasketCard = (props) => {
         </p>
         <button
           id="plusBtn"
-          className="btn btn-secondary"
+          className="btn btn-grey"
           alt="Increase quantity"
           onClick={() => plusQty()}
         >
