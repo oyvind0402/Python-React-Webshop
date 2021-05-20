@@ -8,6 +8,9 @@ from werkzeug.utils import secure_filename
 import bcrypt
 import jwt
 import time
+import warnings
+
+warnings.filterwarnings('ignore', message='Unverified HTTPS request')
 
 
 app = Flask(__name__)
@@ -283,7 +286,7 @@ def addProduct():
 def editProduct(productid):
     db = openDatabase()
     cursor = db.cursor()
-    
+
     #Getting the current values in case the admin doesnt want to update some values
     response = requests.get("https://localhost:5000/api/product/{}".format(productid), verify=False)
     response = response.json()
@@ -404,10 +407,48 @@ def getOrders(userid):
     cursor = db.cursor()
     sql_query = "SELECT OD.orderID, OD.productID, OD.quantity FROM OrderDetails as OD INNER JOIN UserOrder as UD on OD.orderID=UD.id WHERE UD.userID=%s"
     cursor.execute(sql_query, [userid])
-    response = [{"orderID": orderID, "productID": productID, "quantity": quantity} for (orderID, productID, quantity) in cursor]
+    response = []
+    specific_order = []
+    result = [{"orderID": orderID, "productID": productID, "quantity": quantity} for (orderID, productID, quantity) in cursor]
+    sorted_result = sorted(result, key=lambda result: result['orderID'])
+    previous_id = sorted_result[0]["orderID"]
+    product = requests.get("https://localhost:5000/api/product/{}".format(sorted_result[0]["productID"]), verify=False)
+    product = product.json()
+    product["quantity"] = sorted_result[0]["quantity"]
+    prod_list = []
+    prod_list.append(product)
+    del product["image"]
+    specific_order.append({"orderID": previous_id, "products": prod_list})
+    amount = 0
+    first = True
+
+    for result in sorted_result:
+        if result["orderID"] is not specific_order[amount]["orderID"]:
+            amount += 1
+            product = requests.get("https://localhost:5000/api/product/{}".format(result["productID"]), verify=False)
+            product = product.json()
+            del product["image"]
+            product["quantity"] = result["quantity"]
+            specific_order.append({"orderID": result["orderID"], "products": [product]})
+        else:
+            if first:
+                first = False
+                pass
+            else:
+                product = requests.get("https://localhost:5000/api/product/{}".format(result["productID"]), verify=False)
+                product = product.json()
+                del product["image"]
+                product["quantity"] = result["quantity"]
+                prod_list_copy = []
+                for product2 in specific_order[amount]["products"]:
+                    prod_list_copy.append(product2)
+                prod_list_copy.append(product)
+                specific_order[amount]["products"] = prod_list_copy
+
     cursor.close()
     db.close()
-    return jsonify(response), 200
+
+    return jsonify(specific_order), 200
 
 
 if __name__ == "__main__":
