@@ -407,7 +407,6 @@ def getOrders(userid):
     cursor = db.cursor()
     sql_query = "SELECT OD.orderID, OD.productID, OD.quantity FROM OrderDetails as OD INNER JOIN UserOrder as UD on OD.orderID=UD.id WHERE UD.userID=%s"
     cursor.execute(sql_query, [userid])
-    response = []
     specific_order = []
     result = [{"orderID": orderID, "productID": productID, "quantity": quantity} for (orderID, productID, quantity) in cursor]
     sorted_result = sorted(result, key=lambda result: result['orderID'])
@@ -444,10 +443,8 @@ def getOrders(userid):
                     prod_list_copy.append(product2)
                 prod_list_copy.append(product)
                 specific_order[amount]["products"] = prod_list_copy
-
     cursor.close()
     db.close()
-
     return jsonify(specific_order), 200
 
 
