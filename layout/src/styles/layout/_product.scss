@@ -64,6 +64,10 @@ $prod-img-w: 25rem;
     color: $grey20;
   }
 
+  &-no-caps {
+    text-transform: none;
+  }
+
   &-value {
     grid-area: val;
   }

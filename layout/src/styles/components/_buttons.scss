@@ -5,6 +5,11 @@
   border: 2px solid;
   cursor: pointer;
 
+  & a {
+    text-decoration: none;
+    color: inherit;
+  }
+
   &-primary {
     border-color: $blue80;
     background-color: $blue95;
@@ -12,7 +17,7 @@
   }
 
   &-primary:hover,
-  &-primary:focus {
+  &-primary:focus-visible {
     background-color: $blue80;
   }
 
@@ -23,7 +28,7 @@
   }
 
   &-secondary:hover,
-  &-secondary:focus {
+  &-secondary:focus-visible {
     background-color: $grey80;
   }
 }
