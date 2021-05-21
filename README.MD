@@ -8,6 +8,8 @@ Then you follow steps 1 through 3 again to see the default state of our data.
 The URL for the API is https://localhost:5000, it's https since its secured by a selfsigned SSL key pair.
 
 Go to https://localhost:5000/api/users to see all users.
-Go to https://localhost:5000/api/products to see all products.
+Go to https://localhost:5000/api/products to see all products. (It will look a bit weird because images are stored in its base64 encoding)
+
+You can create an account - or you can decide not to, however you need one to create an order.
 
 To log in as the admin - use the email "admin@admin.com" and the password "admin".
