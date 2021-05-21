@@ -9,3 +9,5 @@ The URL for the API is https://localhost:5000, it's https since its secured by a
 
 Go to https://localhost:5000/api/users to see all users.
 Go to https://localhost:5000/api/products to see all products.
+
+To log in as the admin - use the email "admin@admin.com" and the password "admin".

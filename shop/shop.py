@@ -369,7 +369,7 @@ def addOrderDetails(orderid, productid, quantity):
     db = openDatabase()
     cursor = db.cursor()
     now = time.strftime('%Y-%m-%d %H:%M:%S')
-    cursor.execute("INSERT INTO OrderDetails (orderID, productID, orderDate, quantity) VALUES (%s, %s, %s, %s)", (orderid, productid, now, quantity))
+    cursor.execute("INSERT INTO OrderDetails (orderID, productID, quantity) VALUES (%s, %s, %s)", (orderid, productid, quantity))
     db.commit()
     cursor.close()
     db.close()
@@ -377,11 +377,12 @@ def addOrderDetails(orderid, productid, quantity):
 
 
 #Adding an order for a user
-@app.route('/api/user/<int:userid>/order', methods=["POST", "GET"])
-def addOrder(userid):
+@app.route('/api/user/<int:userid>/address/<string:address>/phone/<string:phonenr>/order', methods=["POST", "GET"])
+def addOrder(userid, address, phonenr):
     db = openDatabase()
     cursor = db.cursor()
-    cursor.execute('INSERT INTO UserOrder (userID) VALUES (%s)', [userid])
+    now = time.strftime('%Y-%m-%d %H:%M:%S')
+    cursor.execute('INSERT INTO UserOrder (userID, orderDate, address, phone) VALUES (%s, %s, %s, %s)', (userid, now, address, phonenr))
     id = cursor.lastrowid
     db.commit()
     cursor.close()
@@ -405,19 +406,21 @@ def getAllOrders(userid):
 def getOrders(userid):
     db = openDatabase()
     cursor = db.cursor()
-    sql_query = "SELECT OD.orderID, OD.productID, OD.quantity FROM OrderDetails as OD INNER JOIN UserOrder as UD on OD.orderID=UD.id WHERE UD.userID=%s"
+    sql_query = "SELECT OD.orderID, OD.productID, OD.quantity, UD.address, UD.phone FROM OrderDetails as OD INNER JOIN UserOrder as UD on OD.orderID=UD.id WHERE UD.userID=%s"
     cursor.execute(sql_query, [userid])
     specific_order = []
-    result = [{"orderID": orderID, "productID": productID, "quantity": quantity} for (orderID, productID, quantity) in cursor]
+    result = [{"orderID": orderID, "productID": productID, "quantity": quantity, "address": address, "phone": phone} for (orderID, productID, quantity, address, phone) in cursor]
     sorted_result = sorted(result, key=lambda result: result['orderID'])
     previous_id = sorted_result[0]["orderID"]
+    previous_address = sorted_result[0]["address"]
+    previous_phonenr = sorted_result[0]["phone"]
     product = requests.get("https://localhost:5000/api/product/{}".format(sorted_result[0]["productID"]), verify=False)
     product = product.json()
     product["quantity"] = sorted_result[0]["quantity"]
     prod_list = []
     prod_list.append(product)
     del product["image"]
-    specific_order.append({"orderID": previous_id, "products": prod_list})
+    specific_order.append({"orderID": previous_id, "address": previous_address, "phone": previous_phonenr, "products": prod_list})
     amount = 0
     first = True
 
@@ -428,7 +431,7 @@ def getOrders(userid):
             product = product.json()
             del product["image"]
             product["quantity"] = result["quantity"]
-            specific_order.append({"orderID": result["orderID"], "products": [product]})
+            specific_order.append({"orderID": result["orderID"], "address": result["address"], "phone": result["phone"], "products": [product]})
         else:
             if first:
                 first = False
