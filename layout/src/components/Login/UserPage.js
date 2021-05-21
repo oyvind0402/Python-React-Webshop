@@ -35,6 +35,7 @@ const UserPage = () => {
             <img
               src="https://i.stack.imgur.com/l60Hf.png"
               style={{ width: "200px", borderRadius: "100px" }}
+              alt=""
             />
             <h2>Info</h2>
             <p>Username: {user_info["username"]}</p>

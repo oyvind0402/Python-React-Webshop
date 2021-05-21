@@ -3,18 +3,47 @@ import { Link } from "react-router-dom";
 import { Header } from "../Header/Header";
 
 export const SignUp = () => {
+  async function signup(event) {
+    event.preventDefault();
+
+    const data = new FormData();
+    const name = document.getElementById("name").value;
+    const username = document.getElementById("username").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    data.append("name", name);
+    data.append("username", username);
+    data.append("email", email);
+    data.append("password", password);
+
+    let response = await fetch("https://localhost:5000/api/register", {
+      method: "POST",
+      header: {
+        Authorization: "AWdad12e+1daw::d1__123123dadaodo",
+        "Content-type": "multipart/form-data",
+      },
+      body: data,
+    });
+    const reply = await response.json();
+
+    if (response.status === 201) {
+      alert(reply["msg"]);
+      document.getElementById("name").value = "";
+      document.getElementById("username").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("password").value = "";
+    } else {
+      alert(reply["msg"]);
+    }
+  }
+
   return (
     <>
       <Header />
       <main id="main" className="login">
         <div>
           <h1>Sign up to generic companys webshop!</h1>
-          <form
-            id="signup-form"
-            action="https://localhost:5000/api/register"
-            method="POST"
-            encType="multipart/form-data"
-          >
+          <form id="signup-form" onSubmit={signup}>
             <div className="login-user">
               <label htmlFor="name">Name</label>
               <input

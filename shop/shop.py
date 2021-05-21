@@ -9,6 +9,7 @@ import bcrypt
 import jwt
 import time
 import warnings
+import re
 
 warnings.filterwarnings('ignore', message='Unverified HTTPS request')
 
@@ -25,7 +26,7 @@ app.config['SECRET_KEY'] = "AWdad12e+1daw::d1__123123dadaodo"
 #The upload settings
 UPLOAD_FOLDER = "static/images"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-extensions = set(['png', 'jpg', 'jpeg'])
+extensions = set(['png'])
 
 def validFile(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in extensions
@@ -39,15 +40,18 @@ def openDatabase():
 #For JWT Authentication
 JWT_SECRET_KEY = "Aowidha9owd0192j1pond09h0h9AAD_A_DAwpdoa0w9j1"
 
-def validate_user_input(**kwargs):
-    if len(kwargs["email"]) <= 255 and len(kwargs["password"]) <= 255:
+def generate_hash(password, password_salt):
+    passwordhash = bcrypt.hashpw(password, password_salt)
+    return passwordhash
+
+
+regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
+def validate_email(email):
+    if re.search(regex, email):
         return True
     else:
         return False
 
-def generate_hash(password, password_salt):
-    passwordhash = bcrypt.hashpw(password, password_salt)
-    return passwordhash
 
 
 @app.route('/')
@@ -77,7 +81,7 @@ def getUser(userid):
     result = [{"id": id, "name": name, "username": username, "password_salt": password_salt, "password_hash": password_hash, "email": email} for (id, name, username, password_salt, password_hash, email) in cursor]
     cursor.close()
     db.close()
-    response = jsonify(result)
+    response = jsonify(result[0])
     return response, 200
 
 
@@ -91,17 +95,24 @@ def registerUser():
     username = form.get('username')
     password = form.get('password')
     email = form.get('email')
+    cursor.execute('SELECT * FROM user WHERE email=%s', [email])
+    result = cursor.fetchone()
 
-    if validate_user_input(email=email, password=password):
-        password_salt = bcrypt.gensalt()
-        password_hash = generate_hash(password.encode('utf-8'), password_salt)
-        cursor.execute('INSERT INTO user (name, username, password_salt, password_hash, email) VALUES (%s, %s, %s, %s, %s)', (name, username, password_salt, password_hash, email))
-        db.commit()
-        cursor.close()
-        db.close()
-        return "", 204
+    #If the user exists
+    if result is None:
+        #If the email is valid
+        if validate_email(email):
+            password_salt = bcrypt.gensalt()
+            password_hash = generate_hash(password.encode('utf-8'), password_salt)
+            cursor.execute('INSERT INTO user (name, username, password_salt, password_hash, email) VALUES (%s, %s, %s, %s, %s)', (name, username, password_salt, password_hash, email))
+            db.commit()
+            cursor.close()
+            db.close()
+            return jsonify({"msg": "User created with email {} and username {}".format(email, username)}), 201
+        else:
+            return jsonify({"msg": "Invalid email address!"}), 400
     else:
-        return jsonify({"msg": "Registration failed."}), 400
+        return jsonify({"msg": "There already is a user with that email address."}), 400
 
 
 #Route for logging in
@@ -117,8 +128,9 @@ def loginUser():
     cursor.execute('SELECT * FROM user WHERE email=%s', [email])
     user = [{"id": id, "name": name, "username": username, "password_salt": password_salt, "password_hash": password_hash, "email": email} for (id, name, username, password_salt, password_hash, email) in cursor]
     
+    #If the user doesnt exist
     if user is None:
-        return jsonify({"msg": "No account with that email"}), 401
+        return jsonify({"msg": "No account registered with that email"}), 400
     else:
         if len(user) == 1:
             user_password_hash = user[0]["password_hash"]
@@ -389,7 +401,7 @@ def addOrder(userid, address, phonenr):
     db.close()
     return jsonify({"orderID": id}), 201
 
-#Route to get all orderids for a user - to check for bugs can be removed probably if its not needed.
+#Route to get all orderids for a user
 @app.route('/api/user/<int:userid>/orderids', methods=["GET"])
 def getAllOrders(userid):
     db = openDatabase()
@@ -406,49 +418,58 @@ def getAllOrders(userid):
 def getOrders(userid):
     db = openDatabase()
     cursor = db.cursor()
-    sql_query = "SELECT OD.orderID, OD.productID, OD.quantity, UD.address, UD.phone FROM OrderDetails as OD INNER JOIN UserOrder as UD on OD.orderID=UD.id WHERE UD.userID=%s"
-    cursor.execute(sql_query, [userid])
-    specific_order = []
-    result = [{"orderID": orderID, "productID": productID, "quantity": quantity, "address": address, "phone": phone} for (orderID, productID, quantity, address, phone) in cursor]
-    sorted_result = sorted(result, key=lambda result: result['orderID'])
-    previous_id = sorted_result[0]["orderID"]
-    previous_address = sorted_result[0]["address"]
-    previous_phonenr = sorted_result[0]["phone"]
-    product = requests.get("https://localhost:5000/api/product/{}".format(sorted_result[0]["productID"]), verify=False)
-    product = product.json()
-    product["quantity"] = sorted_result[0]["quantity"]
-    prod_list = []
-    prod_list.append(product)
-    del product["image"]
-    specific_order.append({"orderID": previous_id, "address": previous_address, "phone": previous_phonenr, "products": prod_list})
-    amount = 0
-    first = True
+    response = requests.get("https://localhost:5000/api/user/{}/orderids".format(userid), verify=False)
+    response = response.json()
+    #If the user has order(s)
+    if len(response):
+        sql_query = "SELECT OD.orderID, OD.productID, OD.quantity, UD.address, UD.phone FROM OrderDetails as OD INNER JOIN UserOrder as UD on OD.orderID=UD.id WHERE UD.userID=%s"
+        cursor.execute(sql_query, [userid])
+        specific_order = []
+        result = [{"orderID": orderID, "productID": productID, "quantity": quantity, "address": address, "phone": phone} for (orderID, productID, quantity, address, phone) in cursor]
+        sorted_result = sorted(result, key=lambda result: result["orderID"])
+        previous_id = sorted_result[0]["orderID"]
+        previous_address = sorted_result[0]["address"]
+        previous_phonenr = sorted_result[0]["phone"]
+        product = requests.get("https://localhost:5000/api/product/{}".format(sorted_result[0]["productID"]), verify=False)
+        product = product.json()
+        product["quantity"] = sorted_result[0]["quantity"]
+        prod_list = []
+        prod_list.append(product)
+        del product["image"]
+        specific_order.append({"orderID": previous_id, "address": previous_address, "phone": previous_phonenr, "products": prod_list})
+        amount = 0
+        first = True
 
-    for result in sorted_result:
-        if result["orderID"] is not specific_order[amount]["orderID"]:
-            amount += 1
-            product = requests.get("https://localhost:5000/api/product/{}".format(result["productID"]), verify=False)
-            product = product.json()
-            del product["image"]
-            product["quantity"] = result["quantity"]
-            specific_order.append({"orderID": result["orderID"], "address": result["address"], "phone": result["phone"], "products": [product]})
-        else:
-            if first:
-                first = False
-                pass
-            else:
+        for result in sorted_result:
+            #If its a new orderID
+            if result["orderID"] is not specific_order[amount]["orderID"]:
+                amount += 1
                 product = requests.get("https://localhost:5000/api/product/{}".format(result["productID"]), verify=False)
                 product = product.json()
                 del product["image"]
                 product["quantity"] = result["quantity"]
-                prod_list_copy = []
-                for product2 in specific_order[amount]["products"]:
-                    prod_list_copy.append(product2)
-                prod_list_copy.append(product)
-                specific_order[amount]["products"] = prod_list_copy
-    cursor.close()
-    db.close()
-    return jsonify(specific_order), 200
+                specific_order.append({"orderID": result["orderID"], "address": result["address"], "phone": result["phone"], "products": [product]})
+            #If its not a new orderID - add the product to the exisiting orderIDs product-list
+            else:
+                #If its the first element in the list
+                if first:
+                    first = False
+                    pass
+                else:
+                    product = requests.get("https://localhost:5000/api/product/{}".format(result["productID"]), verify=False)
+                    product = product.json()
+                    del product["image"]
+                    product["quantity"] = result["quantity"]
+                    prod_list_copy = []
+                    for product2 in specific_order[amount]["products"]:
+                        prod_list_copy.append(product2)
+                    prod_list_copy.append(product)
+                    specific_order[amount]["products"] = prod_list_copy
+        cursor.close()
+        db.close()
+        return jsonify(specific_order), 200
+    else:
+        return jsonify([]), 404
 
 
 if __name__ == "__main__":
