@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { useHistory } from "react-router-dom";
 
 import { useCart } from "../CartContext/CartProvider";
 import { PaymentCard } from "./PaymentCard";
@@ -8,6 +8,7 @@ const checkValidData = (id) => {
   document.getElementById(id + "-error").innerText = "";
 
   const data = document.getElementById(id).value;
+  console.log(id);
 
   let matches = false;
 
@@ -37,31 +38,44 @@ const checkValidData = (id) => {
 };
 
 export const Payment = () => {
-  const [payData, setPayData] = useState({
-    name: "",
-    address: "",
-    phone: "",
-  });
-  const payDataUpdater = (name, address, phone) => {
-    console.log(name, address, phone);
-    setPayData({ ...payData, name: name, address: address, phone: phone });
-  };
-
   const data = useCart();
+  const history = useHistory();
 
   if (data.length === 0) {
     window.location.href = "/404";
   } else {
-    const fetchPayerData = (e) => {
-      const name = checkValidData("name");
+    const fetchPayerData = async () => {
+      const userId = checkValidData("name");
       const address = checkValidData("address");
       const phone = checkValidData("phone");
 
-      if (name && address && phone) {
-        payDataUpdater(name, address, phone);
-        console.log("Updated data: ", payData);
+      if (userId && address && phone) {
+        const formData = new FormData();
+        formData.append("phone", phone);
+        formData.append("address", address);
+        formData.append("userID", userId);
+
+        let response = await fetch(
+          `https://localhost:5000/api/user/${userId}/order`,
+          {
+            method: "POST",
+            header: {
+              Authorization: "AWdad12e+1daw::d1__123123dadaodo",
+              "Content-type": "multipart/formdata",
+            },
+            body: formData,
+          }
+        );
+
+        const received_data = await response.json();
+        console.log(received_data.orderId);
+
+        if (response.status === 201) {
+          history.push("/404");
+        } else {
+          history.push("/confirmation");
+        }
       } else {
-        e.preventDefault();
         alert("You have not filled all fields in the form correctly.");
       }
     };
@@ -131,17 +145,13 @@ export const Payment = () => {
             Total price: <span className="total-price-all-free">FREE!</span>
           </p>
           <div className="confirm">
-            <Link
-              to={{
-                pathname: "/confirmation",
-                state: { paymentData: { payData } },
-              }}
-              onClick={(e) => fetchPayerData(e)}
+            <button
+              id="confirmBtn"
+              className="btn btn-primary confirm-btn"
+              onClick={() => fetchPayerData()}
             >
-              <button id="confirmBtn" className="btn btn-primary confirm-btn">
-                Confirm order
-              </button>
-            </Link>
+              Confirm order
+            </button>
           </div>
         </div>
       </main>
