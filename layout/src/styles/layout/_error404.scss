@@ -1,0 +1,15 @@
+.error404 {
+  @include flexbox;
+  flex-direction: column;
+  justify-content: center;
+
+  &-content {
+    text-align: center;
+  }
+
+  &-img {
+    max-width: 70%;
+    padding: 10% 5%;
+    margin: auto;
+  }
+}

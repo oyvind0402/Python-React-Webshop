@@ -1,8 +1,12 @@
 const formatNOK = (value) => {
-  return value.toLocaleString({
-    style: "currency",
-    currency: "NOK",
-  });
+  try {
+    return value.toLocaleString("nb", {
+      style: "currency",
+      currency: "NOK",
+    });
+  } catch {
+    console.log("Value is ", value);
+  }
 };
 
 export { formatNOK };

@@ -1,0 +1,178 @@
+/*-----------Payment info-----------*/
+.form {
+  &-group-1 {
+    grid-template-areas: "lbl in" "err err";
+  }
+
+  &-group-2 {
+    margin: 0.5rem 0;
+    @include grid;
+    grid-template-columns: 1.08fr 0.92fr 0.5fr 0.5fr;
+    grid-template-areas: "date-lbl date-in cvc-lbl cvc-in";
+    justify-content: center;
+  }
+
+  &-lbl-date {
+    grid-area: date-lbl;
+  }
+  &-in-date {
+    grid-area: date-in;
+    max-width: 7rem;
+  }
+  &-lbl-cvc {
+    grid-area: cvc-lbl;
+    text-align: right;
+    box-sizing: border-box;
+    padding: 0 0.5rem 0 1.5rem;
+  }
+  &-in-cvc {
+    grid-area: cvc-in;
+    max-width: 6rem;
+  }
+}
+
+#name-error,
+#phone-error,
+#address-error {
+  color: $blue50;
+  font-weight: 600;
+  grid-area: err;
+  text-align: center;
+  padding-bottom: 0.5rem;
+}
+
+@media only screen and (max-width: #{$mq-xs}) {
+  .form {
+    &-group {
+      grid-template-columns: 1fr;
+      margin: 1.5rem 0;
+    }
+    &-group-2 {
+      grid-template-columns: 1fr;
+      grid-template-areas: "date-lbl" "date-in" "cvc-lbl" "cvc-in";
+      margin: 1.5rem 0;
+    }
+    &-in-date {
+      max-width: inherit;
+    }
+    &-lbl-cvc {
+      grid-area: cvc-lbl;
+      text-align: left;
+      padding: 0;
+      margin-top: 1.5rem;
+    }
+    &-in-cvc {
+      grid-area: cvc-in;
+      max-width: inherit;
+    }
+  }
+}
+
+/*-----------Cart items-----------*/
+.paymentcard {
+  @include grid;
+  grid-template-columns: 10rem 1fr 10rem;
+  grid-template-rows: auto;
+  grid-template-areas: "img title ." "img price total";
+  padding: 2.5rem 0;
+  margin-bottom: 0.5rem;
+  border-radius: 15px;
+  box-shadow: 2px 2px 1px 2px $grey80;
+
+  &:last-of-type {
+    margin-bottom: 1.5rem;
+  }
+
+  &-img {
+    grid-area: img;
+    & img {
+      width: 10rem;
+      max-width: 70%;
+    }
+  }
+  &-name {
+    grid-area: title;
+  }
+  &-price-unit {
+    grid-area: price;
+  }
+  &-price-total {
+    grid-area: total;
+    font-size: 1.5rem;
+    height: 3rem;
+    & > div {
+      position: absolute;
+    }
+  }
+}
+
+.free {
+  text-decoration: line-through;
+  color: $grey80;
+  &-sticker {
+    position: relative;
+    padding: 0.7rem;
+    left: 1.5rem;
+    top: -4rem;
+    display: inline-block;
+    font-weight: 900;
+    color: $blue50;
+    background-color: white;
+    box-shadow: inset 0px 0px 0px 0.3rem $blue50;
+    border-radius: 0.3rem;
+    transform: rotate(-30deg);
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("http://i.imgur.com/5O74VI6.jpg");
+      opacity: 70%;
+      mix-blend-mode: lighten;
+      border-radius: 0.3rem;
+    }
+  }
+}
+
+.total-price-all {
+  margin-top: 0.5rem;
+  text-align: right;
+  font-size: 1.7rem;
+  color: $blue20;
+  &-free {
+    font-weight: 600;
+  }
+}
+
+.confirm {
+  @include flexbox;
+  justify-content: right;
+  &-btn {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+}
+
+@media only screen and (max-width: #{$mq-sm}) {
+  .paymentcard {
+    grid-template-columns: 1fr;
+    grid-template-areas: "title" "img" "price" "total";
+    justify-items: center;
+    text-align: center;
+    padding-top: 1rem;
+    &-price-total > div {
+      transform: translate(-50%);
+    }
+  }
+
+  .free-sticker {
+    left: 0;
+  }
+
+  .total-price-all {
+    text-align: center;
+  }
+}

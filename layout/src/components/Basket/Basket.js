@@ -4,8 +4,6 @@ import { formatNOK } from "../utils";
 import { BasketCard } from "./BasketCard";
 import { Header } from "../Header/Header";
 
-//TODO Make everything-is-free discount page
-
 export const Basket = () => {
   const [render, rerender] = useState();
   const dispatch = useDispatchCart();
@@ -29,7 +27,7 @@ export const Basket = () => {
 
   function checkAmountOfBasket(length) {
     if (length === 0) {
-      //if shoppingcart is empt
+      //if shoppingcart is empty
       setTimeout(() => {
         document
           .getElementById("basket-pay")
@@ -42,11 +40,11 @@ export const Basket = () => {
       setTimeout(() => {
         // when shoppingcart isnt empty
         document
-            .getElementById("basket-pay")
-            .style.setProperty("display", "block");
+          .getElementById("basket-pay")
+          .style.setProperty("display", "flex");
         document
-            .getElementById("basket-empty")
-            .style.setProperty("display", "none");
+          .getElementById("basket-empty")
+          .style.setProperty("display", "none");
       }, 100);
     }
   }
@@ -74,9 +72,11 @@ export const Basket = () => {
           <div className="basket-pay-total">
             <p>Total price: {formatNOK(totalPrice)} </p>
           </div>
-          <button className="btn btn-primary basket-pay-btn">
-            Go to payment
-          </button>
+          <Link to="/payment">
+            <button className="btn btn-primary basket-pay-btn">
+              Go to payment
+            </button>
+          </Link>
         </div>
         <div
           className="basket-empty"
