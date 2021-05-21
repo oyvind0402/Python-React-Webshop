@@ -23,7 +23,7 @@ const UserPage = () => {
       };
       loadData();
     }
-  }, []);
+  }, [user_info]);
 
   if (userLoggedIn) {
     return (

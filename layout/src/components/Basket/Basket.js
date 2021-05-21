@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useCart, useDispatchCart } from "../CartContext/CartProvider";
 import { formatNOK } from "../utils";
 import { BasketCard } from "./BasketCard";

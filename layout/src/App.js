@@ -1,6 +1,11 @@
 import "./styles/main.scss";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import { Footer } from "./components/Footer/Footer";
 import Home from "./components/Homepage/Home";
 import { Login } from "./components/Login/Login";

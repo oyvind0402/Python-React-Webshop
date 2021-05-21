@@ -81,8 +81,11 @@ def getUser(userid):
     result = [{"id": id, "name": name, "username": username, "password_salt": password_salt, "password_hash": password_hash, "email": email} for (id, name, username, password_salt, password_hash, email) in cursor]
     cursor.close()
     db.close()
-    response = jsonify(result[0])
-    return response, 200
+    if len(result) < 1:
+        return {"msg": "Could not get user"}, 404
+    else:
+        response = jsonify(result[0])
+        return response, 200
 
 
 #Route for registering
@@ -156,7 +159,7 @@ def editUser(userid):
     username = form.get('username')
     password = form.get('password')
     email = form.get('email')
-    password_salt = generate_salt()
+    password_salt = bcrypt.gensalt()
     password_hash = generate_hash(password, password_salt)
     cursor.execute('UPDATE user SET name=%s, username=%s, password_salt=%s, password_hash=%s, email=%s WHERE id=%s', (name, username, password_salt, password_hash, email, userid))
     db.commit()
@@ -199,8 +202,12 @@ def getProduct(productid):
     result = [{"id": id, "brand": brand, "name": name, "price": price, "color": color, "operatingsystem": operatingsystem, "storage": storage, "short_desc": short_desc, "long_desc": long_desc, "image": image} for (id, brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image) in cursor]
     cursor.close()
     db.close()
-    response = jsonify((result[0]))
-    return response, 200
+
+    if len(result) < 1:
+        return jsonify({"msg": "Could not find product"}), 404
+    else:
+        response = jsonify((result[0]))
+        return response, 200
 
 
 #Getting distinct values from products
@@ -380,7 +387,6 @@ def deleteProduct(productid):
 def addOrderDetails(orderid, productid, quantity):
     db = openDatabase()
     cursor = db.cursor()
-    now = time.strftime('%Y-%m-%d %H:%M:%S')
     cursor.execute("INSERT INTO OrderDetails (orderID, productID, quantity) VALUES (%s, %s, %s)", (orderid, productid, quantity))
     db.commit()
     cursor.close()
@@ -390,7 +396,7 @@ def addOrderDetails(orderid, productid, quantity):
 
 #Adding an order for a user
 @app.route('/api/user/<int:userid>/order', methods=["POST", "GET"])
-def addOrder(userid, address, phonenr):
+def addOrder(userid):
     db = openDatabase()
     cursor = db.cursor()
     form = request.form
@@ -398,7 +404,7 @@ def addOrder(userid, address, phonenr):
     address = form.get('address')
     phone = form.get('phone')
     now = time.strftime('%Y-%m-%d %H:%M:%S')
-    cursor.execute('INSERT INTO UserOrder (userID, orderDate, address, phone) VALUES (%s, %s, %s, %s)', (userid, now, address, phonenr))
+    cursor.execute('INSERT INTO UserOrder (userID, orderDate, address, recipient, phone) VALUES (%s, %s, %s, %s,  %s)', (userid, now, address, recipient, phone))
     id = cursor.lastrowid
     db.commit()
     cursor.close()
@@ -429,7 +435,7 @@ def getOrders(userid):
         sql_query = "SELECT OD.orderID, OD.productID, OD.quantity, UD.address, UD.recipient, UD.phone FROM OrderDetails as OD INNER JOIN UserOrder as UD on OD.orderID=UD.id WHERE UD.userID=%s"
         cursor.execute(sql_query, [userid])
         specific_order = []
-        result = [{"orderID": orderID, "productID": productID, "quantity": quantity, "address": address, "recipient": recipient "phone": phone} for (orderID, productID, quantity, address, recipient, phone) in cursor]
+        result = [{"orderID": orderID, "productID": productID, "quantity": quantity, "address": address, "recipient": recipient, "phone": phone} for (orderID, productID, quantity, address, recipient, phone) in cursor]
         sorted_result = sorted(result, key=lambda result: result["orderID"])
         previous_id = sorted_result[0]["orderID"]
         previous_address = sorted_result[0]["address"]
@@ -453,7 +459,7 @@ def getOrders(userid):
                 product = product.json()
                 del product["image"]
                 product["quantity"] = result["quantity"]
-                specific_order.append({"orderID": result["orderID"], "address": result["address"], "recipient": result["recipient"] "phone": result["phone"], "products": [product]})
+                specific_order.append({"orderID": result["orderID"], "address": result["address"], "recipient": result["recipient"], "phone": result["phone"], "products": [product]})
             #If its not a new orderID - add the product to the exisiting orderIDs product-list
             else:
                 #If its the first element in the list

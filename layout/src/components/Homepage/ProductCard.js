@@ -8,7 +8,7 @@ export const ProductCard = (props) => {
 
   const addToCart = (item) => {
     setTimeout(() => {
-        document.getElementById("button" + props.product["id"]).disabled = true;
+      document.getElementById("button" + props.product["id"]).disabled = true;
     }, 25);
     dispatch({ type: "ADD", item });
     props.onchange(props.filter);
@@ -19,7 +19,6 @@ export const ProductCard = (props) => {
 
   const src = "data:image/png;base64, " + props.product["image"];
   return (
-    //TODO Make article clickable
     <article className="prodcard">
       <h3 className="prodcard-name">
         {props.product["brand"] + " " + props.product["name"]}

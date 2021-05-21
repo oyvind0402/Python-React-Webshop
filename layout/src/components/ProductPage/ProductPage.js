@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+
 import { SpecsTable } from "./SpecsTable";
-import { useCart, useDispatchCart } from "../CartContext/CartProvider";
+import { useDispatchCart } from "../CartContext/CartProvider";
 import { Header } from "../Header/Header";
 import { formatNOK } from "../utils";
 
 export const ProductPage = () => {
   const dispatch = useDispatchCart();
+  const history = useHistory();
 
   const addToCart = async (item) => {
     document.getElementById("addBtn").disabled = true;
@@ -27,23 +30,24 @@ export const ProductPage = () => {
   const [product, productUpdate] = useState({});
   const [render, reRender] = useState("");
 
-  useEffect(async () => {
+  useEffect(() => {
     const loadData = async () => {
       const link = window.location.href;
       const sku = link.split("/")[4];
       const apiLink = "https://localhost:5000/api/product/" + sku;
 
       const response = await fetch(apiLink);
+
+      if (response.status !== 200) {
+        history.push("/404");
+      }
+
       let data = await response.json();
       productUpdate(data);
       return data;
     };
-    try {
-      await loadData();
-    } catch {
-      window.location = "/404";
-    }
-  }, []);
+    loadData();
+  }, [history]);
 
   return (
     <>
@@ -59,9 +63,6 @@ export const ProductPage = () => {
               alt={product["name"]}
             />
           </div>
-          {useCart().map((product) => {
-            console.log(product);
-          })}
           <div className="productpage-details">
             <p>{product["long_desc"]}</p>
             <div className="productpage-buy">
