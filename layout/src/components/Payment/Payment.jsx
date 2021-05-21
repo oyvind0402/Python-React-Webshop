@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 
 import { useCart } from "../CartContext/CartProvider";
+import { Header } from "../Header/Header";
 import { PaymentCard } from "./PaymentCard";
 
 const checkValidData = (id) => {
@@ -74,9 +75,9 @@ export const Payment = () => {
         console.log(received_data.orderId);
 
         if (response.status === 201) {
-          history.push("/404");
-        } else {
           history.push("/confirmation");
+        } else {
+          history.push("/404");
         }
       } else {
         alert("You have not filled all fields in the form correctly.");
@@ -84,80 +85,86 @@ export const Payment = () => {
     };
 
     return (
-      <main id="main">
-        <h1>Payment</h1>
-        <div>
-          <form className="form">
-            <div className="form-group form-group-1">
-              <label htmlFor="name">Full name (recipient)</label>
-              <input id="name" onBlur={() => checkValidData("name")}></input>
-              <div id="name-error"></div>
-            </div>
-            <div className="form-group form-group-1">
-              <label htmlFor="address">Address</label>
-              <input
-                id="address"
-                onBlur={() => checkValidData("address")}
-              ></input>
-              <div id="address-error"></div>
-            </div>
-            <div className="form-group form-group-1">
-              <label htmlFor="phone">Telephone number</label>
-              <input id="phone" onBlur={() => checkValidData("phone")}></input>
-              <div id="phone-error"></div>
-            </div>
-            <div className="form-group">
-              <label htmlFor="card-nr">Card number</label>
-              <input
-                id="card-nr"
-                className="form-input"
-                placeholder="🎉 Guess who just got a gift?"
-                disabled
-              ></input>
-            </div>
-            <div className="form-group-2">
-              <label className="form-lbl-date" htmlFor="card-date">
-                Expiration date
-              </label>
-              <input
-                className="form-in-date"
-                id="card-date"
-                placeholder="🎉 You got a gift!"
-                disabled
-              ></input>
-              <label className="form-lbl-cvc" htmlFor="card-cvc">
-                CVC
-              </label>
-              <input
-                className="form-in-cvc"
-                id="card-cvc"
-                placeholder="100% free 🎉"
-                disabled
-              ></input>
-            </div>
-          </form>
+      <>
+        <Header />
+        <main id="main">
+          <h1>Payment</h1>
           <div>
-            <h2>Your cart</h2>
-            <section>
-              {data.map((item, index) => {
-                return <PaymentCard key={index} product={item} />;
-              })}
-            </section>
+            <form className="form">
+              <div className="form-group form-group-1">
+                <label htmlFor="name">Full name (recipient)</label>
+                <input id="name" onBlur={() => checkValidData("name")}></input>
+                <div id="name-error"></div>
+              </div>
+              <div className="form-group form-group-1">
+                <label htmlFor="address">Address</label>
+                <input
+                  id="address"
+                  onBlur={() => checkValidData("address")}
+                ></input>
+                <div id="address-error"></div>
+              </div>
+              <div className="form-group form-group-1">
+                <label htmlFor="phone">Telephone number</label>
+                <input
+                  id="phone"
+                  onBlur={() => checkValidData("phone")}
+                ></input>
+                <div id="phone-error"></div>
+              </div>
+              <div className="form-group">
+                <label htmlFor="card-nr">Card number</label>
+                <input
+                  id="card-nr"
+                  className="form-input"
+                  placeholder="🎉 Guess who just got a gift?"
+                  disabled
+                ></input>
+              </div>
+              <div className="form-group-2">
+                <label className="form-lbl-date" htmlFor="card-date">
+                  Expiration date
+                </label>
+                <input
+                  className="form-in-date"
+                  id="card-date"
+                  placeholder="🎉 You got a gift!"
+                  disabled
+                ></input>
+                <label className="form-lbl-cvc" htmlFor="card-cvc">
+                  CVC
+                </label>
+                <input
+                  className="form-in-cvc"
+                  id="card-cvc"
+                  placeholder="100% free 🎉"
+                  disabled
+                ></input>
+              </div>
+            </form>
+            <div>
+              <h2>Your cart</h2>
+              <section>
+                {data.map((item, index) => {
+                  return <PaymentCard key={index} product={item} />;
+                })}
+              </section>
+            </div>
+            <p className="total-price-all">
+              Total price: <span className="total-price-all-free">FREE!</span>
+            </p>
+            <div className="confirm">
+              <button
+                id="confirmBtn"
+                className="btn btn-primary confirm-btn"
+                onClick={() => fetchPayerData()}
+              >
+                Confirm order
+              </button>
+            </div>
           </div>
-          <p className="total-price-all">
-            Total price: <span className="total-price-all-free">FREE!</span>
-          </p>
-          <div className="confirm">
-            <button
-              id="confirmBtn"
-              className="btn btn-primary confirm-btn"
-              onClick={() => fetchPayerData()}
-            >
-              Confirm order
-            </button>
-          </div>
-        </div>
-      </main>
+        </main>
+      </>
     );
   }
 };
