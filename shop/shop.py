@@ -394,6 +394,7 @@ def addOrder(userid, address, phonenr):
     db = openDatabase()
     cursor = db.cursor()
     form = request.form
+    recipient = form.get('recipient')
     address = form.get('address')
     phone = form.get('phone')
     now = time.strftime('%Y-%m-%d %H:%M:%S')
@@ -425,21 +426,22 @@ def getOrders(userid):
     response = response.json()
     #If the user has order(s)
     if len(response):
-        sql_query = "SELECT OD.orderID, OD.productID, OD.quantity, UD.address, UD.phone FROM OrderDetails as OD INNER JOIN UserOrder as UD on OD.orderID=UD.id WHERE UD.userID=%s"
+        sql_query = "SELECT OD.orderID, OD.productID, OD.quantity, UD.address, UD.recipient, UD.phone FROM OrderDetails as OD INNER JOIN UserOrder as UD on OD.orderID=UD.id WHERE UD.userID=%s"
         cursor.execute(sql_query, [userid])
         specific_order = []
-        result = [{"orderID": orderID, "productID": productID, "quantity": quantity, "address": address, "phone": phone} for (orderID, productID, quantity, address, phone) in cursor]
+        result = [{"orderID": orderID, "productID": productID, "quantity": quantity, "address": address, "recipient": recipient "phone": phone} for (orderID, productID, quantity, address, recipient, phone) in cursor]
         sorted_result = sorted(result, key=lambda result: result["orderID"])
         previous_id = sorted_result[0]["orderID"]
         previous_address = sorted_result[0]["address"]
         previous_phonenr = sorted_result[0]["phone"]
+        previous_recipient = sorted_result[0]["recipient"]
         product = requests.get("https://localhost:5000/api/product/{}".format(sorted_result[0]["productID"]), verify=False)
         product = product.json()
         product["quantity"] = sorted_result[0]["quantity"]
         prod_list = []
         prod_list.append(product)
         del product["image"]
-        specific_order.append({"orderID": previous_id, "address": previous_address, "phone": previous_phonenr, "products": prod_list})
+        specific_order.append({"orderID": previous_id, "address": previous_address, "recipient": previous_recipient, "phone": previous_phonenr, "products": prod_list})
         amount = 0
         first = True
 
@@ -451,7 +453,7 @@ def getOrders(userid):
                 product = product.json()
                 del product["image"]
                 product["quantity"] = result["quantity"]
-                specific_order.append({"orderID": result["orderID"], "address": result["address"], "phone": result["phone"], "products": [product]})
+                specific_order.append({"orderID": result["orderID"], "address": result["address"], "recipient": result["recipient"] "phone": result["phone"], "products": [product]})
             #If its not a new orderID - add the product to the exisiting orderIDs product-list
             else:
                 #If its the first element in the list
