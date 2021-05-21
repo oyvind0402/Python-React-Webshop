@@ -56,7 +56,7 @@ export const Payment = () => {
         formData.append("phone", phone);
         formData.append("address", address);
         formData.append("recipient", recipient);
-        formData.append("recipient", userId);
+        formData.append("userID", userId);
 
         let response = await fetch(
           `https://localhost:5000/api/user/${userId}/order`,
