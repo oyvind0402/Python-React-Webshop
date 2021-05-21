@@ -1,49 +1,93 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { useCart } from "../CartContext/CartProvider";
 import { PaymentCard } from "./PaymentCard";
-// import { disableBtn, enableBtn } from "../utils";
 
-const fetchPayerData = () => {
-  const name = document.getElementById("name").value;
-  const address = document.getElementById("address").value;
-  const phone = document.getElementById("phone").value;
+const checkValidData = (id) => {
+  document.getElementById(id + "-error").innerText = "";
 
-  const data = {
-    name: name,
-    address: address,
-    phone: phone,
-  };
+  const data = document.getElementById(id).value;
 
-  console.log(data);
+  let matches = false;
 
-  //TODO Add live checks for data
-  //TODO Enable/disable buttons
+  switch (id) {
+    case "name":
+      const regexName = /^[a-zA-ZæøåÆØÅ\s]+$/;
+      matches = data.match(regexName);
+      break;
+    case "address":
+      const regexAddress = /^[0-9a-zA-ZæøåÆØÅ,\s]+$/;
+      matches = data.match(regexAddress);
+      break;
+    case "phone":
+      const regexPhone = /^[+]?[0-9\s]{0,4}[0-9]{7,17}$/;
+      matches = data.match(regexPhone);
+      break;
+    default:
+      matches = false;
+  }
+
+  if (!matches) {
+    document.getElementById(id + "-error").innerText =
+      "⚠️ You have not inserted a valid " + id + " ⚠️";
+  }
+
+  return data;
 };
 
 export const Payment = () => {
+  const [payData, setPayData] = useState({
+    name: "",
+    address: "",
+    phone: "",
+  });
+  const payDataUpdater = (name, address, phone) => {
+    console.log(name, address, phone);
+    setPayData({ ...payData, name: name, address: address, phone: phone });
+  };
+
   const data = useCart();
 
   if (data.length === 0) {
     window.location.href = "/404";
   } else {
+    const fetchPayerData = (e) => {
+      const name = checkValidData("name");
+      const address = checkValidData("address");
+      const phone = checkValidData("phone");
+
+      if (name && address && phone) {
+        payDataUpdater(name, address, phone);
+        console.log("Updated data: ", payData);
+      } else {
+        e.preventDefault();
+        alert("You have not filled all fields in the form correctly.");
+      }
+    };
+
     return (
       <main id="main">
         <h1>Payment</h1>
         <div>
           <form className="form">
-            <div className="form-group">
+            <div className="form-group form-group-1">
               <label htmlFor="name">Full name</label>
-              <input id="name"></input>
+              <input id="name" onBlur={() => checkValidData("name")}></input>
+              <div id="name-error"></div>
             </div>
-            <div className="form-group">
+            <div className="form-group form-group-1">
               <label htmlFor="address">Address</label>
-              <input id="address"></input>
+              <input
+                id="address"
+                onBlur={() => checkValidData("address")}
+              ></input>
+              <div id="address-error"></div>
             </div>
-            <div className="form-group">
+            <div className="form-group form-group-1">
               <label htmlFor="phone">Telephone number</label>
-              <input id="phone"></input>
+              <input id="phone" onBlur={() => checkValidData("phone")}></input>
+              <div id="phone-error"></div>
             </div>
             <div className="form-group">
               <label htmlFor="card-nr">Card number</label>
@@ -87,12 +131,14 @@ export const Payment = () => {
             Total price: <span className="total-price-all-free">FREE!</span>
           </p>
           <div className="confirm">
-            <Link to="#">
-              <button
-                id="confirmBtn"
-                className="btn btn-primary confirm-btn"
-                onClick={() => fetchPayerData()}
-              >
+            <Link
+              to={{
+                pathname: "/confirmation",
+                state: { paymentData: { payData } },
+              }}
+              onClick={(e) => fetchPayerData(e)}
+            >
+              <button id="confirmBtn" className="btn btn-primary confirm-btn">
                 Confirm order
               </button>
             </Link>

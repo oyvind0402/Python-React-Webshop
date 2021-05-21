@@ -22,31 +22,13 @@
   }
 
   &-secondary {
-    border-color: $blue95;
-    background-color: white;
-    color: $blue50;
-  }
-
-  &-secondary:hover,
-  &-secondary:focus-visible {
-    background-color: $blue95;
-  }
-
-  &-grey {
     border-color: $grey80;
     background-color: $grey95;
     color: $grey20;
   }
 
-  &-grey:hover,
-  &-grey:focus-visible {
+  &-secondary:hover,
+  &-secondary:focus-visible {
     background-color: $grey80;
-  }
-
-  &-disabled {
-    pointer-events: none !important;
-    border-color: $grey95 !important;
-    background-color: $grey95 !important;
-    color: $grey50 !important;
   }
 }

@@ -1,5 +1,9 @@
 /*-----------Payment info-----------*/
 .form {
+  &-group-1 {
+    grid-template-areas: "lbl in" "err err";
+  }
+
   &-group-2 {
     margin: 0.5rem 0;
     @include grid;
@@ -25,6 +29,16 @@
     grid-area: cvc-in;
     max-width: 6rem;
   }
+}
+
+#name-error,
+#phone-error,
+#address-error {
+  color: $blue50;
+  font-weight: 600;
+  grid-area: err;
+  text-align: center;
+  padding-bottom: 0.5rem;
 }
 
 @media only screen and (max-width: #{$mq-xs}) {
