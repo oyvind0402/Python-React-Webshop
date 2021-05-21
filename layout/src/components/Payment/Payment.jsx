@@ -40,13 +40,17 @@ const checkValidData = (id) => {
 export const Payment = () => {
   const data = useCart();
   const history = useHistory();
+<<<<<<< HEAD
 
   const userId = 1; //TODO CHANGE
+=======
+>>>>>>> 196d1fc8251cce0a910d00bc43fae8cc65aa9136
 
   if (data.length === 0) {
     window.location.href = "/404";
   } else {
     const fetchPayerData = async () => {
+<<<<<<< HEAD
       const recipient = checkValidData("name");
       const address = checkValidData("address");
       const phone = checkValidData("phone");
@@ -57,6 +61,17 @@ export const Payment = () => {
         formData.append("address", address);
         formData.append("recipient", recipient);
         formData.append("recipient", userId);
+=======
+      const userId = checkValidData("name");
+      const address = checkValidData("address");
+      const phone = checkValidData("phone");
+
+      if (userId && address && phone) {
+        const formData = new FormData();
+        formData.append("phone", phone);
+        formData.append("address", address);
+        formData.append("userID", userId);
+>>>>>>> 196d1fc8251cce0a910d00bc43fae8cc65aa9136
 
         let response = await fetch(
           `https://localhost:5000/api/user/${userId}/order`,
