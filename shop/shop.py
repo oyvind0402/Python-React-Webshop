@@ -389,10 +389,13 @@ def addOrderDetails(orderid, productid, quantity):
 
 
 #Adding an order for a user
-@app.route('/api/user/<int:userid>/address/<string:address>/phone/<string:phonenr>/order', methods=["POST", "GET"])
+@app.route('/api/user/<int:userid>/order', methods=["POST", "GET"])
 def addOrder(userid, address, phonenr):
     db = openDatabase()
     cursor = db.cursor()
+    form = request.form
+    address = form.get('address')
+    phone = form.get('phone')
     now = time.strftime('%Y-%m-%d %H:%M:%S')
     cursor.execute('INSERT INTO UserOrder (userID, orderDate, address, phone) VALUES (%s, %s, %s, %s)', (userid, now, address, phonenr))
     id = cursor.lastrowid
