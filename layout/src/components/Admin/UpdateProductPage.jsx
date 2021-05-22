@@ -87,6 +87,7 @@ const UpdateProductPage = () => {
         document.getElementById("updateCard-" + field).innerText = value;
         document.getElementById("updateCard-desc").innerText =
           "Description will be updated on save";
+        break;
       default:
         document.getElementById("updateCard-" + field).innerText = value;
         break;
