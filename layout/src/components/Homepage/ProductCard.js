@@ -20,15 +20,15 @@ export const ProductCard = (props) => {
   const src = "data:image/png;base64, " + props.product["image"];
   return (
     <article className="prodcard">
-      <h3 className="prodcard-name">
-        {props.product["brand"] + " " + props.product["name"]}
-      </h3>
-      <img className="prodcard-img" src={src} alt={props.product["name"]} />
-      <p className="prodcard-desc">{props.product["short_desc"]}</p>
       <Link to={"/product/" + props.product["id"]} className="prodcard-more">
+        <h3 className="prodcard-name">
+        {props.product["brand"] + " " + props.product["name"]}
+        </h3>
+        <img className="prodcard-img" src={src} alt={props.product["name"]} />
+        <p className="prodcard-desc">{props.product["short_desc"]}</p>
         <p>ⓘ Read more</p>
+        <p className="prodcard-price">{formatNOK(props.product["price"])}</p>
       </Link>
-      <p className="prodcard-price">{formatNOK(props.product["price"])}</p>
       <button
         className="btn btn-primary prodcard-add"
         id={"button" + props.product["id"]}
