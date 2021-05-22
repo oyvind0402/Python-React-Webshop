@@ -65,3 +65,11 @@
     grid-template-areas: "filter" "prods";
   }
 }
+
+#noProducts {
+  display: none;
+  grid-area: prods;
+  @include flexbox;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}

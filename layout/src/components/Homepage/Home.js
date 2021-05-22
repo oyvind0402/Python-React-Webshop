@@ -10,6 +10,7 @@ export default function Home() {
 
   useEffect(() => {
     const loadData = async () => {
+      document.getElementById("noProducts").style.setProperty("display", "none");
       const response = await fetch("https://localhost:5000/api/products");
       let data = await response.json();
       updateProducts(data);
@@ -64,15 +65,13 @@ export default function Home() {
       });
 
       if (newProducts.length === 0) {
-        // if no products left after filtering
-        updateProducts(data);
+        updateProducts([]);
         updateFilter(filterOptions);
-        // const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-        // await delay(1000); //small delay so products can catch up
-        alert("There were no products found");
+        document.getElementById("noProducts").style.setProperty("display", "block");
       } else {
         updateProducts(newProducts);
         updateFilter(filterOptions);
+        document.getElementById("noProducts").style.setProperty("display", "none");
       }
     }
   }
@@ -191,6 +190,7 @@ export default function Home() {
               );
             })}
           </div>
+          <p id={"noProducts"}>No products found</p>
         </div>
       </main>
     </>
