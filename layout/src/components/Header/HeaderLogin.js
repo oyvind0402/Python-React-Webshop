@@ -18,6 +18,7 @@ export const HeaderLogin = () => {
     localStorage.removeItem("jwt_token");
     localStorage.removeItem("admin");
     localStorage.removeItem("user-info");
+    localStorage.removeItem("orderID");
     setUserLoggedin(false);
     setAdmin(false);
     window.location.reload();

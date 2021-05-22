@@ -402,7 +402,7 @@ def addOrderDetails():
 
 
 #Adding an order for a user
-@app.route('/api/user/<int:userid>/order', methods=["POST", "GET"])
+@app.route('/api/user/<int:userid>/order', methods=["POST"])
 def addOrder(userid):
     db = openDatabase()
     cursor = db.cursor()

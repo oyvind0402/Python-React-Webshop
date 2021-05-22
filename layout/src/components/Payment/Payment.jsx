@@ -83,33 +83,33 @@ export const Payment = () => {
         console.log(received_data);
         let orderID = received_data["orderID"];
         if (response.status === 201) {
-          {
-            data.map(async (product) => {
-              let newData = new FormData();
+          localStorage.setItem("orderID", orderID);
+          data.map(async (product) => {
+            let newData = new FormData();
 
-              console.log(product);
+            console.log(product);
 
-              newData.append("orderID", orderID);
-              newData.append("productID", product["id"]);
-              newData.append("quantity", product["quantity"]);
+            newData.append("orderID", orderID);
+            newData.append("productID", product["id"]);
+            newData.append("quantity", product["quantity"]);
 
-              let response2 = await fetch(
-                `https://localhost:5000/api/orderdetail/add`,
-                {
-                  method: "POST",
-                  header: {
-                    Authorization: "AWdad12e+1daw::d1__123123dadaodo",
-                    "Content-type": "multipart/form-data",
-                  },
-                  body: newData,
-                }
-              );
-
-              if (response2.status !== 201) {
-                error = true;
+            let response2 = await fetch(
+              `https://localhost:5000/api/orderdetail/add`,
+              {
+                method: "POST",
+                header: {
+                  Authorization: "AWdad12e+1daw::d1__123123dadaodo",
+                  "Content-type": "multipart/form-data",
+                },
+                body: newData,
               }
-            });
-          }
+            );
+
+            if (response2.status !== 201) {
+              error = true;
+            }
+          });
+
           if (error) {
             alert("There was an error adding your order, please try again.");
           } else {
