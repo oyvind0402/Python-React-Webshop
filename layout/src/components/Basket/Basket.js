@@ -8,6 +8,7 @@ import { Header } from "../Header/Header";
 export const Basket = () => {
   const [render, rerender] = useState();
   const dispatch = useDispatchCart();
+  const cart = useCart();
 
   function startRerender(string) {
     //force rerender page
@@ -26,67 +27,49 @@ export const Basket = () => {
     dispatch({ type: "REMOVE", index });
   };
 
-  function checkAmountOfBasket(length) {
-    if (length === 0) {
-      //if shoppingcart is empty
-      setTimeout(() => {
-        document
-          .getElementById("basket-pay")
-          .style.setProperty("display", "none");
-        document
-          .getElementById("basket-empty")
-          .style.setProperty("display", "block");
-      }, 100);
-    } else {
-      setTimeout(() => {
-        // when shoppingcart isnt empty
-        document
-          .getElementById("basket-pay")
-          .style.setProperty("display", "flex");
-        document
-          .getElementById("basket-empty")
-          .style.setProperty("display", "none");
-      }, 100);
-    }
-  }
-
-  return (
-    <>
-      <Header />
-      <main id="main">
-        <h2>Your shopping basket</h2>
-        <div>
-          {useCart().map((item, index) => {
-            newTotalUpdater(item);
-            return (
-              <BasketCard
-                handleRemove={handleRemove}
-                key={index}
-                product={item}
-                index={index}
-                onchange={(rerenderString) => startRerender(rerenderString)}
-              />
-            );
-          })}
-        </div>
-        <div className="basket-pay" id={"basket-pay"}>
-          <div className="basket-pay-total">
-            <p>Total price: {formatNOK(totalPrice)} </p>
+  if (cart.length > 0) {
+    return (
+      <>
+        <Header />
+        <main id="main">
+          <h2>Your shopping basket</h2>
+          <div>
+            {cart.map((item, index) => {
+              newTotalUpdater(item);
+              return (
+                <BasketCard
+                  handleRemove={handleRemove}
+                  key={index}
+                  product={item}
+                  index={index}
+                  onchange={(rerenderString) => startRerender(rerenderString)}
+                />
+              );
+            })}
           </div>
-          <Link to="/payment">
-            <button className="btn btn-primary basket-pay-btn">
-              Go to payment
-            </button>
-          </Link>
-        </div>
-        <div
-          className="basket-empty"
-          id="basket-empty"
-          onLoad={checkAmountOfBasket(useCart().length)}
-        >
-          <p>Your shopping basket is empty.</p>
-        </div>
-      </main>
-    </>
-  );
+          <div className="basket-pay" id={"basket-pay"}>
+            <div className="basket-pay-total">
+              <p>Total price: {formatNOK(totalPrice)} </p>
+            </div>
+            <Link to="/payment">
+              <button className="btn btn-primary basket-pay-btn">
+                Go to payment
+              </button>
+            </Link>
+          </div>
+        </main>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Header />
+        <main id="main">
+          <div className="basket-empty" id="basket-empty">
+            <p>Your shopping basket is empty.</p>
+          </div>
+        </main>
+      </>
+    );
+  }
 };
