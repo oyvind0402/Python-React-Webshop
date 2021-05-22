@@ -77,8 +77,13 @@ const UpdateProductPage = () => {
       <>
         <Header />
         <main id="main">
+          <p>
+            <Link to="/update" className="btn btn-secondary">
+              Back to Update Products page
+            </Link>
+          </p>
           <Link to="/admin" className="btn btn-secondary">
-            Back to admin
+            Back to Admin Page
           </Link>
           <h2>Update a phone</h2>
           <div className="form">
@@ -159,6 +164,7 @@ const UpdateProductPage = () => {
                   className="form-control"
                   name="image"
                   id="image"
+                  accept=".png"
                 />
               </div>
               <div className="form-btn">

@@ -26,11 +26,6 @@ const UpdateProduct = () => {
         <main id="main" className="updateProduct">
           <p>
             <Link to="/admin" className="btn btn-secondary">
-              Back to Update Products page
-            </Link>
-          </p>
-          <p>
-            <Link to="/admin" className="btn btn-secondary">
               Back to Admin Page
             </Link>
           </p>

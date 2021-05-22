@@ -11,7 +11,8 @@ export const NewProductForm = () => {
     }
   }, []);
 
-  async function addPhone() {
+  async function addPhone(e) {
+    e.preventDefault();
     const data = new FormData();
     const brand = document.getElementById("brand").value;
     const name = document.getElementById("name").value;
@@ -128,6 +129,7 @@ export const NewProductForm = () => {
                   className="form-control"
                   name="image"
                   id="image"
+                  accept=".png"
                 />
               </div>
               <div className="form-btn">
