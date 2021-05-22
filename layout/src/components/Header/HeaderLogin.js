@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export const HeaderLogin = () => {
   const [userLoggedIn, setUserLoggedin] = useState(false);
   const [admin, setAdmin] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     if (localStorage.getItem("jwt_token")) {
@@ -21,7 +22,7 @@ export const HeaderLogin = () => {
     localStorage.removeItem("orderID");
     setUserLoggedin(false);
     setAdmin(false);
-    window.location.reload();
+    history.push("/");
   };
   return (
     <div className="login-container">

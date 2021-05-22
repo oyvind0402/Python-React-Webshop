@@ -13,11 +13,12 @@
     &-table {
       text-align: left;
       display: block;
-      transform: translateX(calc(50% - 7rem));
+      width: fit-content;
+      margin: 0 auto 0 auto;
 
       &-body tr {
         @include grid;
-        grid-template-columns: minmax(7rem, 1fr) 1fr;
+        grid-template-columns: minmax(7rem, 0fr) 1fr;
         grid-template-areas: "lbl info";
       }
       & td {

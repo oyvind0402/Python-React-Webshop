@@ -73,7 +73,7 @@ $prod-img-w: 25rem;
   }
 }
 
-@media only screen and (max-width: #{$mq-md}) {
+@media only screen and (max-width: #{$mq-lg}) {
   .productpage {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
