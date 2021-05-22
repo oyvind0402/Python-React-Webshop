@@ -95,7 +95,7 @@ export const Login = () => {
                   className="btn btn-secondary login-btn-sec"
                   htmlFor="login-form"
                 >
-                  <Link to="">Forgot password</Link>
+                  <Link to="/forgotpassword">Forgot password</Link>
                 </button>
                 <button
                   className="btn btn-secondary login-btn-sec"
