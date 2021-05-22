@@ -50,6 +50,8 @@ const reducer = (state, action) => {
       const basket = [...state];
       basket.splice(action.index, 1);
       return basket;
+    case "REMOVEALL":
+      return [];
     default:
       throw new Error(`unknown action ${action.type}`);
   }
