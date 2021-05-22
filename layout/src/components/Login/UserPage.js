@@ -23,24 +23,39 @@ const UserPage = () => {
       };
       loadData();
     }
-  }, [user_info]);
+  }, []);
 
   if (userLoggedIn) {
     return (
       <>
         <Header />
         <main id="main">
-          <div>
+          <div className="user">
             <h1>Userpage</h1>
-            <img
-              src="https://i.stack.imgur.com/l60Hf.png"
-              style={{ width: "200px", borderRadius: "100px" }}
-              alt=""
-            />
-            <h2>Info</h2>
-            <p>Username: {user_info["username"]}</p>
-            <p>Name: {user_info["name"]}</p>
-            <p>Email: {user_info["email"]}</p>
+            <div className="user-info">
+              <img
+                className="user-info-img"
+                src="https://i.stack.imgur.com/l60Hf.png"
+                alt=""
+              />
+              <h2>Your info</h2>
+              <table className="user-info-table">
+                <tbody className="user-info-table-body">
+                  <tr>
+                    <td>Username:</td>
+                    <td> {user_info["username"]}</td>
+                  </tr>
+                  <tr>
+                    <td>Name: </td>
+                    <td> {user_info["name"]}</td>
+                  </tr>
+                  <tr>
+                    <td>Email: </td>
+                    <td> {user_info["email"]}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
           <div>
             <h2>Orders</h2>
@@ -48,6 +63,9 @@ const UserPage = () => {
               return (
                 <div key={item["orderID"]}>
                   <h3>Order, ID: {item["orderID"]}</h3>
+                  <p>Recipient name: {item["recipient"]}</p>
+                  <p>Address: {item["address"]}</p>
+                  <p>Phone number: {item["phone"]}</p>
                   {item["products"].map((prod) => {
                     return (
                       <div key={prod["id"]}>
@@ -70,7 +88,7 @@ const UserPage = () => {
       <>
         <Header />
         <main id="main">
-          <p>Youre not logged in!</p>
+          <h1>You are not logged in!</h1>
         </main>
       </>
     );
