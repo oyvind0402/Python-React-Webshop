@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from prometheus_flask_exporter import PrometheusMetrics
 import requests
@@ -64,6 +64,12 @@ def validate_email(email):
 @app.route('/')
 def index():
     return '<div style="text-align: center; margin-top: 200px; font-size: 30px;">This is the webshop API.<br/><br/>Go to <a href="https://localhost:5000/api/users">Users</a> to see all users.<br/>Go to <a href="https://localhost:5000/api/products">Products</a> to see all products.</div>'
+
+
+#To remove the favicon 404 response
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 #Getting all users
