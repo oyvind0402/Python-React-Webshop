@@ -127,7 +127,7 @@ const UpdateProductPage = () => {
               <div className="form-group">
                 <label htmlFor="storage">Phone storage</label>
                 <input
-                  type="text"
+                  type="number"
                   className="form-control"
                   name="storage"
                   id="storage"
