@@ -5,6 +5,7 @@ import { OrderCard } from "./OrderCard";
 const UserPage = () => {
   const [userLoggedIn, setUserLoggedin] = useState(false);
   const [orders, setOrders] = useState([]);
+  const [admin, setAdmin] = useState(false);
   const user_info = JSON.parse(localStorage.getItem("user-info"));
 
   useEffect(() => {
@@ -12,6 +13,9 @@ const UserPage = () => {
     if (localStorage.getItem("jwt_token")) {
       setUserLoggedin(true);
       done = true;
+    }
+    if (localStorage.getItem("admin")) {
+      setAdmin(true);
     }
     if (done) {
       const loadData = async () => {
@@ -65,6 +69,18 @@ const UserPage = () => {
             })}
           </div>
         </main>
+      </>
+    );
+  } else if (admin) {
+    return (
+      <>
+        <Header />
+        <main id="main">
+          <h1>You are admin!</h1>
+          <p>Admins do not have a right to a user page.</p>
+          <p>You have enough power as is.</p>
+        </main>
+        ;
       </>
     );
   } else {

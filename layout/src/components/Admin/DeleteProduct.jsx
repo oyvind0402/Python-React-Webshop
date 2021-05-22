@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Header } from "../Header/Header";
+import { ErrorNoPrivileges } from "./ErrorNoPrivileges";
 
 const DeleteProduct = () => {
   const [admin, setAdmin] = useState(false);
@@ -62,9 +63,7 @@ const DeleteProduct = () => {
     return (
       <>
         <Header />
-        <main id="main">
-          <p>You dont have admin privileges...</p>
-        </main>
+        <ErrorNoPrivileges />
       </>
     );
   }

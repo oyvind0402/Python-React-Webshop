@@ -7,7 +7,12 @@ export const ProductCard = (props) => {
   const dispatch = useDispatchCart();
 
   const addToCart = (item) => {
-    alert("Product is added to the basket");
+    const msg =
+      props.product["brand"] +
+      " " +
+      props.product["name"] +
+      " has been added to your basket.";
+    alert(msg);
     setTimeout(() => {
       document.getElementById("button" + props.product["id"]).disabled = true;
     }, 25);
