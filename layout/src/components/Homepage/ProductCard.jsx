@@ -23,7 +23,7 @@ export const ProductCard = (props) => {
     <article className="prodcard">
       <Link to={"/product/" + props.product["id"]} className="prodcard-more">
         <h3 className="prodcard-name">
-        {props.product["brand"] + " " + props.product["name"]}
+          {props.product["brand"] + " " + props.product["name"]}
         </h3>
         <img className="prodcard-img" src={src} alt={props.product["name"]} />
         <p className="prodcard-desc">{props.product["short_desc"]}</p>

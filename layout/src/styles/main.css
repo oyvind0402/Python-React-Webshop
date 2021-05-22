@@ -11,7 +11,8 @@
   background-color: #e6f2ff;
   color: #013165;
 }
-.btn-primary:hover, .btn-primary:focus {
+.btn-primary:hover,
+.btn-primary:focus {
   background-color: #9acafe;
 }
 .btn-secondary {
@@ -19,7 +20,8 @@
   background-color: #f2f2f3;
   color: #313435;
 }
-.btn-secondary:hover, .btn-secondary:focus {
+.btn-secondary:hover,
+.btn-secondary:focus {
   background-color: #cacdce;
 }
 
@@ -148,7 +150,8 @@ input {
   border-radius: 15px;
   box-shadow: 1px 1px 2px #cacdce;
 }
-.prodcard:hover, .prodcard:focus-within {
+.prodcard:hover,
+.prodcard:focus-within {
   box-shadow: 1px 1px 3px #313435;
 }
 .prodcard-name {
@@ -324,4 +327,4 @@ input {
     width: 100%;
     max-width: 90vw;
   }
-}/*# sourceMappingURL=main.css.map */
+} /*# sourceMappingURL=main.css.map */

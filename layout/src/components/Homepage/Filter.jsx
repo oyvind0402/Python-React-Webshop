@@ -123,9 +123,6 @@ export const Filter = (props) => {
           );
         }
       })}
-      {/*<div className="filter-btn">*/}
-      {/*  <button className="btn btn-primary" onClick={() => props.onchange(filterOptions)}>Filter</button>*/}
-      {/*</div>*/}
     </div>
   );
 };

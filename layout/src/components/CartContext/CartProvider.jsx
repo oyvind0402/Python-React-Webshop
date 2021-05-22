@@ -27,7 +27,7 @@ const reducer = (state, action) => {
         return currentBasket;
       }
     case "ADDQUANTITY":
-      const addBasket = [...state]
+      const addBasket = [...state];
       for (let i = 0; i < addBasket.length; i++) {
         let product = addBasket[i];
         if (product["id"] === action.item.id) {

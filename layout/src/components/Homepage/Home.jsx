@@ -35,8 +35,8 @@ export default function Home() {
     if (emptyFilter) {
       updateProducts(data);
       document
-          .getElementById("noProducts")
-          .style.setProperty("display", "none");
+        .getElementById("noProducts")
+        .style.setProperty("display", "none");
     } else {
       let firstFilter = true;
 
