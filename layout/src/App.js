@@ -21,6 +21,7 @@ import UpdateProductPage from "./components/Admin/UpdateProductPage";
 import { Error404 } from "./components/Error404/Error404";
 import { Payment } from "./components/Payment/Payment";
 import { Confirmation } from "./components/Confirmation/Confirmation";
+import { ForgottenPassword } from "./components/ForgottenPassword/ForgottenPassword";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/user" exact component={UserPage} />
         <Route path="/update" exact component={UpdateProduct} />
         <Route path="/updateproduct" component={UpdateProductPage} />
+        <Route path="/forgotpassword" component={ForgottenPassword} />
         <Route path="/404" component={Error404} />
         <Redirect to="/404" />
       </Switch>
