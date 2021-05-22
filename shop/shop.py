@@ -212,7 +212,7 @@ def getProduct(productid):
     db = openDatabase()
     cursor = db.cursor()
     cursor.execute('SELECT * FROM product WHERE id=%s', [productid])
-    result = [{"id": id, "brand": brand, "name": name, "price": price, "color": color, "operatingsystem": operatingsystem, "storage": storage, "short_desc": short_desc, "long_desc": long_desc, "image": image} for (id, brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image) in cursor]
+    result = [{"id": id, "brand": brand, "name": name, "price": price, "color": color, "operatingsystem": operatingsystem, "storage": storage, "short_desc": short_desc, "long_desc": long_desc, "image": image, "deleted": deleted} for (id, brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image, deleted) in cursor]
     cursor.close()
     db.close()
 
