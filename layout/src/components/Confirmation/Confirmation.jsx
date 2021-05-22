@@ -17,13 +17,13 @@ export const Confirmation = () => {
       setUserLoggedin(true);
       removeCart();
     }
-  });
+  }, []);
   if (userLoggedIn) {
     return (
       <>
         <Header />
         <main id="main" className="confirmation">
-          <h1>Order of ID #{orderID} confirmed</h1>
+          <h1>Order #{orderID} confirmed</h1>
           <p>Your order #{orderID} has been successfully placed.</p>
           <p>
             Estimated delivery: 32nd of February 2121 (according to the Mayan

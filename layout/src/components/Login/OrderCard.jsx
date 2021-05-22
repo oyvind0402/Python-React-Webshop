@@ -4,7 +4,7 @@ import { OrderCardItem } from "./OrderCardItem";
 export const OrderCard = (props) => {
   const item = props.item;
   return (
-    <div key={item["orderID"]} className="ordercard">
+    <div className="ordercard">
       <h3>Order #{item["orderID"]}</h3>
       <div className="ordercard-info">
         <div className="ordercard-info-delivery">
@@ -26,8 +26,8 @@ export const OrderCard = (props) => {
           </tr>
         </thead>
         <tbody>
-          {item["products"].map((prod) => {
-            return <OrderCardItem prod={prod} />;
+          {item["products"].map((prod, index) => {
+            return <OrderCardItem key={index} prod={prod} />;
           })}
         </tbody>
       </table>

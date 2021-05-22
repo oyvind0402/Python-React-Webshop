@@ -96,12 +96,42 @@ export const Filter = (props) => {
               </div>
             </div>
           );
+        } else if (att[0] === "storage") {
+          return (
+            <div key={index} className="filter-by">
+              <h4 className="filter-by-title">{att[0]}</h4>
+              <ul>
+                {att[1].map((checkbox, index) => {
+                  console.log(att);
+                  return (
+                    <div key={index} className="filter-by-item">
+                      <input
+                        onChange={searchValues}
+                        type={"checkbox"}
+                        id={checkbox}
+                        name={checkbox}
+                        value={checkbox}
+                        location={att[0]}
+                      />
+                      <label
+                        className="filter-by-label filter-by-storage"
+                        htmlFor={checkbox}
+                      >
+                        {checkbox}
+                      </label>
+                    </div>
+                  );
+                })}
+              </ul>
+            </div>
+          );
         } else {
           return (
             <div key={index} className="filter-by">
               <h4 className="filter-by-title">{att[0]}</h4>
               <ul>
                 {att[1].map((checkbox, index) => {
+                  console.log(att);
                   return (
                     <div key={index} className="filter-by-item">
                       <input

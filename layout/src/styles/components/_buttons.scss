@@ -27,6 +27,7 @@
     border-color: $blue80;
     background-color: $blue95;
     color: $blue20;
+    transition: background-color 0.3s linear;
   }
 
   &-primary:hover,
@@ -38,6 +39,7 @@
     border-color: $grey80;
     background-color: $grey95;
     color: $grey20;
+    transition: background-color 0.3s linear;
   }
 
   &-secondary:hover,

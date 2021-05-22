@@ -19,6 +19,10 @@
     &-label {
       margin: 0.5rem;
     }
+    &-storage::after {
+      content: " Gb";
+      font-size: 0.8rem;
+    }
   }
 
   &-btn {

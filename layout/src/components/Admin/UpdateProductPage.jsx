@@ -70,6 +70,29 @@ const UpdateProductPage = () => {
     }
   }
 
+  const autoUpdate = (field, value) => {
+    switch (field) {
+      case "price":
+        value = parseInt(value);
+        if (!isNaN(value)) {
+          document.getElementById("updateCard-" + field).innerHTML =
+            formatNOK(value);
+          break;
+        } else {
+          document.getElementById("updateCard-" + field).innerText = "ERROR";
+          break;
+        }
+      case "name":
+      case "brand":
+        document.getElementById("updateCard-" + field).innerText = value;
+        document.getElementById("updateCard-desc").innerText =
+          "Description will be updated on save";
+      default:
+        document.getElementById("updateCard-" + field).innerText = value;
+        break;
+    }
+  };
+
   const src = "data:image/png;base64, " + product["image"];
 
   if (admin) {
@@ -86,105 +109,117 @@ const UpdateProductPage = () => {
             Back to Admin Page
           </Link>
           <h2>Update a phone</h2>
-          <div className="form">
-            <form onSubmit={updatePhone}>
-              <div className="form-group">
-                <label htmlFor="brand">Brand</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="brand"
-                  id="brand"
-                  defaultValue={product["brand"]}
-                  required
-                />
+          <div className="updateOnePhone">
+            <div className="form">
+              <form onSubmit={updatePhone}>
+                <div className="form-group">
+                  <label htmlFor="brand">Brand</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="brand"
+                    id="brand"
+                    defaultValue={product["brand"]}
+                    onChange={(e) => autoUpdate(e.target.id, e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="name">Phone name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="name"
+                    id="name"
+                    defaultValue={product["name"]}
+                    onChange={(e) => autoUpdate(e.target.id, e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="price">Price</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="price"
+                    id="price"
+                    defaultValue={product["price"]}
+                    onChange={(e) => autoUpdate(e.target.id, e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="color">Color</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="color"
+                    id="color"
+                    defaultValue={product["color"]}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="operatingsystem">Operating System</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="operatingsystem"
+                    id="operatingsystem"
+                    defaultValue={product["operatingsystem"]}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="storage">Storage (Gb)</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="storage"
+                    id="storage"
+                    defaultValue={product["storage"]}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="image">
+                    Image (.png) <br />
+                    <span className="form-note">*Not required</span>
+                  </label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    name="image"
+                    id="image"
+                    accept=".png"
+                  />
+                </div>
+                <div className="form-btn">
+                  <input
+                    type="submit"
+                    className="btn btn-primary"
+                    name="submit"
+                    value="Update phone"
+                  />
+                </div>
+              </form>
+            </div>
+            <div id="updateCard">
+              <div className="prodcard">
+                <h3 className="prodcard-name">
+                  <span id="updateCard-brand">{product["brand"]}</span>{" "}
+                  <span id="updateCard-name">{product["name"]}</span>
+                </h3>
+                <img className="prodcard-img" src={src} alt={product["name"]} />
+                <p id="updateCard-desc" className="prodcard-desc">
+                  {product["short_desc"]}
+                </p>
+                <p id="updateCard-price" className="prodcard-price">
+                  {formatNOK(product["price"])}
+                </p>
               </div>
-              <div className="form-group">
-                <label htmlFor="name">Phone name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="name"
-                  id="name"
-                  defaultValue={product["name"]}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="price">Price</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  name="price"
-                  id="price"
-                  defaultValue={product["price"]}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="color">Color</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="color"
-                  id="color"
-                  defaultValue={product["color"]}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="operatingsystem">Operating System</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="operatingsystem"
-                  id="operatingsystem"
-                  defaultValue={product["operatingsystem"]}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="storage">Storage (Gb)</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  name="storage"
-                  id="storage"
-                  defaultValue={product["storage"]}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="image">
-                  Image (.png) <br />
-                  <span className="form-note">*Not required</span>
-                </label>
-                <input
-                  type="file"
-                  className="form-control"
-                  name="image"
-                  id="image"
-                  accept=".png"
-                />
-              </div>
-              <div className="form-btn">
-                <input
-                  type="submit"
-                  className="btn btn-primary"
-                  name="submit"
-                  value="Update phone"
-                />
-              </div>
-            </form>
+            </div>
           </div>
-          <article className="prodcard">
-            <h3 className="prodcard-name">
-              {product["brand"] + " " + product["name"]}
-            </h3>
-            <img className="prodcard-img" src={src} alt={product["name"]} />
-            <p className="prodcard-desc">{product["short_desc"]}</p>
-            <p className="prodcard-price">{formatNOK(product["price"])}</p>
-          </article>
         </main>
       </>
     );
