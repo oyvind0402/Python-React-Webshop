@@ -1,0 +1,22 @@
+.confirmation {
+  & h1,
+  & a {
+    color: $blue20;
+  }
+
+  &-warning {
+    padding: 0.5rem 2rem;
+    background: $blue50;
+    color: white;
+    border-radius: 15px;
+    box-shadow: 2px 2px 2px 2px rgba($blue20, 0.7);
+    text-align: center;
+    font-size: 1.15rem;
+    line-height: 1rem;
+
+    &-fu {
+      font-size: 1rem;
+      color: $blue80;
+    }
+  }
+}

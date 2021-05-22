@@ -22,14 +22,23 @@ export const Confirmation = () => {
     return (
       <>
         <Header />
-        <main id="main">
+        <main id="main" className="confirmation">
+          <h1>Order of ID #{orderID} confirmed</h1>
+          <p>Your order #{orderID} has been successfully placed.</p>
           <p>
-            Your order with orderID = {orderID}, has been successfully placed.
-            It will be delivered when our delivery driver returns from Mars on
-            the 32nd of February, 2121. According to the Mayan calendar, revised
-            in August of 3015.
+            Estimated delivery: 32nd of February 2121 (according to the Mayan
+            calendar, revised in August of 3015)
           </p>
-          <p>Your order was free, be happy with that...</p>
+          <div className="confirmation-warning">
+            <h2>Warning</h2>
+            <p>
+              Delivery might be delayed, as it will be conducted only once our
+              delivery driver returns from Mars.
+            </p>
+            <p className="confirmation-warning-fu">
+              Your order was free, be happy with that...
+            </p>
+          </div>
           <p>
             Go to your <Link to="/user">profile</Link> to see your orders!
           </p>

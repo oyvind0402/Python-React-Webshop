@@ -132,7 +132,7 @@ def loginUser():
     user = [{"id": id, "name": name, "username": username, "password_salt": password_salt, "password_hash": password_hash, "email": email} for (id, name, username, password_salt, password_hash, email) in cursor]
     
     #If the user doesnt exist
-    if user is None:
+    if len(user) < 1:
         return jsonify({"msg": "No account registered with that email"}), 400
     else:
         if len(user) == 1:

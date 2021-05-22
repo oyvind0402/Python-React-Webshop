@@ -92,12 +92,9 @@ export const SignUp = () => {
                 name="Register"
                 value="Register"
               />
-              <button
-                className="btn btn-secondary login-btn-sec"
-                htmlFor="signup-form"
-              >
-                <Link to="/login">To Login</Link>
-              </button>
+              <Link to="/login" className="btn btn-secondary login-btn-sec">
+                To Login
+              </Link>
             </div>
           </form>
         </div>

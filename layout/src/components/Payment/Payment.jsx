@@ -214,11 +214,10 @@ export const Payment = () => {
         <>
           <Header />
           <main id="main">
-            <p>
-              You are not logged in! You need to be logged in to place an order.
-            </p>
-            <Link to="/login">
-              <p>To login</p>
+            <h1>You are not logged in!</h1>
+            <p>You need to be logged in to place an order.</p>
+            <Link to="/login" className="btn btn-primary">
+              To login
             </Link>
           </main>
         </>

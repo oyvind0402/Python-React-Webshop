@@ -89,20 +89,16 @@ export const Login = () => {
                 name="Login"
                 value="Login"
               />
-
-              <div>
-                <button
+              <div className="login-extrabtns">
+                <Link
+                  to="/forgotpassword"
                   className="btn btn-secondary login-btn-sec"
-                  htmlFor="login-form"
                 >
-                  <Link to="/forgotpassword">Forgot password</Link>
-                </button>
-                <button
-                  className="btn btn-secondary login-btn-sec"
-                  htmlFor="login-form"
-                >
-                  <Link to="/signup">Sign Up</Link>
-                </button>
+                  Forgot password
+                </Link>
+                <Link to="/signup" className="btn btn-secondary login-btn-sec">
+                  Sign Up
+                </Link>
               </div>
             </div>
           </form>
