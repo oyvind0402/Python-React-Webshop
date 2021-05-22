@@ -12,10 +12,7 @@ export const ProductPage = () => {
 
   const addToCart = async (item) => {
     const msg =
-      props.product["brand"] +
-      " " +
-      props.product["name"] +
-      " has been added to your basket.";
+      item["brand"] + " " + item["name"] + " has been added to your basket.";
     alert(msg);
     document.getElementById("addBtn").disabled = true;
     const link = window.location.href;
