@@ -22,6 +22,8 @@ const AdminPage = () => {
             <Link to="/delete">Delete a product</Link>
             <br />
             <Link to="/update">Update a product</Link>
+            <br />
+            <Link to="/deleted">Show all deleted products</Link>
           </div>
         </main>
       </>

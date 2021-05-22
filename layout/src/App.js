@@ -15,6 +15,7 @@ import { NewProductForm } from "./components/Admin/NewProductForm";
 import { ProductPage } from "./components/ProductPage/ProductPage";
 import AdminPage from "./components/Admin/AdminPage";
 import DeleteProduct from "./components/Admin/DeleteProduct";
+import DeletedProducts from "./components/Admin/DeletedProducts";
 import UserPage from "./components/Login/UserPage";
 import UpdateProduct from "./components/Admin/UpdateProduct";
 import UpdateProductPage from "./components/Admin/UpdateProductPage";
@@ -37,6 +38,7 @@ function App() {
         <Route path="/product" component={ProductPage} />
         <Route path="/admin" exact component={AdminPage} />
         <Route path="/delete" exact component={DeleteProduct} />
+        <Route path="/deleted" exact component={DeletedProducts} />
         <Route path="/user" exact component={UserPage} />
         <Route path="/update" exact component={UpdateProduct} />
         <Route path="/updateproduct" component={UpdateProductPage} />
