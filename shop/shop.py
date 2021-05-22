@@ -364,7 +364,7 @@ def editProduct(productid):
 
     short_desc = "This is the new " + name + " from " + brand + "."
     long_desc = "The " + name + " from " + brand + ", which costs " + str(price) + "kr, is in the lovely color of " + color + ". It runs on " + operatingsystem + " and has " + str(storage) + "GB of storage."
-    if not request.files.get('image'):
+    if request.files.get('image') is None:
         cursor.execute("UPDATE product SET brand=%s, name=%s, price=%s, color=%s, operatingsystem=%s, storage=%s, short_desc=%s, long_desc=%s WHERE id=%s", (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, productid))
         db.commit()
         cursor.close()
