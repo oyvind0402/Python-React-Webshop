@@ -6,15 +6,12 @@ import { HeaderLogin } from "./HeaderLogin";
 import { HeaderBasket } from "./HeaderBasket";
 
 import logo_svg from "../../static/generic_logo.svg";
-import {useCart} from "../CartContext/CartProvider";
+import { useCart } from "../CartContext/CartProvider";
 
 export const Header = () => {
-    // let totalNumber = 0;
+  let totalNumber = 0;
 
-
-    let totalNumber = 0;
-
-    return (
+  return (
     <header className="header">
       <div className="header-left">
         <Link to="/">
@@ -26,12 +23,12 @@ export const Header = () => {
         <HeaderLogin />
         <Link to="/basket">
           <HeaderBasket />
-            { useCart().map((product) => {
-                totalNumber += product["quantity"]
-                return null
-            })}
+          {useCart().map((product) => {
+            totalNumber += product["quantity"];
+            return null;
+          })}
         </Link>
-          <p>({totalNumber})</p>
+        <p>({totalNumber})</p>
       </div>
     </header>
   );

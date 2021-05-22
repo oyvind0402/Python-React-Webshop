@@ -48,6 +48,14 @@
   & p {
     color: $grey20;
   }
+
+  &-link {
+    display: inline-block;
+    padding: 0 1rem;
+    & a {
+      color: $blue20;
+    }
+  }
 }
 
 @media only screen and (max-width: #{$mq-xs}) {

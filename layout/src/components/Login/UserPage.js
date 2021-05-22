@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "../Header/Header";
+import { OrderCard } from "./OrderCard";
 
 const UserPage = () => {
   const [userLoggedIn, setUserLoggedin] = useState(false);
@@ -60,24 +61,7 @@ const UserPage = () => {
           <div>
             <h2>Orders</h2>
             {orders.map((item) => {
-              return (
-                <div key={item["orderID"]}>
-                  <h3>Order, ID: {item["orderID"]}</h3>
-                  <p>Recipient name: {item["recipient"]}</p>
-                  <p>Address: {item["address"]}</p>
-                  <p>Phone number: {item["phone"]}</p>
-                  {item["products"].map((prod) => {
-                    return (
-                      <div key={prod["id"]}>
-                        <p>{"Name: " + prod["brand"] + " " + prod["name"]}</p>
-                        <p>{"Price: " + prod["price"]}</p>
-                        <p>{"Quantity: " + prod["quantity"]}</p>
-                        <br />
-                      </div>
-                    );
-                  })}
-                </div>
-              );
+              return <OrderCard item={item} />;
             })}
           </div>
         </main>
