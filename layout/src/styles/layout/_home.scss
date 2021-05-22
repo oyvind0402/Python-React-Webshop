@@ -69,7 +69,8 @@
 #noProducts {
   display: none;
   grid-area: prods;
-  @include flexbox;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: $blue20;
 }

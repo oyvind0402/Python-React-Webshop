@@ -10,7 +10,9 @@ export default function Home() {
 
   useEffect(() => {
     const loadData = async () => {
-      document.getElementById("noProducts").style.setProperty("display", "none");
+      document
+        .getElementById("noProducts")
+        .style.setProperty("display", "none");
       const response = await fetch("https://localhost:5000/api/products");
       let data = await response.json();
       updateProducts(data);
@@ -67,11 +69,15 @@ export default function Home() {
       if (newProducts.length === 0) {
         updateProducts([]);
         updateFilter(filterOptions);
-        document.getElementById("noProducts").style.setProperty("display", "block");
+        document
+          .getElementById("noProducts")
+          .style.setProperty("display", "block");
       } else {
         updateProducts(newProducts);
         updateFilter(filterOptions);
-        document.getElementById("noProducts").style.setProperty("display", "none");
+        document
+          .getElementById("noProducts")
+          .style.setProperty("display", "none");
       }
     }
   }
