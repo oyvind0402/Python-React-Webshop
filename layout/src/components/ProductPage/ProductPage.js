@@ -11,6 +11,7 @@ export const ProductPage = () => {
   const history = useHistory();
 
   const addToCart = async (item) => {
+    alert("Product is added to the basket");
     document.getElementById("addBtn").disabled = true;
     const link = window.location.href;
     const sku = link.split("/")[4];

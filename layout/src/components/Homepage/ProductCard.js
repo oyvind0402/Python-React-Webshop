@@ -7,6 +7,7 @@ export const ProductCard = (props) => {
   const dispatch = useDispatchCart();
 
   const addToCart = (item) => {
+    alert("Product is added to the basket");
     setTimeout(() => {
       document.getElementById("button" + props.product["id"]).disabled = true;
     }, 25);
