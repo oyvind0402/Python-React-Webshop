@@ -383,15 +383,22 @@ def deleteProduct(productid):
 
 
 #Adding an orderdetail for an order
-@app.route('/api/product/<int:productid>/size/<int:quantity>/order/<int:orderid>', methods=["POST", "GET"])
-def addOrderDetails(orderid, productid, quantity):
+@app.route('/api/orderdetail/add', methods=["POST"])
+def addOrderDetails():
     db = openDatabase()
     cursor = db.cursor()
-    cursor.execute("INSERT INTO OrderDetails (orderID, productID, quantity) VALUES (%s, %s, %s)", (orderid, productid, quantity))
-    db.commit()
-    cursor.close()
-    db.close()
-    return jsonify({"msg": "Orderdetails placed for orderid={}.".format(orderid)}), 201
+    form = request.form
+    if form:
+        orderid = form.get('orderID')
+        productid = form.get('productID')
+        quantity = form.get('quantity')
+        cursor.execute("INSERT INTO OrderDetails (orderID, productID, quantity) VALUES (%s, %s, %s)", (orderid, productid, quantity))
+        db.commit()
+        cursor.close()
+        db.close()
+        return jsonify({"msg": "Orderdetails placed for orderid={}.".format(orderid)}), 201
+    else:
+        return jsonify({"msg": "You tried adding orderdetails with no form added."}), 404
 
 
 #Adding an order for a user
@@ -404,12 +411,13 @@ def addOrder(userid):
     address = form.get('address')
     phone = form.get('phone')
     now = time.strftime('%Y-%m-%d %H:%M:%S')
-    cursor.execute('INSERT INTO UserOrder (userID, orderDate, address, recipient, phone) VALUES (%s, %s, %s, %s,  %s)', (userid, now, address, recipient, phone))
+    cursor.execute('INSERT INTO UserOrder (userID, orderDate, address, recipient, phone) VALUES (%s, %s, %s, %s, %s)', (userid, now, address, recipient, phone))
     id = cursor.lastrowid
     db.commit()
     cursor.close()
     db.close()
     return jsonify({"orderID": id}), 201
+
 
 #Route to get all orderids for a user
 @app.route('/api/user/<int:userid>/orderids', methods=["GET"])
