@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "../Header/Header";
 import { Link } from "react-router-dom";
+import { ErrorNoPrivileges } from "./ErrorNoPrivileges";
 
 const DeletedProducts = () => {
   const [admin, setAdmin] = useState(false);
@@ -32,10 +33,14 @@ const DeletedProducts = () => {
     return (
       <>
         <Header />
-        <main id="main">
-          <h1>Deleted products</h1>
-          <p>If you wish to undelete a product, just press "Add product".</p>
-          <Link to="/admin">Back to admin</Link>
+        <main id="main" className="deletedProducts">
+          <Link to="/admin" className="btn btn-secondary">
+            Back to Admin Page
+          </Link>
+          <h2>Deleted products</h2>
+          <p>
+            If you wish to undelete a product, just press "Restore product".
+          </p>
           <div className="products">
             {products.map((prod) => {
               const src = "data:image/png;base64, " + prod["image"];
@@ -47,10 +52,10 @@ const DeletedProducts = () => {
                   <img className="prodcard-img" src={src} alt={prod["name"]} />
                   <p className="prodcard-desc">{prod["short_desc"]}</p>
                   <button
-                    className="btn btn-primary"
+                    className="btn btn-primary deletedProducts-btn"
                     onClick={() => addProduct(prod["id"])}
                   >
-                    Add product
+                    Restore product
                   </button>
                 </article>
               );
@@ -74,9 +79,7 @@ const DeletedProducts = () => {
     return (
       <>
         <Header />
-        <main id="main">
-          <p>You do not have admin privileges...</p>
-        </main>
+        <ErrorNoPrivileges />
       </>
     );
   }

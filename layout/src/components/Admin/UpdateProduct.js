@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Header } from "../Header/Header";
+import { ErrorNoPrivileges } from "./ErrorNoPrivileges";
 
 const UpdateProduct = () => {
   const [admin, setAdmin] = useState(false);
@@ -22,8 +23,17 @@ const UpdateProduct = () => {
     return (
       <>
         <Header />
-        <main id="main">
-          <Link to="/admin">Back to admin</Link>
+        <main id="main" className="updateProduct">
+          <p>
+            <Link to="/admin" className="btn btn-secondary">
+              Back to Update Products page
+            </Link>
+          </p>
+          <p>
+            <Link to="/admin" className="btn btn-secondary">
+              Back to Admin Page
+            </Link>
+          </p>
           <div className="products">
             {products.map((prod) => {
               const src = "data:image/png;base64, " + prod["image"];
@@ -34,9 +44,14 @@ const UpdateProduct = () => {
                   </h3>
                   <img className="prodcard-img" src={src} alt={prod["name"]} />
                   <p className="prodcard-desc">{prod["short_desc"]}</p>
-                  <Link to={"/updateproduct/" + prod["id"]}>
-                    <p>Update</p>
-                  </Link>
+                  <p className="updateProduct-btn">
+                    <Link
+                      to={"/updateproduct/" + prod["id"]}
+                      className="btn btn-primary"
+                    >
+                      Update
+                    </Link>
+                  </p>
                 </article>
               );
             })}
@@ -48,9 +63,7 @@ const UpdateProduct = () => {
     return (
       <>
         <Header />
-        <main id="main">
-          <p>You dont have admin privileges...</p>
-        </main>
+        <ErrorNoPrivileges />
       </>
     );
   }

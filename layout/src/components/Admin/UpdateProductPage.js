@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { formatNOK } from "../utils";
 import { Link } from "react-router-dom";
 import { Header } from "../Header/Header";
+import { ErrorNoPrivileges } from "./ErrorNoPrivileges";
 
 const UpdateProductPage = () => {
   const [admin, setAdmin] = useState(false);
@@ -75,17 +77,21 @@ const UpdateProductPage = () => {
       <>
         <Header />
         <main id="main">
-          <Link to="/admin">Back to admin</Link>
-          <h3>Update a phone</h3>
+          <Link to="/admin" className="btn btn-secondary">
+            Back to admin
+          </Link>
+          <h2>Update a phone</h2>
           <div className="form">
             <form onSubmit={updatePhone}>
               <div className="form-group">
-                <label htmlFor="brand">Phone brand</label>
+                <label htmlFor="brand">Brand</label>
                 <input
                   type="text"
                   className="form-control"
                   name="brand"
                   id="brand"
+                  defaultValue={product["brand"]}
+                  required
                 />
               </div>
               <div className="form-group">
@@ -95,47 +101,58 @@ const UpdateProductPage = () => {
                   className="form-control"
                   name="name"
                   id="name"
+                  defaultValue={product["name"]}
+                  required
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="price">Phone price</label>
+                <label htmlFor="price">Price</label>
                 <input
                   type="number"
                   className="form-control"
                   name="price"
                   id="price"
+                  defaultValue={product["price"]}
+                  required
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="color">Phone color</label>
+                <label htmlFor="color">Color</label>
                 <input
                   type="text"
                   className="form-control"
                   name="color"
                   id="color"
+                  defaultValue={product["color"]}
+                  required
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="operatingsystem">Phone operatingsystem</label>
+                <label htmlFor="operatingsystem">Operating System</label>
                 <input
                   type="text"
                   className="form-control"
                   name="operatingsystem"
                   id="operatingsystem"
+                  defaultValue={product["operatingsystem"]}
+                  required
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="storage">Phone storage</label>
+                <label htmlFor="storage">Storage (Gb)</label>
                 <input
                   type="number"
                   className="form-control"
                   name="storage"
                   id="storage"
+                  defaultValue={product["storage"]}
+                  required
                 />
               </div>
               <div className="form-group">
                 <label htmlFor="image">
-                  Phone image (only .png files can be uploaded)
+                  Image (.png) <br />
+                  <span className="form-note">*Not required</span>
                 </label>
                 <input
                   type="file"
@@ -160,7 +177,7 @@ const UpdateProductPage = () => {
             </h3>
             <img className="prodcard-img" src={src} alt={product["name"]} />
             <p className="prodcard-desc">{product["short_desc"]}</p>
-            <p className="prodcard-price">{product["price"]}</p>
+            <p className="prodcard-price">{formatNOK(product["price"])}</p>
           </article>
         </main>
       </>
@@ -169,9 +186,7 @@ const UpdateProductPage = () => {
     return (
       <>
         <Header />
-        <main id="main">
-          <p>You dont have admin privileges...</p>
-        </main>
+        <ErrorNoPrivileges />
       </>
     );
   }

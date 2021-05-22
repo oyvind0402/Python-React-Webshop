@@ -1,3 +1,21 @@
+.adminpage {
+  & div {
+    line-height: 2.5rem;
+  }
+}
+
+.updateProduct {
+  &-btn {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.deletedProducts {
+  &-btn {
+    margin-bottom: 1.5rem;
+  }
+}
+
 .addProduct {
   & h3 {
     max-width: $form-width;

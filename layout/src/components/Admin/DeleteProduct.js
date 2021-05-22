@@ -32,7 +32,9 @@ const DeleteProduct = () => {
       <>
         <Header />
         <main id="main">
-          <Link to="/admin">Back to admin</Link>
+          <Link to="/admin" className="btn btn-secondary">
+            Back to Admin Page
+          </Link>
           <div className="products">
             {products.map((prod) => {
               const src = "data:image/png;base64, " + prod["image"];
@@ -44,7 +46,7 @@ const DeleteProduct = () => {
                   <img className="prodcard-img" src={src} alt={prod["name"]} />
                   <p className="prodcard-desc">{prod["short_desc"]}</p>
                   <button
-                    className="btn"
+                    className="btn btn-primary deletedProducts-btn"
                     onClick={() => deletePhone(prod["id"])}
                   >
                     Delete

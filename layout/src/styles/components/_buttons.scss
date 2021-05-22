@@ -1,6 +1,14 @@
 .btn {
-  padding: 0.3rem 0.9rem;
-  margin: 0.2rem 0;
+  /*Resetting button/link*/
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+  /*---------------------*/
+  padding: 0.3em 0.9em;
+  margin: 0.2em 0;
   border-radius: 5px;
   border: 2px solid;
   cursor: pointer;

@@ -2,3 +2,11 @@
   text-decoration: line-through;
   color: $grey80;
 }
+
+/*h2 title with small letters underneath*/
+.title {
+  line-height: 1.3rem;
+  &-mini {
+    font-size: 1rem;
+  }
+}

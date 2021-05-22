@@ -7,6 +7,7 @@
 
   & div {
     width: 100%;
+    margin-bottom: 1rem;
   }
 
   & label {
@@ -19,10 +20,6 @@
   &-form {
     display: block;
     width: 100%;
-  }
-
-  &-password {
-    margin: 2rem auto 1.3rem auto;
   }
 
   &-extrabtns {

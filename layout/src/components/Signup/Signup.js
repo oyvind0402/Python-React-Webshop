@@ -42,9 +42,12 @@ export const SignUp = () => {
       <Header />
       <main id="main" className="login">
         <div>
-          <h1>Sign up to generic companys webshop!</h1>
+          <h1 className="title">
+            Sign up <br></br>
+            <span className="title-mini">to Generic Company's webshop</span>
+          </h1>
           <form id="signup-form" onSubmit={signup}>
-            <div className="login-user">
+            <div>
               <label htmlFor="name">Name</label>
               <input
                 placeholder="Name"
@@ -54,7 +57,7 @@ export const SignUp = () => {
                 required={true}
               />
             </div>
-            <div className="login-user">
+            <div>
               <label htmlFor="username">Username</label>
               <input
                 placeholder="Username"
@@ -64,7 +67,7 @@ export const SignUp = () => {
                 required={true}
               />
             </div>
-            <div className="login-user">
+            <div>
               <label htmlFor="email">Email</label>
               <input
                 placeholder="Email"
@@ -74,7 +77,7 @@ export const SignUp = () => {
                 required={true}
               />
             </div>
-            <div className="login-password">
+            <div>
               <label htmlFor="password">Password</label>
               <input
                 placeholder="Password"

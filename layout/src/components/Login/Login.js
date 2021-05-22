@@ -58,9 +58,12 @@ export const Login = () => {
       <Header />
       <main id="main" className="login">
         <div>
-          <h1>Log in to generic companys webshop!</h1>
+          <h1 className="title">
+            Log in <br></br>
+            <span className="title-mini">to Generic Company's webshop</span>
+          </h1>
           <form id="login-form" onSubmit={login}>
-            <div className="login-user">
+            <div>
               <label htmlFor="email">Email</label>
               <input
                 placeholder="Email"
@@ -70,7 +73,7 @@ export const Login = () => {
                 required={true}
               />
             </div>
-            <div className="login-password">
+            <div>
               <label htmlFor="password">Password</label>
               <input
                 placeholder="Password"

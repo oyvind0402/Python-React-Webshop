@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "../Header/Header";
 import { Link } from "react-router-dom";
+import { ErrorNoPrivileges } from "./ErrorNoPrivileges";
 
 export const NewProductForm = () => {
   const [admin, setAdmin] = useState(false);
@@ -51,12 +52,14 @@ export const NewProductForm = () => {
         <Header />
 
         <main id="main" className="addProduct">
-          <Link to="/admin">Back to admin</Link>
-          <h3>Add a phone</h3>
+          <Link to="/admin" className="btn btn-secondary">
+            Back to Admin Page
+          </Link>
+          <h2>Add a phone</h2>
           <div className="form">
             <form onSubmit={addPhone}>
               <div className="form-group">
-                <label htmlFor="brand">Phone brand</label>
+                <label htmlFor="brand">Brand</label>
                 <input
                   type="text"
                   className="form-control"
@@ -76,7 +79,7 @@ export const NewProductForm = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="price">Phone price</label>
+                <label htmlFor="price">Price</label>
                 <input
                   type="number"
                   className="form-control"
@@ -86,7 +89,7 @@ export const NewProductForm = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="color">Phone color</label>
+                <label htmlFor="color">Color</label>
                 <input
                   type="text"
                   className="form-control"
@@ -96,7 +99,7 @@ export const NewProductForm = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="operatingsystem">Phone operatingsystem</label>
+                <label htmlFor="operatingsystem">Operating System</label>
                 <input
                   type="text"
                   className="form-control"
@@ -106,7 +109,7 @@ export const NewProductForm = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="storage">Phone storage</label>
+                <label htmlFor="storage">Storage (Gb)</label>
                 <input
                   type="number"
                   className="form-control"
@@ -117,7 +120,8 @@ export const NewProductForm = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="image">
-                  Phone image, not required (only .png files can be uploaded)
+                  Image (.png) <br />
+                  <span className="form-note">*Not required</span>
                 </label>
                 <input
                   type="file"
@@ -143,9 +147,7 @@ export const NewProductForm = () => {
     return (
       <>
         <Header />
-        <main id="main">
-          <p>You do not have admin privileges...</p>
-        </main>
+        <ErrorNoPrivileges />
       </>
     );
   }

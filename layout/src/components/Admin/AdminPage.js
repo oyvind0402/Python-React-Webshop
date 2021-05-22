@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Header } from "../Header/Header";
+import { ErrorNoPrivileges } from "./ErrorNoPrivileges";
 
 const AdminPage = () => {
   const [admin, setAdmin] = useState(false);
@@ -15,15 +16,28 @@ const AdminPage = () => {
       <>
         <Header />
         <main id="main">
-          <div>
-            <h1>Adminpage</h1>
-            <Link to="/new">Add a product</Link>
-            <br />
-            <Link to="/delete">Delete a product</Link>
-            <br />
-            <Link to="/update">Update a product</Link>
-            <br />
-            <Link to="/deleted">Show all deleted products</Link>
+          <div className="adminpage">
+            <h1>Admin Page</h1>
+            <div>
+              <Link to="/new" className="btn btn-primary">
+                Add a product
+              </Link>
+            </div>
+            <div>
+              <Link to="/delete" className="btn btn-primary">
+                Delete a product
+              </Link>
+            </div>
+            <div>
+              <Link to="/update" className="btn btn-primary">
+                Update a product
+              </Link>
+            </div>
+            <div>
+              <Link to="/deleted" className="btn btn-primary">
+                Show all deleted products
+              </Link>
+            </div>
           </div>
         </main>
       </>
@@ -32,9 +46,7 @@ const AdminPage = () => {
     return (
       <>
         <Header />
-        <main id="main">
-          <p>You don't have admin privileges...</p>
-        </main>
+        <ErrorNoPrivileges />
       </>
     );
   }

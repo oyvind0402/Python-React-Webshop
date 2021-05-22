@@ -11,4 +11,10 @@
   &-btn {
     text-align: center;
   }
+
+  &-note {
+    color: $grey50;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
 }
