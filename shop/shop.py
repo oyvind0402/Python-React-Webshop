@@ -289,7 +289,7 @@ def addProduct():
     storage = form.get('storage')
     short_desc = "This is the new " + name + " from " + brand + "."
     long_desc = "The " + name + " from " + brand + ", which costs " + price + "kr, is in the lovely color of " + color + ". It runs on " + operatingsystem + " and has " + storage + "GB of storage."
-    if not request.files.get('image'):
+    if request.files.get('image') is None:
         file = open("./static/images/default-product-pic.png", "rb");
         image = base64.b64encode(file.read())
         cursor.execute("INSERT INTO product (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (brand, name, price, color, operatingsystem, storage, short_desc, long_desc, image))
@@ -310,7 +310,8 @@ def addProduct():
         db.close()
         file.close()
         return jsonify({"msg": "Successfully added product named {}, product picture included.".format(name)}), 201
-    return jsonify({"msg": "Could not add the product, the image chosen had the wrong extension."}), 400
+    else:
+        return jsonify({"msg": "Could not add the product, the image chosen had the wrong extension."}), 400
 
 
 #Editing a product
