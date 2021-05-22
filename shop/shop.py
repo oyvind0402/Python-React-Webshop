@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from prometheus_flask_exporter import PrometheusMetrics
 import requests
 import mysql.connector
 import os
@@ -15,6 +16,10 @@ warnings.filterwarnings('ignore', message='Unverified HTTPS request')
 
 
 app = Flask(__name__)
+
+
+#Adding prometheus scraping of the flask API
+PrometheusMetrics(app)
 
 
 #To eliminate CORS errors when doing post and get requests from localhost
@@ -516,4 +521,4 @@ def getOrders(userid):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True, ssl_context=('./static/TLS/webshop.crt', './static/TLS/webshop.key'))
+    app.run(host='0.0.0.0', debug=False, ssl_context=('./static/TLS/webshop.crt', './static/TLS/webshop.key'))

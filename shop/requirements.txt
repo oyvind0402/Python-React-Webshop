@@ -5,3 +5,4 @@ pyjwt
 bcrypt
 pyopenssl
 requests
+prometheus_flask_exporter
