@@ -57,6 +57,12 @@ const DeletedProducts = () => {
                   >
                     Restore product
                   </button>
+                  <Link
+                    to={"/updateproduct/" + prod["id"]}
+                    className="btn btn-primary deletedProducts-update"
+                  >
+                    Update
+                  </Link>
                 </article>
               );
             })}

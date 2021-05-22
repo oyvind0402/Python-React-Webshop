@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { formatNOK } from "../utils";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Header } from "../Header/Header";
 import { ErrorNoPrivileges } from "./ErrorNoPrivileges";
 
 const UpdateProductPage = () => {
   const [admin, setAdmin] = useState(false);
   const [product, updateProduct] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     if (localStorage.getItem("admin")) {
@@ -18,8 +19,12 @@ const UpdateProductPage = () => {
       const apiLink = "https://localhost:5000/api/product/" + id;
 
       const response = await fetch(apiLink);
-      let data = await response.json();
-      updateProduct(data);
+      if (response.status === 200) {
+        let data = await response.json();
+        updateProduct(data);
+      } else {
+        history.push("/404");
+      }
     };
     loadData();
   }, []);
@@ -75,8 +80,9 @@ const UpdateProductPage = () => {
       case "price":
         value = parseInt(value);
         if (!isNaN(value)) {
-          document.getElementById("updateCard-" + field).innerHTML =
-            formatNOK(value);
+          document.getElementById("updateCard-" + field).innerHTML = formatNOK(
+            value
+          );
           break;
         } else {
           document.getElementById("updateCard-" + field).innerText = "ERROR";
