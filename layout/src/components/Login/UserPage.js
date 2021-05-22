@@ -60,8 +60,8 @@ const UserPage = () => {
           </div>
           <div>
             <h2>Orders</h2>
-            {orders.map((item) => {
-              return <OrderCard item={item} />;
+            {orders.map((item, index) => {
+              return <OrderCard key={index} item={item} />;
             })}
           </div>
         </main>

@@ -12,6 +12,7 @@ import time
 import warnings
 import re
 
+#Removing errors that appear through unverified HTTPS requests
 warnings.filterwarnings('ignore', message='Unverified HTTPS request')
 
 
@@ -28,7 +29,7 @@ CORS(app)
 app.config['SECRET_KEY'] = "AWdad12e+1daw::d1__123123dadaodo"
 
 
-#The upload settings
+#The upload settings - making only .png files valid.
 UPLOAD_FOLDER = "static/images"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 extensions = set(['png'])
@@ -50,6 +51,7 @@ def generate_hash(password, password_salt):
     return passwordhash
 
 
+#For email validation
 regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
 def validate_email(email):
     if re.search(regex, email):
@@ -58,7 +60,7 @@ def validate_email(email):
         return False
 
 
-
+#Creating a basic front for the API
 @app.route('/')
 def index():
     return '<div style="text-align: center; margin-top: 200px; font-size: 30px;">This is the webshop API.<br/><br/>Go to <a href="https://localhost:5000/api/users">Users</a> to see all users.<br/>Go to <a href="https://localhost:5000/api/products">Products</a> to see all products.</div>'
@@ -152,37 +154,6 @@ def loginUser():
                 return jsonify({"id": user[0]["id"], "name": user[0]["name"], "username": user[0]["username"], "email": user[0]["email"], "jwt_token": token}), 200
             else:
                 return jsonify({"msg": "Incorrect password"}), 401
-
-
-#Editing a user
-@app.route('/api/user/<int:userid>/update', methods=["POST"])
-def editUser(userid):
-    db = openDatabase()
-    cursor = db.cursor()
-    form = request.form
-    name = form.get('name')
-    username = form.get('username')
-    password = form.get('password')
-    email = form.get('email')
-    password_salt = bcrypt.gensalt()
-    password_hash = generate_hash(password, password_salt)
-    cursor.execute('UPDATE user SET name=%s, username=%s, password_salt=%s, password_hash=%s, email=%s WHERE id=%s', (name, username, password_salt, password_hash, email, userid))
-    db.commit()
-    cursor.close()
-    db.close()
-    return jsonify({"msg": "User updated."}), 200
-
-
-#Deleting a user
-@app.route('/api/user/<int:userid>/delete', methods=["POST"])
-def deleteUser(userid):
-    db = openDatabase()
-    cursor = db.cursor()
-    cursor.execute('DELETE FROM user WHERE id=%s', [userid])
-    db.commit()
-    cursor.close()
-    db.close()
-    return "", 204
 
 
 #Getting all products
@@ -428,7 +399,7 @@ def addOrderDetails():
         db.close()
         return jsonify({"msg": "Orderdetails placed for orderid={}.".format(orderid)}), 201
     else:
-        return jsonify({"msg": "You tried adding orderdetails with no form added."}), 404
+        return jsonify({"msg": "You tried adding orderdetails with no form-data added."}), 404
 
 
 #Adding an order for a user
@@ -437,16 +408,19 @@ def addOrder(userid):
     db = openDatabase()
     cursor = db.cursor()
     form = request.form
-    recipient = form.get('recipient')
-    address = form.get('address')
-    phone = form.get('phone')
-    now = time.strftime('%Y-%m-%d %H:%M:%S')
-    cursor.execute('INSERT INTO UserOrder (userID, orderDate, address, recipient, phone) VALUES (%s, %s, %s, %s, %s)', (userid, now, address, recipient, phone))
-    id = cursor.lastrowid
-    db.commit()
-    cursor.close()
-    db.close()
-    return jsonify({"orderID": id}), 201
+    if form:
+        recipient = form.get('recipient')
+        address = form.get('address')
+        phone = form.get('phone')
+        now = time.strftime('%Y-%m-%d %H:%M:%S')
+        cursor.execute('INSERT INTO UserOrder (userID, orderDate, address, recipient, phone) VALUES (%s, %s, %s, %s, %s)', (userid, now, address, recipient, phone))
+        id = cursor.lastrowid
+        db.commit()
+        cursor.close()
+        db.close()
+        return jsonify({"orderID": id}), 201
+    else:
+        return jsonify({"msg": "You tried adding an order with no form-data added."}), 404
 
 
 #Route to get all orderids for a user
