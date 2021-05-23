@@ -31,6 +31,12 @@ export const ProductPage = () => {
 
   const [product, productUpdate] = useState({});
   const [render, reRender] = useState("");
+  const [deletedProd, updateDeletedProd] = useState(1);
+  const setDeleted = (data) => {
+    updateDeletedProd = (prev) => {
+      prev = data;
+    };
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -46,6 +52,7 @@ export const ProductPage = () => {
 
       let data = await response.json();
       productUpdate(data);
+      updateDeletedProd(data["deleted"]);
       return data;
     };
     loadData();
@@ -69,13 +76,23 @@ export const ProductPage = () => {
             <p>{product["long_desc"]}</p>
             <div className="productpage-buy">
               <p className="productpage-price">{formatNOK(product.price)}</p>
-              <button
-                id="addBtn"
-                className="btn btn-primary"
-                onClick={() => addToCart(product)}
-              >
-                Add to basket
-              </button>
+              {deletedProd ? (
+                <button
+                  id="addBtn"
+                  className="btn btn-secondary disabled"
+                  disabled
+                >
+                  Out of stock
+                </button>
+              ) : (
+                <button
+                  id="addBtn"
+                  className="btn btn-primary"
+                  onClick={() => addToCart(product)}
+                >
+                  Add to basket
+                </button>
+              )}
             </div>
           </div>
           <table className="productSpecs">
