@@ -7,6 +7,12 @@ import { ErrorNoPrivileges } from "./ErrorNoPrivileges";
 const UpdateProductPage = () => {
   const [admin, setAdmin] = useState(false);
   const [product, updateProduct] = useState([]);
+  const [deletedProd, updateDeletedProd] = useState(1);
+  const setDeleted = (data) => {
+    updateDeletedProd = (prev) => {
+      prev = data;
+    };
+  };
   const history = useHistory();
 
   useEffect(() => {
@@ -22,6 +28,7 @@ const UpdateProductPage = () => {
       if (response.status === 200) {
         let data = await response.json();
         updateProduct(data);
+        updateDeletedProd(data["deleted"]);
       } else {
         history.push("/404");
       }
@@ -109,9 +116,15 @@ const UpdateProductPage = () => {
         <Header />
         <main id="main">
           <p>
-            <Link to="/update" className="btn btn-secondary">
-              Back to Update Products page
-            </Link>
+            {deletedProd ? (
+              <Link to="/deleted" className="btn btn-secondary">
+                Back to Deleted Products page
+              </Link>
+            ) : (
+              <Link to="/update" className="btn btn-secondary">
+                Back to Update Products page
+              </Link>
+            )}
           </p>
           <Link to="/admin" className="btn btn-secondary">
             Back to Admin Page
