@@ -9,7 +9,7 @@ export const Filter = (props) => {
         "https://localhost:5000/api/product/distinctvalues"
       );
       let data = await response.json();
-      updateAttributes(data);
+      updateAttributes(data); // load all the possible unique values
     };
     loadData();
   }, []);
@@ -23,23 +23,23 @@ export const Filter = (props) => {
     const checkedBoxes = document.querySelectorAll(
       "input[type=checkbox]:checked"
     );
-    checkedBoxes.forEach((box) => {
+    checkedBoxes.forEach((box) => { // loops through all the checkboxes and see it they are checked ot not
       filterOptions.forEach((filter) => {
-        if (filter[0] === box.getAttribute("location")) {
+        if (filter[0] === box.getAttribute("location")) { // location is parent Brand is the location of Apple
           let inList = false;
-          filter[1].forEach((element) => {
+          filter[1].forEach((element) => { // check if it already was in the list
             if (element === box.id) {
               inList = true;
             }
           });
-          if (!inList) {
+          if (!inList) { // not in the list? let's add it
             filter[1].push(box.id);
           }
         }
       });
     });
 
-    filterOptions.forEach((filter) => {
+    filterOptions.forEach((filter) => { // Since filter is depended on two variable both need to be checked
       if (filter[0] === "price") {
         //price filter
         let lowValue = document.getElementById("lowInput").value;
@@ -51,7 +51,7 @@ export const Filter = (props) => {
         }
       }
     });
-    props.onchange(filterOptions);
+    props.onchange(filterOptions); // Filtervalues get send to the homepage where they will be compared with the products
   }
 
   function filterPrice() {
