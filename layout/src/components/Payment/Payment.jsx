@@ -136,24 +136,24 @@ export const Payment = () => {
                   <input
                     id="name"
                     onBlur={() => checkValidData("name")}
-                  ></input>
-                  <div id="name-error"></div>
+                  />
+                  <div id="name-error"/>
                 </div>
                 <div className="form-group form-group-1">
                   <label htmlFor="address">Address</label>
                   <input
                     id="address"
                     onBlur={() => checkValidData("address")}
-                  ></input>
-                  <div id="address-error"></div>
+                  />
+                  <div id="address-error"/>
                 </div>
                 <div className="form-group form-group-1">
                   <label htmlFor="phone">Telephone number</label>
                   <input
                     id="phone"
                     onBlur={() => checkValidData("phone")}
-                  ></input>
-                  <div id="phone-error"></div>
+                  />
+                  <div id="phone-error"/>
                 </div>
                 <div className="form-group">
                   <label htmlFor="card-nr">Card number</label>
@@ -162,7 +162,7 @@ export const Payment = () => {
                     className="form-input"
                     placeholder="🎉 Guess who just got a gift?"
                     disabled
-                  ></input>
+                  />
                 </div>
                 <div className="form-group-2">
                   <label className="form-lbl-date" htmlFor="card-date">
@@ -173,7 +173,7 @@ export const Payment = () => {
                     id="card-date"
                     placeholder="🎉 You got a gift!"
                     disabled
-                  ></input>
+                  />
                   <label className="form-lbl-cvc" htmlFor="card-cvc">
                     CVC
                   </label>
@@ -182,7 +182,7 @@ export const Payment = () => {
                     id="card-cvc"
                     placeholder="100% free 🎉"
                     disabled
-                  ></input>
+                  />
                 </div>
               </form>
               <div>
