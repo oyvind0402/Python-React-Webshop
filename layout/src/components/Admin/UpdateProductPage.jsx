@@ -79,9 +79,8 @@ const UpdateProductPage = () => {
       case "price":
         value = parseInt(value);
         if (!isNaN(value)) {
-          document.getElementById("updateCard-" + field).innerHTML = formatNOK(
-            value
-          );
+          document.getElementById("updateCard-" + field).innerHTML =
+            formatNOK(value);
           break;
         } else {
           document.getElementById("updateCard-" + field).innerText = "ERROR";
@@ -177,7 +176,7 @@ const UpdateProductPage = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="storage">Storage (Gb)</label>
+                  <label htmlFor="storage">Storage (GB)</label>
                   <input
                     type="number"
                     className="form-control"

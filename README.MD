@@ -1,25 +1,26 @@
-# DATA2410 - Portfolio Project 2
+# DATA2410 - Portfolio Project 2: Webshop
+
+This is a webshop created for the final exam in DATA2410 - Networking and Cloud Services.
 
 ## How to run
 
-1. Type 'docker-compose build' while in the root directory of the project to build the images from the three Dockerfiles and link them together.
-2. Type 'docker-compose up' to start the three containers (the MySQL database, the React application and the flask API server).
-3. Go to 'localhost:3001' to see the working webshop.
+1. Use `$ docker-compose build` while in the root directory of the project to build the images from the three Dockerfiles and link them together, along with the Prometheus image.
+2. Use `$ docker-compose up` to start the three containers (the MySQL database, the React application and the flask API server).
+3. Go to [localhost:3001](http://localhost:3001) to see the working webshop.
 
-If you encounter issues loading data, you may need to visit the [API](https://localhost:5000). You will see a warning about it being a potentially unsafe page, due to it being self-certified. Accept accessing the unsafe API.
+If you encounter issues loading data, you may need to visit the [API](https://localhost:5000). You will see a warning about it being a potentially unsafe page, as it is self-certified. Accept accessing the unsafe API and navigate back to the [webshop](http://localhost:3001). The issue should be solved.
 
 ## Resetting the database
 
-You need to delete the container to reset the database, if you so wish.
-You can do that with 'docker-compose down'.
-Then you follow steps 1 through 3 from [How To Run](#how-to-run) to see the default state of our data.
+If you wish to reset the database, you need to delete the container. You can do that with `$ docker-compose down`.
+To re-start the webshop, follow steps 1 through 3 from [How To Run](#how-to-run). Data will have been reset to its default state.
 
 ## API
 
-The URL for the API is https://localhost:5000, it's https since its secured by a selfsigned SSL key pair.
+The URL for the API is https://localhost:5000. It uses HTTPS since due to being secured by a self-signed SSL key pair.
 
 Go to https://localhost:5000/api/users to see all users.
-Go to https://localhost:5000/api/products to see all products. (It will look a bit weird because images are stored in its base64 encoding)
+Go to https://localhost:5000/api/products to see all products.
 
 ## Website
 

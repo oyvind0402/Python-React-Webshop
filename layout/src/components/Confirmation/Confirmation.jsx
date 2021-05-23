@@ -50,7 +50,7 @@ export const Confirmation = () => {
       <>
         <Header />
         <main id="main">
-          <h1>You havent ordered anything...</h1>
+          <h1>You have not ordered anything yet.</h1>
         </main>
       </>
     );

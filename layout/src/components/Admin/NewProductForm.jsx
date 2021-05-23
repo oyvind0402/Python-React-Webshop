@@ -109,7 +109,7 @@ export const NewProductForm = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="storage">Storage (Gb)</label>
+                <label htmlFor="storage">Storage (GB)</label>
                 <input
                   type="number"
                   className="form-control"
