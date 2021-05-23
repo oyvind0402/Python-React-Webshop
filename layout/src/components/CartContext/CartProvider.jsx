@@ -8,7 +8,6 @@ const CartDispatchContext = createContext();
 const reducer = (state, action) => {
   switch (action.type) {
     case "ADD":
-      // return [...state, action.item];
       const currentBasket = [...state];
       let alreadyInBasket = false;
       for (let i = 0; i < currentBasket.length; i++) {
