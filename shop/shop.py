@@ -25,7 +25,7 @@ PrometheusMetrics(app)
 
 #To eliminate CORS errors when doing post and get requests from localhost
 CORS(app)
-#For headers on responses
+#For headers on requests
 app.config['SECRET_KEY'] = "AWdad12e+1daw::d1__123123dadaodo"
 
 
@@ -83,22 +83,6 @@ def getUsers():
     db.close()
     response = jsonify(result)
     return response, 200
-
-
-#Getting one user
-@app.route('/api/users/<int:userid>', methods=["GET"])
-def getUser(userid):
-    db = openDatabase()
-    cursor = db.cursor()
-    cursor.execute('SELECT * FROM user WHERE id=%s', [userid])
-    result = [{"id": id, "name": name, "username": username, "password_salt": password_salt, "password_hash": password_hash, "email": email} for (id, name, username, password_salt, password_hash, email) in cursor]
-    cursor.close()
-    db.close()
-    if len(result) < 1:
-        return {"msg": "Could not get user"}, 404
-    else:
-        response = jsonify(result[0])
-        return response, 200
 
 
 #Route for registering

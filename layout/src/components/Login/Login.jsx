@@ -38,7 +38,10 @@ export const Login = () => {
     if ((email === "admin@admin.com") & (password === "admin")) {
       localStorage.setItem("admin", reply["jwt_token"]);
       history.push("/admin");
-    } else if (response.status === 200) {
+    }
+    //If its another user thats logging in we add the token and userinfo to localstorage for use throughout the website.
+    //Then we redirect to home.
+    else if (response.status === 200) {
       localStorage.setItem("jwt_token", reply["jwt_token"]);
       let user_info = {
         id: reply["id"],

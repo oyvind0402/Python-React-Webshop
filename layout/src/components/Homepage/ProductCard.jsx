@@ -13,6 +13,7 @@ export const ProductCard = (props) => {
       props.product["name"] +
       " has been added to your basket.";
     alert(msg);
+    //Disabling the button when adding a product to the basket to let it finish.
     setTimeout(() => {
       document.getElementById("button" + props.product["id"]).disabled = true;
     }, 25);

@@ -5,10 +5,12 @@ import { formatNOK } from "../utils";
 export const BasketCard = (props) => {
   const dispatch = useDispatchCart();
 
+  //Adding another of the same item in the basket
   const plusQty = () => {
     let newQty = props.product.quantity + 1; //new quantity
     addToCart(props.product, newQty);
   };
+
   const minusQty = () => {
     let reducedQty = props.product.quantity - 1;
     if (reducedQty === 0) {
