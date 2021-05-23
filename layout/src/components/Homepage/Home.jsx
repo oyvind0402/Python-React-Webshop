@@ -15,7 +15,7 @@ export default function Home() {
         .style.setProperty("display", "none");
       const response = await fetch("https://localhost:5000/api/products");
       let data = await response.json();
-      updateProducts(data);
+      updateProducts(data); // initial products are loaded in here
     };
     loadData();
   }, []);
@@ -28,25 +28,25 @@ export default function Home() {
     let emptyFilter = true;
 
     filterOptions.forEach((filter) => {
-      if (filter[1].length !== 0) {
+      if (filter[1].length !== 0) { // if one of the filters isn't empty it will be sett to false
         emptyFilter = false;
       }
     });
-    if (emptyFilter) {
+    if (emptyFilter) { // no filters are selected so all the products will show
       updateProducts(data);
       document
         .getElementById("noProducts")
         .style.setProperty("display", "none");
-    } else {
+    } else { // there is a filter(s) selected so now we need to loop through filter array and product array
       let firstFilter = true;
 
       filterOptions.forEach((filter) => {
         if (filter[1].length !== 0) {
-          if (firstFilter) {
-            if (filter[0] === "price") {
+          if (firstFilter) { // First filter will function as a base here all the product that match the values will be included
+            if (filter[0] === "price") { // since price is depended on two inputs it goes to a different function
               newProducts = filterPrice(filter, data, newProducts, firstFilter);
             } else {
-              newProducts = matchProductsWithFilter(
+              newProducts = matchProductsWithFilter( // the selected filter (could be brand, color, size) is being send to the function to compare with the products
                 filter,
                 data,
                 newProducts,
@@ -54,11 +54,11 @@ export default function Home() {
               );
             }
             firstFilter = false;
-          } else {
-            if (filter[0] === "price") {
+          } else { //if firstFilter has been used, products need to be deducted based on the next criteria
+            if (filter[0] === "price") { // since price is depended on two inputs it goes to a different function
               newProducts = filterPrice(filter, data, newProducts, firstFilter);
             } else {
-              newProducts = matchProductsWithFilter(
+              newProducts = matchProductsWithFilter( // the selected filter (could be brand, color, size) is being send to the function to compare with the products
                 filter,
                 data,
                 newProducts,
@@ -69,13 +69,13 @@ export default function Home() {
         }
       });
 
-      if (newProducts.length === 0) {
+      if (newProducts.length === 0) { // if no product match the condition. The noProducts will show
         updateProducts([]);
         updateFilter(filterOptions);
         document
           .getElementById("noProducts")
           .style.setProperty("display", "block");
-      } else {
+      } else { // The useState of products is set here and the page will be rerendered
         updateProducts(newProducts);
         updateFilter(filterOptions);
         document

@@ -32,6 +32,7 @@ const UpdateProductPage = () => {
   async function updatePhone(event) {
     event.preventDefault();
 
+    //Creating a form-data to send through the header of the POST request.
     const data = new FormData();
     const brand = document.getElementById("brand").value;
     const name = document.getElementById("name").value;
@@ -48,6 +49,7 @@ const UpdateProductPage = () => {
     data.append("storage", storage);
     data.append("image", image);
 
+    //Taking the id of the phone from the URL.
     const link = window.location.href;
     const id = link.split("/")[4];
     const response = await fetch(
@@ -63,6 +65,7 @@ const UpdateProductPage = () => {
     );
     const reply = await response.json();
 
+    //Checking to see if the POST request was successful, and if it is we update the product you see on the page with the new values.
     if (response.status === 201) {
       const apiLink = `https://localhost:5000/api/product/${id}`;
       const response2 = await fetch(apiLink);

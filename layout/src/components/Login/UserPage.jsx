@@ -17,6 +17,7 @@ const UserPage = () => {
     if (localStorage.getItem("admin")) {
       setAdmin(true);
     }
+    //Waiting untill the user is set as logged in before doing the fetch.
     if (done) {
       const loadData = async () => {
         const response = await fetch(

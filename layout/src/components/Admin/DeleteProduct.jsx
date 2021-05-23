@@ -23,6 +23,7 @@ const DeleteProduct = () => {
     await fetch(`https://localhost:5000/api/product/delete/${id}`, {
       method: "POST",
     });
+    //New response to update the page so that the phone gets deleted without the need of a refresh.
     const response = await fetch("https://localhost:5000/api/products");
     let data = await response.json();
     updateProducts(data);

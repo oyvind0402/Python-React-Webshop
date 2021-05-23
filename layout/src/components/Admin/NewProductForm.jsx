@@ -12,7 +12,10 @@ export const NewProductForm = () => {
   }, []);
 
   async function addPhone(e) {
+    //Preventing default behaviour of the button.
     e.preventDefault();
+
+    //Creating a form-data to send through the header of the POST request.
     const data = new FormData();
     const brand = document.getElementById("brand").value;
     const name = document.getElementById("name").value;
