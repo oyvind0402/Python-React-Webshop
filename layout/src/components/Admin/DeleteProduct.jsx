@@ -41,7 +41,7 @@ const DeleteProduct = () => {
             {products.map((prod) => {
               const src = "data:image/png;base64, " + prod["image"];
               return (
-                <article className="prodcard">
+                <article className="prodcard" key={prod["id"]}>
                   <h3 className="prodcard-name">
                     {prod["brand"] + " " + prod["name"]}
                   </h3>

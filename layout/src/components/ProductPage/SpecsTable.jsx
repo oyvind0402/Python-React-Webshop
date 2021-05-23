@@ -8,9 +8,9 @@ import React from "react";
 export const SpecsTable = (data) => {
   return (
     <tbody>
-      {data.specs.map((spec) => {
+      {data.specs.map((spec, index) => {
         return (
-          <tr className="productSpecs-row">
+          <tr className="productSpecs-row" key={index}>
             <td className="productSpecs-name">{spec[0]}</td>
             <td className="productSpecs-value productSpecs-no-caps">
               {spec[1]}
