@@ -18,7 +18,7 @@ export const Confirmation = () => {
       removeCart();
     }
   }, []);
-  if (userLoggedIn) {
+  if (userLoggedIn && orderID) {
     return (
       <>
         <Header />
@@ -42,6 +42,15 @@ export const Confirmation = () => {
           <p>
             Go to your <Link to="/user">profile</Link> to see your orders!
           </p>
+        </main>
+      </>
+    );
+  } else if (!orderID && userLoggedIn) {
+    return (
+      <>
+        <Header />
+        <main id="main">
+          <h1>You havent ordered anything...</h1>
         </main>
       </>
     );
