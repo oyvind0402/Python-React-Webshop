@@ -53,6 +53,7 @@ export const Payment = () => {
 
   if (data.length === 0) {
     history.push("/404");
+    return <></>;
   } else {
     const fetchPayerData = async () => {
       const recipient = checkValidData("name");
@@ -117,6 +118,7 @@ export const Payment = () => {
           }
         } else {
           history.push("/404");
+          return <></>;
         }
       } else {
         alert("You have not filled all fields in the form correctly.");
@@ -133,11 +135,8 @@ export const Payment = () => {
               <form className="form">
                 <div className="form-group form-group-1">
                   <label htmlFor="name">Full name (recipient)</label>
-                  <input
-                    id="name"
-                    onBlur={() => checkValidData("name")}
-                  />
-                  <div id="name-error"/>
+                  <input id="name" onBlur={() => checkValidData("name")} />
+                  <div id="name-error" />
                 </div>
                 <div className="form-group form-group-1">
                   <label htmlFor="address">Address</label>
@@ -145,15 +144,12 @@ export const Payment = () => {
                     id="address"
                     onBlur={() => checkValidData("address")}
                   />
-                  <div id="address-error"/>
+                  <div id="address-error" />
                 </div>
                 <div className="form-group form-group-1">
                   <label htmlFor="phone">Telephone number</label>
-                  <input
-                    id="phone"
-                    onBlur={() => checkValidData("phone")}
-                  />
-                  <div id="phone-error"/>
+                  <input id="phone" onBlur={() => checkValidData("phone")} />
+                  <div id="phone-error" />
                 </div>
                 <div className="form-group">
                   <label htmlFor="card-nr">Card number</label>
