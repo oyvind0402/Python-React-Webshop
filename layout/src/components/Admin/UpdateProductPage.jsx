@@ -8,11 +8,6 @@ const UpdateProductPage = () => {
   const [admin, setAdmin] = useState(false);
   const [product, updateProduct] = useState([]);
   const [deletedProd, updateDeletedProd] = useState(1);
-  const setDeleted = (data) => {
-    updateDeletedProd = (prev) => {
-      prev = data;
-    };
-  };
   const history = useHistory();
 
   useEffect(() => {

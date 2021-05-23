@@ -11,6 +11,8 @@ import { useCart } from "../CartContext/CartProvider";
 export const Header = () => {
   let totalNumber = 0;
 
+
+
   return (
     <header className="header">
       <div className="header-left">
@@ -18,10 +20,11 @@ export const Header = () => {
           <img src={logo_svg} alt="Logo" className="header-logo" />
         </Link>
       </div>
-      <div className="header-centre"></div>
+      <div className="header-centre"/>
       <div className="header-right">
         <HeaderLogin />
-        <Link to="/basket">
+        <Link to="/basket" onClick={() =>     setTimeout(() => {
+        }, 150)}>
           <HeaderBasket />
           {useCart().map((product) => {
             totalNumber += product["quantity"];

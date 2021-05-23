@@ -26,17 +26,13 @@ export const ProductPage = () => {
     reRender("reRender");
     setTimeout(() => {
       document.getElementById("addBtn").disabled = false;
-    }, 200);
+    }, 150);
   };
 
   const [product, productUpdate] = useState({});
   const [render, reRender] = useState("");
   const [deletedProd, updateDeletedProd] = useState(1);
-  const setDeleted = (data) => {
-    updateDeletedProd = (prev) => {
-      prev = data;
-    };
-  };
+
 
   useEffect(() => {
     const loadData = async () => {

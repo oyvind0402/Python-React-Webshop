@@ -21,7 +21,7 @@ export const ProductCard = (props) => {
     props.onchange(props.filter);
     setTimeout(() => {
       document.getElementById("button" + props.product["id"]).disabled = false;
-    }, 200);
+    }, 150);
   };
 
   const src = "data:image/png;base64, " + props.product["image"];
