@@ -54,6 +54,23 @@
   }
 }
 
+@media only screen and (max-width: #{$mq-xs}) {
+  .deletedProducts {
+    & .prodcard > a {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+
+    &-btn {
+      margin-bottom: 0;
+    }
+
+    &-update {
+      margin-left: 0;
+    }
+  }
+}
+
 .addProduct {
   & h3 {
     max-width: $form-width;
