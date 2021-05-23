@@ -50,7 +50,7 @@ export const Confirmation = () => {
       <>
         <Header />
         <main id="main">
-          <p>You are not logged in...</p>
+          <h1>You are not logged in...</h1>
         </main>
       </>
     );

@@ -52,7 +52,7 @@ export const Payment = () => {
   const history = useHistory();
 
   if (data.length === 0) {
-    window.location.href = "/404";
+    history.push("/404");
   } else {
     const fetchPayerData = async () => {
       const recipient = checkValidData("name");

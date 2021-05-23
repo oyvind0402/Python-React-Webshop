@@ -64,9 +64,13 @@ const UserPage = () => {
           </div>
           <div>
             <h2>Orders</h2>
-            {orders.map((item, index) => {
-              return <OrderCard key={index} item={item} />;
-            })}
+            {orders.length > 0 ? (
+              orders.map((item, index) => {
+                return <OrderCard key={index} item={item} />;
+              })
+            ) : (
+              <p>You have not made any orders yet.</p>
+            )}
           </div>
         </main>
       </>
