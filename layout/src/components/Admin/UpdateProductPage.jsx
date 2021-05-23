@@ -231,7 +231,9 @@ const UpdateProductPage = () => {
                   <span id="updateCard-brand">{product["brand"]}</span>{" "}
                   <span id="updateCard-name">{product["name"]}</span>
                 </h3>
-                <img className="prodcard-img" src={src} alt={product["name"]} />
+                <div className="prodcard-img">
+                  <img src={src} alt={product["name"]} />
+                </div>
                 <p id="updateCard-desc" className="prodcard-desc">
                   {product["short_desc"]}
                 </p>

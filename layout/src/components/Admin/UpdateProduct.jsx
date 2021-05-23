@@ -37,7 +37,9 @@ const UpdateProduct = () => {
                   <h3 className="prodcard-name">
                     {prod["brand"] + " " + prod["name"]}
                   </h3>
-                  <img className="prodcard-img" src={src} alt={prod["name"]} />
+                  <div className="prodcard-img">
+                    <img src={src} alt={prod["name"]} />
+                  </div>
                   <p className="prodcard-desc">{prod["short_desc"]}</p>
                   <p className="updateProduct-btn">
                     <Link

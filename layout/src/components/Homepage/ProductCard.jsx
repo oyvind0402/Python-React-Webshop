@@ -31,7 +31,9 @@ export const ProductCard = (props) => {
         <h3 className="prodcard-name">
           {props.product["brand"] + " " + props.product["name"]}
         </h3>
-        <img className="prodcard-img" src={src} alt={props.product["name"]} />
+        <div className="prodcard-img">
+          <img src={src} alt={props.product["name"]} />
+        </div>
         <p className="prodcard-desc">{props.product["short_desc"]}</p>
         <p>ⓘ Read more</p>
         <p className="prodcard-price">{formatNOK(props.product["price"])}</p>

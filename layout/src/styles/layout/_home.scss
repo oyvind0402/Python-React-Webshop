@@ -18,6 +18,9 @@
 }
 
 .prodcard {
+  @include flexbox;
+  flex-direction: column;
+  align-items: center;
   min-width: 10rem;
   width: 20rem;
   text-align: center;
@@ -31,14 +34,26 @@
     box-shadow: 1px 1px 3px $grey20;
   }
 
+  & > a {
+    @include flexbox;
+    flex-direction: column;
+    flex-grow: 2;
+  }
+
   &-name {
     font-size: 1.3rem;
     margin-bottom: 0.5rem;
   }
 
   &-img {
-    max-width: 90%;
-    max-height: 20rem;
+    flex-grow: 1;
+    @include flexbox;
+    align-items: center;
+    justify-content: center;
+    & img {
+      max-width: 90%;
+      max-height: 20rem;
+    }
   }
 
   &-price {
