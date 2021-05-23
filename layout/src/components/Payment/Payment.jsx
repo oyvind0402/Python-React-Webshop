@@ -39,12 +39,16 @@ const checkValidData = (id) => {
 };
 
 export const Payment = () => {
+  const [admin, setAdmin] = useState(false);
   const [userLoggedIn, setUserLoggedin] = useState(false);
   const user_info = JSON.parse(localStorage.getItem("user-info"));
 
   useEffect(() => {
     if (localStorage.getItem("jwt_token")) {
       setUserLoggedin(true);
+    }
+    if (localStorage.getItem("admin")) {
+      setAdmin(true);
     }
   }, []);
 
@@ -203,6 +207,19 @@ export const Payment = () => {
                 </button>
               </div>
             </div>
+          </main>
+        </>
+      );
+    } else if (admin) {
+      return (
+        <>
+          <Header />
+          <main id="main">
+            <h1>You are admin!</h1>
+            <p>You need to be a regular user to buy items!</p>
+            <Link to="/admin" className="btn btn-primary">
+              To admin
+            </Link>
           </main>
         </>
       );
