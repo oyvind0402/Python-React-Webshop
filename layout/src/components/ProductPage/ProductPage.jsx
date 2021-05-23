@@ -26,7 +26,7 @@ export const ProductPage = () => {
     reRender("reRender");
     setTimeout(() => {
       document.getElementById("addBtn").disabled = false;
-    }, 500);
+    }, 100);
   };
 
   const [product, productUpdate] = useState({});
