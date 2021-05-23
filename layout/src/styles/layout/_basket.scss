@@ -50,6 +50,9 @@
   }
 
   &-img {
+    @include flexbox;
+    align-items: center;
+    justify-content: center;
     width: 20vw;
     height: 20vw;
     min-height: 10rem;
@@ -136,9 +139,6 @@
       max-width: 25rem;
       margin: 0 auto;
       grid-area: img;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       background: white;
       border-radius: 20px;
     }
