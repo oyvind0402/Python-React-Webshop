@@ -20,16 +20,21 @@ To re-start the webshop, follow steps 1 through 3 from [How To Run](#how-to-run)
 The URL for the API is https://localhost:5000. It uses HTTPS since due to being secured by a self-signed SSL key pair.
 
 Go to https://localhost:5000/api/users to see all users.
+
 Go to https://localhost:5000/api/products to see all products.
 
 ## Website
 
-### Ordering
-
-You can create an account - or you can decide not to, however you need one to create an order.
+The website has pages that can only be accessed through login as either a user or admin.
 
 ### Admin
 
 To log in as the admin - use the email "admin@admin.com" and the password "admin".
 
 The admin account allows you to create new products, and edit or delete existing ones.
+
+### User
+
+You may create a new user by pressing "Log in" in the header and the selecting "Sign up".
+
+A user is required to see the user page, as well as complete an order.
