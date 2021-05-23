@@ -38,7 +38,6 @@ export const NewProductForm = () => {
       body: data,
     });
     const reply = await response.json();
-    console.log(reply);
 
     if (response.status === 201) {
       alert(JSON.stringify(reply["msg"]));

@@ -62,7 +62,6 @@ const UpdateProductPage = () => {
       }
     );
     const reply = await response.json();
-    console.log(reply);
 
     if (response.status === 201) {
       const apiLink = `https://localhost:5000/api/product/${id}`;

@@ -4,9 +4,7 @@ const formatNOK = (value) => {
       style: "currency",
       currency: "NOK",
     });
-  } catch {
-    console.log("Value is ", value);
-  }
+  } catch {}
 };
 
 export { formatNOK };

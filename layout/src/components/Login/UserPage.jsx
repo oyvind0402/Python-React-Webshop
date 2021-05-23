@@ -23,7 +23,6 @@ const UserPage = () => {
           `https://localhost:5000/api/user/${user_info["id"]}/orders`
         );
         let data = await response.json();
-        console.log(data);
         setOrders(data);
       };
       loadData();

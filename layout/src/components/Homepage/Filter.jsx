@@ -102,7 +102,6 @@ export const Filter = (props) => {
               <h4 className="filter-by-title">{att[0]}</h4>
               <ul>
                 {att[1].map((checkbox, index) => {
-                  console.log(att);
                   return (
                     <div key={index} className="filter-by-item">
                       <input
@@ -131,7 +130,6 @@ export const Filter = (props) => {
               <h4 className="filter-by-title">{att[0]}</h4>
               <ul>
                 {att[1].map((checkbox, index) => {
-                  console.log(att);
                   return (
                     <div key={index} className="filter-by-item">
                       <input

@@ -9,7 +9,6 @@ const checkValidData = (id) => {
   document.getElementById(id + "-error").innerText = "";
 
   const data = document.getElementById(id).value;
-  console.log(id);
 
   let matches = false;
 
@@ -81,14 +80,11 @@ export const Payment = () => {
         );
         let error = false;
         const received_data = await response.json();
-        console.log(received_data);
         let orderID = received_data["orderID"];
         if (response.status === 201) {
           localStorage.setItem("orderID", orderID);
           data.map(async (product) => {
             let newData = new FormData();
-
-            console.log(product);
 
             newData.append("orderID", orderID);
             newData.append("productID", product["id"]);

@@ -24,7 +24,6 @@ export const ProductPage = () => {
     productUpdate(data);
     dispatch({ type: "ADD", item });
     reRender("reRender");
-    console.log(render);
     setTimeout(() => {
       document.getElementById("addBtn").disabled = false;
     }, 500);
