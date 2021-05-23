@@ -10,6 +10,7 @@ export const Basket = () => {
   const dispatch = useDispatchCart();
   const cart = useCart();
 
+  //Forces a rerender which means the basket will be automatically updated on clicking + and -
   function startRerender(string) {
     //force rerender page
     console.log(render);
@@ -18,11 +19,13 @@ export const Basket = () => {
 
   let totalPrice = 0;
 
+  //Calculates the total price of the basket
   function newTotalUpdater(item) {
     let newValue = item["quantity"] * item["price"];
     totalPrice = totalPrice + newValue;
   }
 
+  //Removes an item from the basket if clicking the X.
   const handleRemove = (index) => {
     dispatch({ type: "REMOVE", index });
   };

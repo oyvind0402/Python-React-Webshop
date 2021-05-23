@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import {useDispatchCart} from "../CartContext/CartProvider";
+import { useDispatchCart } from "../CartContext/CartProvider";
 
 export const HeaderLogin = () => {
   const [userLoggedIn, setUserLoggedin] = useState(false);
@@ -17,6 +17,7 @@ export const HeaderLogin = () => {
     }
   }, []);
 
+  //Removing stuff from localstorage when logging out - so that you actually do log out.
   const logOut = () => {
     localStorage.removeItem("jwt_token");
     localStorage.removeItem("admin");
@@ -27,6 +28,7 @@ export const HeaderLogin = () => {
     setAdmin(false);
     history.push("/");
   };
+
   return (
     <div className="login-container">
       {userLoggedIn || admin ? (

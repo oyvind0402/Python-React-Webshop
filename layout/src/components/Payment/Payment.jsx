@@ -5,6 +5,7 @@ import { useCart } from "../CartContext/CartProvider";
 import { Header } from "../Header/Header";
 import { PaymentCard } from "./PaymentCard";
 
+//Arrow function checking the data of the payment details.
 const checkValidData = (id) => {
   document.getElementById(id + "-error").innerText = "";
 
@@ -50,6 +51,7 @@ export const Payment = () => {
   const data = useCart();
   const history = useHistory();
 
+  //If the cart is empty you go to the 404 page.
   if (data.length === 0) {
     history.push("/404");
     return <></>;
@@ -60,6 +62,7 @@ export const Payment = () => {
       const phone = checkValidData("phone");
       const userId = user_info["id"];
 
+      //If all the fields have valid values.
       if (recipient && address && phone) {
         const formData = new FormData();
         formData.append("phone", phone);
@@ -78,9 +81,11 @@ export const Payment = () => {
             body: formData,
           }
         );
+        //Checking to see if theres an error for any of the order details
         let error = false;
         const received_data = await response.json();
         let orderID = received_data["orderID"];
+        //If the order was successfully made we add a orderdetail for each product in the cart.
         if (response.status === 201) {
           localStorage.setItem("orderID", orderID);
           data.map(async (product) => {

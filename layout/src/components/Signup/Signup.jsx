@@ -4,8 +4,10 @@ import { Header } from "../Header/Header";
 
 export const SignUp = () => {
   async function signup(event) {
+    //Preventing the button from doing its default behaviour.
     event.preventDefault();
 
+    //Creating form-data to send through the header of the POST request.
     const data = new FormData();
     const name = document.getElementById("name").value;
     const username = document.getElementById("username").value;
