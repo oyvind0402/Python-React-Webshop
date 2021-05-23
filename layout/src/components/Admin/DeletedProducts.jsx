@@ -75,9 +75,11 @@ const DeletedProducts = () => {
       <>
         <Header />
         <main id="main">
+          <Link to="/admin" className="btn btn-secondary">
+            Back to Admin Page
+          </Link>
           <h1>Deleted products</h1>
-          <p>No products are deleted at the moment!</p>
-          <Link to="/admin">Back to admin</Link>
+          <p>No products are deleted at the moment.</p>
         </main>
       </>
     );
